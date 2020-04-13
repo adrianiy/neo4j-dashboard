@@ -1,0 +1,12 @@
+.header {
+    width: calc(100% - 96px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 24px 48px;
+    border-bottom: 1px solid #1a1d23;
+    background: #202329d6;
+}
+.icon {
+    font-size: 18px;
+}

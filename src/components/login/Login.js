@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { driver, auth } from 'neo4j-driver';
 
-import './Login.css';
+import styles from './Login.module.css';
 
 function Login(props) {
     const [uri, setUri] = useState('');
@@ -50,36 +50,39 @@ function Login(props) {
 
 
     return (
-      <div className="login column center">
-        <header className="App-header column center">
-          <em className="material-icons">share</em>
-          <p>
-            Use your <b>Neo4j</b> credentials
-          </p>
-        </header>
-        <form onSubmit={doLogin} className="column center">
-          <input
-            type="text"
-            placeholder="IP:Port"
-            value={uri}
-            onChange={(e) => setUri(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="User"
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          { error.length ? <span className="error">{ error }</span> : null }
-          <button type="submit">Login</button>
-        </form>
-      </div>
+        <div className="column center" style={{height: '100vh'}}>
+            <header className="column center">
+                <em className={`${styles.icon} material-icons`}>share</em>
+                <p>
+                    Use your <b>Neo4j</b> credentials
+                </p>
+            </header>
+            <form onSubmit={doLogin} className="column center">
+                <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="IP:Port"
+                    value={uri}
+                    onChange={(e) => setUri(e.target.value)}
+                />
+                <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="User"
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
+                />
+                <input
+                    className={styles.input}
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                {error.length ? <span className={styles.error}>{error}</span> : null}
+                <button className={styles.button} type="submit">Login</button>
+            </form>
+        </div>
     );
 
 }

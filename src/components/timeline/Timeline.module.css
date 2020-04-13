@@ -1,0 +1,6 @@
+.timelineContainer {
+    height: calc(100vh - 67px);
+    margin-top: 67px;
+    padding-top: 24px;
+    width: 60%;
+}
