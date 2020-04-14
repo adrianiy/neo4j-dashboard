@@ -18,7 +18,8 @@
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "vis-network": "^7.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

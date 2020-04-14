@@ -24,11 +24,10 @@ function Login(props) {
             event.preventDefault();
         }
         try {
-            const server = driver(uri, auth.basic(user, password));
-            if (server._authToken) {
-                const session = server.session();
+            const drv = driver(uri, auth.basic(user, password));
+            if (drv._authToken) {
                 saveCredentials();
-                props.callback({ session, user });
+                props.callback({ drv, user });
             } else {
                 setError('Incorrect connection credentials');
             }

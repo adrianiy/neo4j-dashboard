@@ -1,7 +1,16 @@
 .timelineContainer {
     height: calc(100vh - 85px);
     margin-top: 85px;
-    width: 60%;
+    width: calc(60% + 48px);
+    position: relative;
+}
+.overflowScroll {
+    background: #282c34;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
 }
 .input {
     outline: none;
@@ -16,6 +25,7 @@
 .inputContainer {
     background: #4f535d;
     border-radius: 4px;
+    margin: 0 24px;
 }
 .inputContainer em {
     font-size: 35px;
@@ -25,7 +35,12 @@
 .inputContainer em:hover {
     color: #f76d09;
 }
-.timeline {
+.chartContainer {
+    flex: 1;
+    padding: 0 24px;
+    overflow: scroll;
+}
+.chartWrapper {
     min-height: 400px;
     margin-top: 48px;
     margin-bottom: 48px;
@@ -34,4 +49,5 @@
     border-radius: 4px;
     color: rgba(255,255,255,.6);
     font-weight: bold;
+    flex: 1;
 }
