@@ -1,0 +1,53 @@
+.timelineContainer {
+    height: calc(100vh - 85px);
+    margin-top: 85px;
+    width: calc(60% + 48px);
+    position: relative;
+}
+.overflowScroll {
+    background: #282c34;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+}
+.input {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    padding: 12px;
+    width: calc(100% - 16px);
+}
+.input .CodeMirror {
+    height: 20px;
+}
+.inputContainer {
+    background: #4f535d;
+    border-radius: 4px;
+    margin: 0 24px;
+}
+.inputContainer em {
+    font-size: 35px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+.inputContainer em:hover {
+    color: #f76d09;
+}
+.chartContainer {
+    flex: 1;
+    padding: 0 24px;
+    overflow: scroll;
+}
+.chartWrapper {
+    min-height: 400px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    padding: 24px;
+    background: #4f535d;
+    border-radius: 4px;
+    color: rgba(255,255,255,.6);
+    font-weight: bold;
+    flex: 1;
+}

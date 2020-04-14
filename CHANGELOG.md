@@ -7,4 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/AdrianInsua/curriculum-vitae/compare/commits?sourceBranch=refs/heads/develop
+## [0.1.0] - 2020-04-14
+
+### Added
+[#1] (https://github.com/AdrianInsua/neo4j-dashboard/issues/1) Add text area to write queries.
+[#2] (https://github.com/AdrianInsua/neo4j-dashboard/issues/2) Show query results.
+
+
+
+[Unreleased]: https://github.com/AdrianInsua/neo4j-dashboard/compare/commits?targetBranch=0.1.0&sourceBranch=refs/heads/develop
+[0.1.0]: https://github.com/AdrianInsua/neo4j-dashboard/compare/commits?until=0.1.0
