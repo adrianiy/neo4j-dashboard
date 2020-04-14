@@ -1,85 +1,101 @@
 import React, { useState, useEffect } from 'react';
 import { driver, auth } from 'neo4j-driver';
+import { useCookies } from "react-cookie";
 
-import './Login.css';
+import { cls } from '../../global/utils';
+import { ColumnLayout } from '../../global/layouts';
+
+import styles from './Login.module.css';
 
 function Login(props) {
+    const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
     const [uri, setUri] = useState('');
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         loadCredentials();
     });
 
-    function doLogin(event) {
-        event.preventDefault();
+    const doLogin = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
         try {
             const server = driver(uri, auth.basic(user, password));
             if (server._authToken) {
                 const session = server.session();
                 saveCredentials();
-                props.callback(session);
+                props.callback({ session, user });
             } else {
                 setError('Incorrect connection credentials');
             }
         } catch (err) {
-            console.log(err.message);
             setError(err.message);
         }
     };
 
-    function saveCredentials() {
-        localStorage.setItem('neo4jDash.credentials', JSON.stringify({
-            uri,
-            user,
-            password
-        }))
+    const saveCredentials = () => {
+        setCookie('neo4jDash.sess', btoa(`${uri} ${user} ${password}`), { path: '/', maxAge: 10 * 60 });
     };
 
-    function loadCredentials() {
-        let credentials = localStorage.getItem('neo4jDash.credentials');
-        if (credentials) {
-            credentials = JSON.parse(credentials);
-            setUri(credentials.uri);
-            setUser(credentials.user);
-            setPassword(credentials.password);
+    const loadCredentials = () => {
+        if (cookies['neo4jDash.sess']) {
+            const credentials = atob(cookies['neo4jDash.sess']).split(' ');
+            setUri(credentials[0]);
+            setUser(credentials[1]);
+            setPassword(credentials[2]);
+            doLogin();
+        } else {
+            setLoading(false);
         }
     };
 
 
     return (
-      <div className="login column center">
-        <header className="App-header column center">
-          <em className="material-icons">share</em>
-          <p>
-            Use your <b>Neo4j</b> credentials
-          </p>
-        </header>
-        <form onSubmit={doLogin} className="column center">
-          <input
-            type="text"
-            placeholder="IP:Port"
-            value={uri}
-            onChange={(e) => setUri(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="User"
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          { error.length ? <span className="error">{ error }</span> : null }
-          <button type="submit">Login</button>
-        </form>
-      </div>
+        <ColumnLayout dist="center">
+            <header className="column center">
+                <em className={cls([styles.icon, "material-icons"])}>share</em>
+                {!loading ? (
+                    <p>
+                        Use your <b>Neo4j</b> credentials
+                    </p>
+                ) : null}
+            </header>
+            {!loading ? (
+                <form onSubmit={doLogin}>
+                    <ColumnLayout dist="center">
+                        <input
+                            className={styles.input}
+                            type="text"
+                            placeholder="neo4j://IP:Port"
+                            value={uri}
+                            onChange={(e) => setUri(e.target.value)}
+                        />
+                        <input
+                            className={styles.input}
+                            type="text"
+                            placeholder="User"
+                            value={user}
+                            onChange={(e) => setUser(e.target.value)}
+                        />
+                        <input
+                            className={styles.input}
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        {error.length ? <span className={styles.error}>{error}</span> : null}
+                        <button className={styles.button} type="submit">
+                            Login
+                        </button>
+                    </ColumnLayout>
+                </form>
+            ) : null}
+        </ColumnLayout>
     );
 
 }
