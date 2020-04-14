@@ -24,7 +24,7 @@ function Login(props) {
             event.preventDefault();
         }
         try {
-            const drv = driver(uri, auth.basic(user, password), { encrypted: "ENCRYPTION_ON" });
+            const drv = driver(uri, auth.basic(user, password), { encrypted: "ENCRYPTION_ON", trust: "TRUST_ALL_CERTIFICATES" });
             if (drv._authToken) {
                 saveCredentials();
                 props.callback({ drv, user });
