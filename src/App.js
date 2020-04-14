@@ -5,23 +5,23 @@ import Timeline from './components/timeline/Timeline';
 import Header from './components/header/Header';
 
 function App() {
-    const [session, setSession] = useState(false);
+    const [driver, setDriver] = useState(false);
     const [user, setUser] = useState('');
 
     const setLoginResponse = response => {
-        setSession(response.session);
+        setDriver(response.drv);
         setUser(response.user);
     };
 
     const logout = () => {
-        setSession(null);
+        setDriver(null);
     }
 
 
     return (
         <div className="App">
-            { !session ? null : <Header session={session} user={user} callback={ logout }></Header>}
-            { !session ? <Login callback={ setLoginResponse }></Login> : <Timeline session={session}></Timeline> }
+            { !driver ? null : <Header user={user} callback={ logout }></Header>}
+            { !driver ? <Login callback={ setLoginResponse }></Login> : <Timeline driver={driver}></Timeline> }
         </div>
     );
 }
