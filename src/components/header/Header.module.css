@@ -7,6 +7,23 @@
     border-bottom: 1px solid #1a1d23;
     background: #202329d6;
 }
-.icon {
+.name {
+    font-weight: bold;
+}
+.name em {
+    color: #f76d09;
     font-size: 18px;
+}
+.name span {
+    margin-left: 8px;
+}
+.userContainer span {
+    color: #f76d09;
+}
+.link {
+    margin-left: 8px;
+    cursor: pointer;
+}
+.link:hover {
+    color: #f76d09;
 }

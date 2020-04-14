@@ -1,6 +1,37 @@
 .timelineContainer {
-    height: calc(100vh - 67px);
-    margin-top: 67px;
-    padding-top: 24px;
+    height: calc(100vh - 85px);
+    margin-top: 85px;
     width: 60%;
+}
+.input {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    padding: 12px;
+    width: calc(100% - 16px);
+}
+.input .CodeMirror {
+    height: 20px;
+}
+.inputContainer {
+    background: #4f535d;
+    border-radius: 4px;
+}
+.inputContainer em {
+    font-size: 35px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+.inputContainer em:hover {
+    color: #f76d09;
+}
+.timeline {
+    min-height: 400px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    padding: 24px;
+    background: #4f535d;
+    border-radius: 4px;
+    color: rgba(255,255,255,.6);
+    font-weight: bold;
 }

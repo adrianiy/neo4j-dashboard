@@ -1,19 +1,30 @@
 import React from 'react';
 import styles from './Header.module.css';
+import { RowLayout } from '../../global/layouts';
+import { cls } from '../../global/utils';
+import { useCookies } from 'react-cookie';
 
 function Header(props) {
+    // eslint-disable-next-line no-unused-vars
+    const [cookies, setCookie, removeCookie] = useCookies(["neo4jDash.sess"]);
+
+    const doLogout = () => {
+        removeCookie('neo4jDash.sess');
+        props.callback();
+    };
+
     return (
-        <header className={`${styles.header} row spaced middle`}>
-            <div className="row middle spaced">
-                <em className={`${styles.icon} material-icons`}>share</em>
+        <RowLayout dist="middle spaced" className={styles.header}>
+            <RowLayout dist="middle spaced" className={styles.name}>
+                <em className={cls([styles.icon, "material-icons"])}>share</em>
                 <span>Neo4J Dashboard</span>
-            </div>
-            <div className="row middle spaced user__container">
-                <span>Hi, { props.username }!</span>
-                <span className="link">Logout</span>
-            </div>
-        </header>
-    )
+            </RowLayout>
+            <RowLayout dist="middle spaced" className={styles.userContainer}>
+                <div>Hi, <span>{ props.user }</span>!</div>
+                <strong className={ styles.link } onClick={doLogout}>Logout</strong>
+            </RowLayout>
+        </RowLayout>
+    );
 };
 
 export default Header;
