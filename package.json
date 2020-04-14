@@ -1,6 +1,6 @@
 {
   "name": "neo4j-dashboard",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
