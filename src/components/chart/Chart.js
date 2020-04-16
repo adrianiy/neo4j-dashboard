@@ -1,38 +1,39 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useEffect } from 'react';
-import NeoVis from '../../assets/novis/neovis';
+import { Visualization } from '../visualization/VisualizationView';
+import { getChart } from '../../service/neo.service';
 
 function Chart(props) {
+    const [results, setResults] = useState(null);
 
-    useEffect(() => {
-        console.log(props.query);
-        const config = {
-            container_id: "viz",
-            driver: props.driver,
-            labels: {
-                //"Character": "name",
-                Character: {
-                    caption: "name",
-                    size: "pagerank",
-                    community: "community",
-                    //"sizeCypher": "MATCH (n) WHERE id(n) = {id} MATCH (n)-[r]-() RETURN sum(r.weight) AS c"
-                },
-            },
-            relationships: {
-                INTERACTS: {
-                    thickness: "weight",
-                    caption: false,
-                },
-            },
-            initial_cypher: props.query,
-        };
-        const viz = new NeoVis(config);
-        viz.render()
+    const fecthData = useCallback(async () => {
+        const results = await getChart(props.sessionId, props.query);
+        console.log(results);
+        setResults(results);
     }, [props])
 
-    return (
-        <div id="viz" style={{ width: '100%', height: '100%'}}></div>
-    )
+    useEffect(() => {
+        fecthData();
+    }, [props, fecthData, results])
+
+    const itemHover = (item) => {
+        console.log(item);
+    }
+
+    const itemSelected = (item) => {
+        console.log(item);
+    }
+
+    return results ? (
+        <Visualization
+            style={{width: '100%'}}
+            result={results}
+            maxNeighbours={ 30 }
+            sessionId={ props.sessionId }
+            itemHovered={itemHover}
+            itemSelected={itemSelected}
+        />
+    ) :  null
 }
 
 export default Chart;

@@ -3,25 +3,34 @@ import './App.css';
 import Login from './components/login/Login';
 import Timeline from './components/timeline/Timeline';
 import Header from './components/header/Header';
+import { doLogout } from './service/neo.service';
 
 function App() {
-    const [driver, setDriver] = useState(false);
+    const [sessionId, setSessionId] = useState(false);
     const [user, setUser] = useState('');
 
     const setLoginResponse = response => {
-        setDriver(response.drv);
+        console.log(response);
+        setSessionId(response.sessionId);
         setUser(response.user);
     };
 
-    const logout = () => {
-        setDriver(null);
+    const logoutHandler = () => {
+        logout();
+    }
+
+    const logout = async () => {
+        const logOutResult = await doLogout(sessionId);
+        if (logOutResult) {
+            setSessionId(null);
+        }
     }
 
 
     return (
         <div className="App">
-            { !driver ? null : <Header user={user} callback={ logout }></Header>}
-            { !driver ? <Login callback={ setLoginResponse }></Login> : <Timeline driver={driver}></Timeline> }
+            { !sessionId ? null : <Header user={user} callback={ logoutHandler }></Header>}
+            { !sessionId ? <Login callback={ setLoginResponse }></Login> : <Timeline sessionId={sessionId}></Timeline> }
         </div>
     );
 }
