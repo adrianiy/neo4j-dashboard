@@ -14,7 +14,7 @@ function Chart(props) {
 
     useEffect(() => {
         fecthData();
-    }, [props, fecthData, results])
+    }, [props, fecthData])
 
     const itemHover = (item) => {
         console.log(item);
