@@ -213,7 +213,6 @@ export function extractNodesAndRelationshipsFromRecordsForOldVis(
   })
 
   const nodes = rawNodes.map(item => {
-      console.log(item);
     return {
       id: item.identity.toString(),
       labels: item.labels,

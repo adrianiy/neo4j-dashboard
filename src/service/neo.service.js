@@ -2,7 +2,7 @@ import Record from "neo4j-driver/lib/record";
 import { Path, Node, PathSegment, Relationship } from "neo4j-driver/lib/graph-types";
 import Integer from "neo4j-driver/lib/integer";
 
-const SERVICE_URL = process.env.NODE_ENV === 'production' ? "https://neo4j-service.azurewebsites.net/api" : "http://localhost:5000";
+const SERVICE_URL = process.env.NODE_ENV === 'production' ? "https://neo4j-service.azurewebsites.net/api" : "http://localhost:5000/api";
 
 export const doLogin = async (uri, user, password) => {
     const result = await fetch(`${SERVICE_URL}/login`, {
@@ -32,15 +32,17 @@ export const getChart = async (sessionId, query) => {
         const parsed = await result.json();
         parsed.records = parsed.records.map((res) => {
             res._fields = res._fields.map((field) => {
-                field.start = createNode(field.start)
-                field.end = createNode(field.end)
-                field.segments = field.segments.map((seg) => {
-                    seg.start = createNode(seg.start)
-                    seg.end = createNode(seg.end)
-                    seg.relationship = createRel(seg.relationship)
-                    return new PathSegment(seg.start, seg.relationship, seg.end)
-                });
-                return new Path(field.start, field.end, field.segments)
+                if (field.segments) {
+                    return createPath(field)
+                } else if (field.relationship) {
+                    return createSegment(field)
+                } else if (field.identity && field.start && field.end) {
+                    return createRel(field)
+                } else if (field.identity) {
+                    return createNode(field)
+                } else {
+                    return parseProperties(field)
+                }
             });
             return new Record(res.keys, res._fields)
         });
@@ -59,11 +61,52 @@ const parseProperties = props => {
     return props
 }
 
+const createPath = (path) => {
+    if (path.start) {
+        path.start = createNode(path.start);
+    }
+    if (path.end) {
+        path.end = createNode(path.end);
+    }
+    if (path.segments) {
+        path.segments = createSegments(path.segments)
+    }
+    return new Path(path.start, path.end, path.segments);
+}
+
+const createSegments = (segments) => {
+    return segments.map((seg) => {
+        return createSegment(seg);
+    });
+
+}
+
+const createSegment = (seg) => {
+    if (seg.start) {
+        seg.start = createNode(seg.start);
+    }
+    if (seg.end) {
+        seg.end = createNode(seg.end);
+    }
+    if (seg.relationship) {
+        seg.relationship = createRel(seg.relationship);
+    }
+    return new PathSegment(seg.start, seg.relationship, seg.end);
+}
+
 const createRel = (rel) => {
-    rel.identity = createInteger(rel.identity)
-    rel.start = createInteger(rel.start)
-    rel.end = createInteger(rel.end)
-    rel.properties = parseProperties(rel.properties)
+    if (rel.identity) {
+        rel.identity = createInteger(rel.identity)
+    }
+    if (rel.start) {
+        rel.start = createInteger(rel.start)
+    }
+    if (rel.end) {
+        rel.end = createInteger(rel.end)
+    }
+    if (rel.properties) {
+        rel.properties = parseProperties(rel.properties)
+    }
     return new Relationship(rel.identity, rel.start, rel.end, rel.type, rel.properties)
 }
 
@@ -72,7 +115,11 @@ const createInteger = (data) => {
 }
 
 const createNode = (node) => {
-    node.properties = parseProperties(node.properties)
-    node.identity = createInteger(node.identity)
+    if (node.properties) {
+        node.properties = parseProperties(node.properties)
+    }
+    if (node.identity) {
+        node.identity = createInteger(node.identity)
+    }
     return new Node(node.identity, node.labels, node.properties);
 };

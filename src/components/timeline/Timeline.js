@@ -7,6 +7,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/cypher/cypher';
 import './codemirror.css';
+import { cls } from '../../global/utils';
 
 function Timeline(props) {
     const [query, setQuery] = useState('');
@@ -23,7 +24,7 @@ function Timeline(props) {
 
     const handlePlay = () => {
         const stored = [query].concat(storedQueries.filter(q => q !== query)).slice(0, 5);
-        setQueries(queries.concat(query));
+        setQueries([query].concat(queries.filter((q) => q !== query)));
         setStoredQueries(stored);
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
     }
@@ -57,7 +58,9 @@ function Timeline(props) {
                 <em className="material-icons" onClick={handlePlay}>
                     play_arrow
                 </em>
-                <em className="material-icons" onClick={showStoredQueries}>
+                <em className={
+                    cls('material-icons', showStored ? styles.activeIcon : '')
+                } onClick={showStoredQueries}>
                     history
                 </em>
             </RowLayout>

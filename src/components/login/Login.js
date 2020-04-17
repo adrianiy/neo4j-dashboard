@@ -63,7 +63,7 @@ function Login(props) {
     return (
         <ColumnLayout dist="center">
             <header className="column center">
-                <em className={cls([styles.icon, "material-icons"])}>share</em>
+                <em className={cls(styles.icon, "material-icons")}>share</em>
                 {!loading ? (
                     <p>
                         Use your <b>Neo4j</b> credentials
