@@ -1,6 +1,6 @@
 {
   "name": "neo4j-dashboard",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.1.2",
@@ -70,10 +70,15 @@
     ]
   },
   "release": {
-     "plugins": [
+    "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
-      ["@semantic-release/npm",{"npmPublish":false}],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
       "@semantic-release/changelog",
       "@semantic-release/git"
     ],
