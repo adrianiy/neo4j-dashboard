@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Chart from '../chart/Chart';
+import Card from '../card/Card';
 import styles from './Timeline.module.css';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
 import {Controlled as CodeMirror} from 'react-codemirror2'
@@ -26,6 +26,7 @@ function Timeline(props) {
         const stored = [query].concat(storedQueries.filter(q => q !== query)).slice(0, 5);
         setQueries([query].concat(queries.filter((q) => q !== query)));
         setStoredQueries(stored);
+        setQuery('')
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
     }
 
@@ -36,6 +37,10 @@ function Timeline(props) {
     const selectQuery = (query) => {
         setQuery(query)
         setShowStored(false)
+    }
+
+    const deleteQuery = (query) => {
+        setQueries(queries.filter(q => q !== query));
     }
 
     return (
@@ -64,32 +69,35 @@ function Timeline(props) {
                     history
                 </em>
             </RowLayout>
-            {showStored ? (
-                <div className={styles.list}>
-                    <div className={styles.listOverflow}></div>
-                    <span className={styles.listTitle}>Últimas consultas</span>
-                    <ul>
-                        {storedQueries.map((q, i) => (
-                            <li key={i} onClick={() => selectQuery(q)}>
-                                <CodeMirror
-                                    value={q}
-                                    options={{
-                                        mode: "cypher",
-                                        theme: "material",
-                                        lineNumbers: false,
-                                        lineWrapping: true,
-                                    }}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : null}
+            <div className={cls(styles.list, showStored ? styles.listActive : '')}>
+                <div className={styles.listOverflow}></div>
+                <span className={styles.listTitle}>Últimas consultas</span>
+                <ul>
+                    {storedQueries.map((q, i) => (
+                        <li key={i} onClick={() => selectQuery(q)}>
+                            <CodeMirror
+                                value={q}
+                                options={{
+                                    mode: "cypher",
+                                    theme: "material",
+                                    lineNumbers: false,
+                                    lineWrapping: true,
+                                }}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <ColumnLayout className={styles.chartContainer}>
                 {queries.length ? (
                     queries.map((q, idx) => (
                         <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
-                            <Chart sessionId={props.sessionId} query={q} />
+                            <Card
+                                sessionId={props.sessionId}
+                                query={q}
+                                deleteQuery={deleteQuery}
+                                restoreQuery={selectQuery}
+                            />
                         </RowLayout>
                     ))
                 ) : (

@@ -1,0 +1,48 @@
+.card {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.card header {
+    height: 32px;
+    background: var(--secondary-color);
+    border-bottom: 1px solid var(--bg-color);
+    font-weight: lighter;
+    font-size: 12px;
+}
+.card header * {
+    line-height: 32px;
+}
+.cardTitle {
+    padding: 0 24px;
+    color: var(--highlight-color);
+}
+.card em {
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 8px;
+    border-left: 1px solid var(--bg-color)
+}
+.card em:hover {
+    color: var(--highlight-color);
+}
+.cardQuery {
+    max-width: calc(100% - 40px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.cardQuery:hover {
+    color: var(--highlight-color);
+}
+
+.cardBody {
+    height: calc(100% - 32px);
+}
+
+.summary {
+    background: var(--secondary-color);
+    border-right: 1px solid var(--bg-color);
+    padding: 24px;
+}

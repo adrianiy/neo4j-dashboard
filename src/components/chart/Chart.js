@@ -1,43 +1,183 @@
-import React, { useState, useCallback } from 'react';
-import { useEffect } from 'react';
-import { Visualization } from '../visualization/VisualizationView';
+import React, { useState, useEffect, useCallback } from 'react';
+import { GraphComponent } from '../../assets/visualization/Graph';
 import { getChart } from '../../service/neo.service';
 
-function Chart(props) {
-    const [results, setResults] = useState(null);
-    const [updated, setUpdated] = useState(null);
+import { extractNodesAndRelationshipsFromRecordsForOldVis } from './utils/graph-utils';
+import deepmerge from 'deepmerge';
+import neo4j from 'neo4j-driver';
 
-    const fecthData = useCallback(async () => {
-        const results = await getChart(props.sessionId, props.query);
-        console.log(results);
-        setResults(results);
-        setUpdated(new Date().getTime());
-    }, [props])
+import neoGraphStyle from './graphStyle';
+
+const updateGraphStyleData = (graphStyleData) => {
+    return {
+        type: "grass/UPDATE_GRAPH_STYLE_DATA",
+        styleData: graphStyleData,
+    };
+};
+
+const deduplicateNodes = (nodes) => {
+    return nodes.reduce(
+        (all, curr) => {
+            if (all.taken.indexOf(curr.id) > -1) {
+                return all;
+            } else {
+                all.nodes.push(curr);
+                all.taken.push(curr.id);
+                return all;
+            }
+        },
+        { nodes: [], taken: [] }
+    ).nodes;
+};
+
+function Chart (props) {
+    const [nodes, setNodes] = useState([]);
+    const [relationships, setRelationships] = useState([]);
+    const [graphStyle, setGraphStyle] = useState(neoGraphStyle());
+    const [styleVersion, setStyleVersion] = useState(0);
+    let _graph;
+    let _autoCompleteCallback;
+
+    const checkNodesLength = useCallback(_nodes => {
+        _nodes = deduplicateNodes(_nodes);
+        if (_nodes.length > parseInt(props.initialNodeDisplay)) {
+            _nodes = _nodes.slice(0, props.initialNodeDisplay);
+            setRelationships(
+                props.relationships.filter((item) => {
+                    return _nodes.filter((node) => node.id === item.startNodeId) > 0;
+                })
+            );
+            props.itemSelected({
+                type: "status-item",
+                item: `Not all return nodes are being displayed due to Initial Node Display setting. Only ${this.props.initialNodeDisplay} of ${nodes.length} nodes are being displayed`,
+            });
+        }
+        setNodes(_nodes);
+    }, [nodes.length, props]);
+
+    const populateDataFromRecords = useCallback((records) => {
+        const {
+            nodes,
+            relationships
+        } = extractNodesAndRelationshipsFromRecordsForOldVis(
+            records
+        );
+        checkNodesLength(nodes);
+        setRelationships(relationships);
+    }, [checkNodesLength]);
+
+    const checkGraphStyle = useCallback(() => {
+        const _graphStyle = graphStyle.toSheet();
+        if (props.graphStyleData) {
+            const rebasedStyle = deepmerge(_graphStyle, props.graphStyleData);
+            graphStyle.loadRules(rebasedStyle);
+            setGraphStyle(graphStyle);
+            setStyleVersion(styleVersion + 1);
+        } else {
+            graphStyle.resetToDefault();
+            setGraphStyle(graphStyle);
+            updateGraphStyleData(graphStyle.toSheet());
+        }
+    }, [graphStyle, props.graphStyleData, styleVersion]);
 
     useEffect(() => {
-        setResults(null);
-        fecthData();
-    }, [props, fecthData])
+        checkGraphStyle();
+        const { records = [] } = props.result;
+        if (records && records.length > 0) {
+            setNodes([]);
+            populateDataFromRecords(records);
+        }
+    }, [props, populateDataFromRecords, checkGraphStyle]);
 
-    const itemHover = (item) => {
-        console.log(item);
+    const autoCompleteRelationships = async (existingNodes, newNodes) => {
+        if (props.autoComplete) {
+            const existingNodeIds = existingNodes.map(node => parseInt(node.id))
+            const newNodeIds = newNodes.map(node => parseInt(node.id))
+
+            const graph = await getInternalRelationships(existingNodeIds, newNodeIds);
+            _autoCompleteCallback && _autoCompleteCallback(graph.relationships);
+        } else {
+            _autoCompleteCallback && _autoCompleteCallback([])
+        }
     }
 
-    const itemSelected = (item) => {
-        console.log(item);
+    const getNeighbours = async (id, currentNeighbourIds = []) => {
+        const query = `MATCH path = (a)--(o)
+                    WHERE id(a) = ${id}
+                    AND NOT (id(o) IN[${currentNeighbourIds.join(',')}])
+                    RETURN path, size((a)--()) as c
+                    ORDER BY id(o)
+                    LIMIT ${props.maxNeighbours -
+                        currentNeighbourIds.length}`
+        const results = await getChart(props.sessionId, query);
+        console.log(results);
+        const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
+        const resultGraph = extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
+        await autoCompleteRelationships(_graph._nodes, resultGraph.nodes);
+        return { ...resultGraph, count: count };
     }
 
-    return results ? (
-            <Visualization
-                style={{width: '100%'}}
-                result={results}
-                maxNeighbours={ 30 }
-                sessionId={ props.sessionId }
-                itemHovered={itemHover}
-                itemSelected={itemSelected}
-                updated={updated}
-            />
-    ) :  null
+    const getInternalRelationships = async (existingNodeIds, newNodeIds) => {
+        newNodeIds = newNodeIds.map(neo4j.int)
+        existingNodeIds = existingNodeIds.map(neo4j.int)
+        existingNodeIds = existingNodeIds.concat(newNodeIds)
+        const query =
+            'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
+        const results = await getChart(props.sessionId, query);
+        console.log(results);
+        return {
+            ...extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
+        };
+    }
+
+    const setGraph = (graph) => {
+        _graph = graph
+        autoCompleteRelationships([], _graph.nodes)
+    }
+
+    const getNodeNeighbours = async (node, currentNeighbours, callback) => {
+        if (currentNeighbours.length > props.maxNeighbours) {
+            callback(null, { nodes: [], relationships: [] });
+        }
+        try {
+            const result = await getNeighbours(node.id, currentNeighbours);
+            const nodes = result.nodes;
+            if (result.count > props.maxNeighbours - currentNeighbours.length) {
+                props.itemSelected({
+                    type: "status-item",
+                    item: `Rendering was limited to ${props.maxNeighbours} of the node's total ${
+                        result.count + currentNeighbours.length
+                    } neighbours due to browser config maxNeighbours.`,
+                });
+            }
+            callback(null, { nodes: nodes, relationships: result.relationships });
+        } catch (err) {
+            callback(null, { nodes: [], relationships: [] });
+        }
+    }
+
+    const onGraphModelChange = (stats) => {
+        props.setSummary(stats);
+        updateGraphStyleData(graphStyle.toSheet());
+    }
+
+    return !nodes.length ? null : (
+        <GraphComponent
+            fullscreen={props.fullscreen}
+            frameHeight={props.frameHeight}
+            relationships={relationships}
+            nodes={nodes}
+            getNodeNeighbours={getNodeNeighbours}
+            onItemMouseOver={props.itemHovered}
+            onItemSelect={props.itemSelected}
+            graphStyle={graphStyle}
+            styleVersion={styleVersion} // cheap way for child to check style updates
+            onGraphModelChange={onGraphModelChange}
+            assignVisElement={props.assignVisElement}
+            getAutoCompleteCallback={props.getAutoCompleteCallback}
+            setGraph={setGraph}
+        />
+    );
 }
 
 export default Chart;
