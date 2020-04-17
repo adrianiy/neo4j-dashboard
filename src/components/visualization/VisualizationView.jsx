@@ -35,7 +35,6 @@ export class Visualization extends Component {
   }
 
   componentDidUpdate(prevProps) {
-      console.log(this.props.updated, prevProps.updated)
     if (
       this.props.updated !== prevProps.updated ||
       this.props.autoComplete !== prevProps.autoComplete
@@ -80,7 +79,6 @@ export class Visualization extends Component {
                    LIMIT ${this.props.maxNeighbours -
                      currentNeighbourIds.length}`
     const results = await getChart(this.props.sessionId, query);
-    console.log(results);
     const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
     const resultGraph = bolt.extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
     await this.autoCompleteRelationships(this.graph._nodes, resultGraph.nodes);
@@ -94,7 +92,6 @@ export class Visualization extends Component {
     const query =
       'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
     const results = await getChart(this.props.sessionId, query);
-    console.log(results);
     return {
         ...bolt.extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
     };
