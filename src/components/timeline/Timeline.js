@@ -39,7 +39,7 @@ function Timeline(props) {
     }
 
     return (
-        <ColumnLayout dist="spaced" className={styles.timelineContainer}>
+        <ColumnLayout dist="spaced" className={cls(styles.timelineContainer, 'animated', 'fadeInUp')}>
             <div className={styles.overflowScroll}></div>
             <RowLayout dist="middle" className={styles.inputContainer}>
                 <CodeMirror
@@ -65,22 +65,25 @@ function Timeline(props) {
                 </em>
             </RowLayout>
             {showStored ? (
-                <ul className={styles.list}>
-                    <span>Últimas consultas</span>
-                    {storedQueries.map((q, i) => (
-                        <li key={i} onClick={() => selectQuery(q)}>
-                            <CodeMirror
-                                value={q}
-                                options={{
-                                    mode: "cypher",
-                                    theme: "material",
-                                    lineNumbers: false,
-                                    lineWrapping: true,
-                                }}
-                            />
-                        </li>
-                    ))}
-                </ul>
+                <div className={styles.list}>
+                    <div className={styles.listOverflow}></div>
+                    <span className={styles.listTitle}>Últimas consultas</span>
+                    <ul>
+                        {storedQueries.map((q, i) => (
+                            <li key={i} onClick={() => selectQuery(q)}>
+                                <CodeMirror
+                                    value={q}
+                                    options={{
+                                        mode: "cypher",
+                                        theme: "material",
+                                        lineNumbers: false,
+                                        lineWrapping: true,
+                                    }}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             ) : null}
             <ColumnLayout className={styles.chartContainer}>
                 {queries.length ? (
