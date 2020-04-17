@@ -13,7 +13,6 @@
     "@testing-library/user-event": "^7.2.1",
     "@typescript-eslint/parser": "^2.28.0",
     "codemirror": "^5.52.2",
-    "commit-message-validator": "^0.1.11",
     "d3": "3",
     "deepmerge": "^4.2.2",
     "highlight.js": "^9.18.1",
@@ -47,7 +46,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commit-message-validator",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged",
       "pre-push": "npm run lint && npm run test"
     }
@@ -57,12 +56,6 @@
       "eslint --fix",
       "git add"
     ]
-  },
-  "config": {
-    "commit-message-validator": {
-      "pattern": "^\\[\\#[\\d]+\\]\\s.*$",
-      "errorMessage": "Invalid commit message. Valid example: #8 Fix typo"
-    }
   },
   "browserslist": {
     "production": [
@@ -75,5 +68,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.5",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "semantic-release": "^17.0.6"
   }
 }
