@@ -34,10 +34,10 @@
     cursor: pointer;
 }
 .inputContainer em:hover  {
-    color: #f76d09;
+    color: var(--highlight-color);
 }
 .activeIcon  {
-    color: #f76d09;
+    color: var(--highlight-color);
 }
 .chartContainer {
     flex: 1;
@@ -59,7 +59,7 @@
 }
 .list {
     border-radius: 4px;
-
+    overflow: hidden;
     background: rgb(70, 78, 93);
     margin: 0 20%;
     margin-top: -2px;
@@ -68,8 +68,12 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border: 1px solid #5a6070;
-    max-height: 200px;
+    height: 0px;
     position: relative;
+    transition: all ease-in-out 200ms;
+}
+.listActive {
+    height: 200px;
 }
 .list ul {
     max-height: calc(100% - 40px);
