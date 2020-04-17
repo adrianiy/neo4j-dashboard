@@ -7,6 +7,12 @@
 .column {
     flex-direction: column;
 }
+.column.reverse {
+    flex-direction: column-reverse;
+}
+.row.reverse {
+    flex-direction: row-reverse;
+}
 .row.spaced{
     justify-content: space-between;
 }
