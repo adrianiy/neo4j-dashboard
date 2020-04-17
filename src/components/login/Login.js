@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { driver, auth } from 'neo4j-driver';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useCookies } from "react-cookie";
 
 import { cls } from '../../global/utils';
 import { ColumnLayout } from '../../global/layouts';
 
 import styles from './Login.module.css';
+import { doLogin } from '../../service/neo.service';
 
 function Login(props) {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
@@ -15,43 +15,50 @@ function Login(props) {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        loadCredentials();
-    });
-
-    const doLogin = (event) => {
+    const loginHandle = async (event) => {
         if (event) {
             event.preventDefault();
         }
+        login(uri, user, password);
+    };
+
+    const saveCredentials = useCallback((_uri, _user, _password) => {
+        setCookie("neo4jDash.sess", btoa(`${_uri} ${_user} ${_password}`), { path: "/", maxAge: 24 * 60 * 60 });
+    }, [setCookie]);
+
+    const login = useCallback(async (_uri, _user, _password) => {
         try {
-            const drv = driver(uri, auth.basic(user, password));
-            if (drv._authToken) {
-                saveCredentials();
-                props.callback({ drv, user });
+            setLoading(true);
+            const sessionId = await doLogin(_uri, _user, _password);
+            if (sessionId && sessionId.id) {
+                saveCredentials(_uri, _user, _password);
+                props.callback({ sessionId: sessionId.id, user: _user });
             } else {
-                setError('Incorrect connection credentials');
+                setLoading(false);
+                setError("Incorrect connection credentials");
             }
         } catch (err) {
+            setLoading(false);
             setError(err.message);
         }
-    };
+    }, [props, saveCredentials])
 
-    const saveCredentials = () => {
-        setCookie('neo4jDash.sess', btoa(`${uri} ${user} ${password}`), { path: '/', maxAge: 10 * 60 });
-    };
+    const loadCookies = useCallback(() => {
+        const credentials = atob(cookies["neo4jDash.sess"]).split(" ");
+        login(credentials[0], credentials[1], credentials[2]);
+    }, [cookies, login]);
 
-    const loadCredentials = () => {
-        if (cookies['neo4jDash.sess']) {
-            const credentials = atob(cookies['neo4jDash.sess']).split(' ');
-            setUri(credentials[0]);
-            setUser(credentials[1]);
-            setPassword(credentials[2]);
-            doLogin();
+    const loadCredentials = useCallback(() => {
+        if (cookies["neo4jDash.sess"]) {
+            loadCookies();
         } else {
             setLoading(false);
         }
-    };
+    }, [cookies, loadCookies]);
 
+    useEffect(() => {
+        loadCredentials();
+    }, [loadCredentials]);
 
     return (
         <ColumnLayout dist="center">
@@ -64,7 +71,7 @@ function Login(props) {
                 ) : null}
             </header>
             {!loading ? (
-                <form onSubmit={doLogin}>
+                <form onSubmit={loginHandle} autoComplete="on">
                     <ColumnLayout dist="center">
                         <input
                             className={styles.input}

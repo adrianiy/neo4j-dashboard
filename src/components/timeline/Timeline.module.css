@@ -5,25 +5,26 @@
     position: relative;
 }
 .overflowScroll {
-    background: #282c34;
+    background: var(--bg-color);
     height: 100%;
     position: absolute;
     top: 0;
     right: 0;
     width: 20px;
+    z-index: 99;
 }
 .input {
     outline: none;
     border: none;
     font-size: 14px;
     padding: 12px;
-    width: calc(100% - 16px);
+    width: calc(100% - 142px);
 }
 .input .CodeMirror {
     height: 20px;
 }
 .inputContainer {
-    background: #4f535d;
+    background: var(--p-color);
     border-radius: 4px;
     margin: 0 24px;
 }
@@ -44,10 +45,33 @@
     min-height: 400px;
     margin-top: 48px;
     margin-bottom: 48px;
-    padding: 24px;
-    background: #4f535d;
+    background: var(--p-color);
     border-radius: 4px;
     color: rgba(255,255,255,.6);
     font-weight: bold;
     flex: 1;
+}
+.list {
+    border-radius: 4px;
+    top: 100px;
+    background: rgb(70, 78, 93);
+    margin: 0 24px;
+    margin-top: -2px;
+    padding: 24px;
+    padding-top: 8px;
+    box-shadow: -1px 4px 20px 0px #00000040;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #5a6070;
+}
+.list span {
+    font-size: 12px;
+}
+.list li {
+    border-radius: 4px;
+    list-style: none;
+    height: 50px;
+    cursor: pointer;
+    margin: 8px 0;
+    overflow: scroll;
 }

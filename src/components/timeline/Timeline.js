@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from '../chart/Chart';
 import styles from './Timeline.module.css';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
@@ -11,9 +11,30 @@ import './codemirror.css';
 function Timeline(props) {
     const [query, setQuery] = useState('');
     const [queries, setQueries] = useState([])
+    const [storedQueries, setStoredQueries] = useState([]);
+    const [showStored, setShowStored] = useState(false);
+
+    useEffect(() => {
+        const queries = localStorage.getItem("neo4jDashboard.queries");
+        if (queries) {
+            setStoredQueries(JSON.parse(queries));
+        }
+    }, [props])
 
     const handlePlay = () => {
+        const stored = [query].concat(storedQueries.filter(q => q !== query)).slice(0, 5);
         setQueries(queries.concat(query));
+        setStoredQueries(stored);
+        localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
+    }
+
+    const showStoredQueries = () => {
+        setShowStored(!showStored);
+    }
+
+    const selectQuery = (query) => {
+        setQuery(query)
+        setShowStored(false)
     }
 
     return (
@@ -27,30 +48,50 @@ function Timeline(props) {
                         mode: "cypher",
                         theme: "material",
                         lineNumbers: false,
-                        lineWrapping: true
+                        lineWrapping: true,
                     }}
                     onBeforeChange={(editor, data, value) => {
-                        setQuery(value)
+                        setQuery(value);
                     }}
                 />
-                <em className="material-icons" onClick={handlePlay}>play_arrow</em>
-                <em className="material-icons">history</em>
+                <em className="material-icons" onClick={handlePlay}>
+                    play_arrow
+                </em>
+                <em className="material-icons" onClick={showStoredQueries}>
+                    history
+                </em>
             </RowLayout>
-
+            {showStored ? (
+                <ul className={styles.list}>
+                    <span>Últimas consultas</span>
+                    {storedQueries.map((q, i) => (
+                        <li key={i} onClick={() => selectQuery(q)}>
+                            <CodeMirror
+                                value={q}
+                                options={{
+                                    mode: "cypher",
+                                    theme: "material",
+                                    lineNumbers: false,
+                                    lineWrapping: true,
+                                }}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            ) : null}
             <ColumnLayout className={styles.chartContainer}>
-                    {
-                        queries.length ? queries.map((q, idx) => (
-                            <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
-                                <Chart driver={props.driver} query={q}/>
-                            </RowLayout>
-                        ))
-                        :
-                        <RowLayout dist="center middle" className={styles.chartWrapper}>
-                            Type a query and press RUN!
+                {queries.length ? (
+                    queries.map((q, idx) => (
+                        <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
+                            <Chart sessionId={props.sessionId} query={q} />
                         </RowLayout>
-                    }
+                    ))
+                ) : (
+                    <RowLayout dist="center middle" className={styles.chartWrapper}>
+                        Type a query and press RUN!
+                    </RowLayout>
+                )}
             </ColumnLayout>
-
         </ColumnLayout>
     );
 };

@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+[#7] (https://github.com/AdrianInsua/neo4j-dashboard/issues/7) use d3 approximation and connect to neo4j-service.
+
 ## [0.1.0] - 2020-04-14
 
 ### Added
-[#1] (https://github.com/AdrianInsua/neo4j-dashboard/issues/1) Add text area to write queries.
-[#2] (https://github.com/AdrianInsua/neo4j-dashboard/issues/2) Show query results.
+
+- [#1] (https://github.com/AdrianInsua/neo4j-dashboard/issues/1) Add text area to write queries.
+- [#2] (https://github.com/AdrianInsua/neo4j-dashboard/issues/2) Show query results.
 
 
 
