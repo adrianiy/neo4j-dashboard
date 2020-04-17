@@ -35,10 +35,12 @@ export class Visualization extends Component {
   }
 
   componentDidUpdate(prevProps) {
+      console.log(this.props.updated, prevProps.updated)
     if (
       this.props.updated !== prevProps.updated ||
       this.props.autoComplete !== prevProps.autoComplete
     ) {
+        this.setState({ nodes: [] })
       this.populateDataToStateFromProps(this.props)
     }
   }
@@ -50,7 +52,6 @@ export class Visualization extends Component {
     } = bolt.extractNodesAndRelationshipsFromRecordsForOldVis(
       props.result.records
     )
-    console.log(nodes, relationships)
     this.setState({
       nodes,
       relationships,
@@ -78,7 +79,8 @@ export class Visualization extends Component {
                    ORDER BY id(o)
                    LIMIT ${this.props.maxNeighbours -
                      currentNeighbourIds.length}`
-    const results = getChart(this.props.sessionId, query);
+    const results = await getChart(this.props.sessionId, query);
+    console.log(results);
     const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
     const resultGraph = bolt.extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
     await this.autoCompleteRelationships(this.graph._nodes, resultGraph.nodes);
@@ -91,7 +93,8 @@ export class Visualization extends Component {
     existingNodeIds = existingNodeIds.concat(newNodeIds)
     const query =
       'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
-    const results = getChart(this.props.sessionId, query);
+    const results = await getChart(this.props.sessionId, query);
+    console.log(results);
     return {
         ...bolt.extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
     };

@@ -1,4 +1,4 @@
-export const cls = classNames => classNames.join(' ');
+export const cls = (...classNames) => classNames.join(' ');
 
 export const deepEquals = (x, y) => {
     if (x && y && typeof x === "object" && typeof y === "object") {

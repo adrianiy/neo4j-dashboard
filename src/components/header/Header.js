@@ -16,7 +16,7 @@ function Header(props) {
     return (
         <RowLayout dist="middle spaced" className={styles.header}>
             <RowLayout dist="middle spaced" className={styles.name}>
-                <em className={cls([styles.icon, "material-icons"])}>share</em>
+                <em className={cls(styles.icon, "material-icons")}>share</em>
                 <span>Neo4J Dashboard</span>
             </RowLayout>
             <RowLayout dist="middle spaced" className={styles.userContainer}>
