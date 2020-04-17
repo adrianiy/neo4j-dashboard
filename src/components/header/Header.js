@@ -14,7 +14,7 @@ function Header(props) {
     };
 
     return (
-        <RowLayout dist="middle spaced" className={styles.header}>
+        <RowLayout dist="middle spaced" className={cls(styles.header, 'animated', 'fadeInDown')}>
             <RowLayout dist="middle spaced" className={styles.name}>
                 <em className={cls(styles.icon, "material-icons")}>share</em>
                 <span>Neo4J Dashboard</span>
