@@ -44,13 +44,13 @@ export class Visualization extends Component {
   }
 
   populateDataToStateFromProps(props) {
-    console.log(props.result)
     const {
       nodes,
       relationships
     } = bolt.extractNodesAndRelationshipsFromRecordsForOldVis(
       props.result.records
     )
+    console.log(nodes, relationships)
     this.setState({
       nodes,
       relationships,

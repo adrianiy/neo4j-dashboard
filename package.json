@@ -60,7 +60,7 @@
   },
   "config": {
     "commit-message-validator": {
-      "pattern": "^\\#[\\d]+\\s.*$",
+      "pattern": "^\\[\\#[\\d]+\\]\\s.*$",
       "errorMessage": "Invalid commit message. Valid example: #8 Fix typo"
     }
   },

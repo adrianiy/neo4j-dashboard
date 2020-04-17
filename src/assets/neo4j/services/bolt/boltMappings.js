@@ -176,6 +176,7 @@ export function extractNodesAndRelationshipsFromRecords(
       extractNodesAndRelationshipsFromPath(item, rawNodes, rawRels, types)
     )
   })
+  console.log(rawRels)
   return { nodes: rawNodes, relationships: rawRels }
 }
 
@@ -212,6 +213,7 @@ export function extractNodesAndRelationshipsFromRecordsForOldVis(
   })
 
   const nodes = rawNodes.map(item => {
+      console.log(item);
     return {
       id: item.identity.toString(),
       labels: item.labels,
@@ -276,6 +278,7 @@ const extractNodesAndRelationshipsFromPath = (item, rawNodes, rawRels) => {
       if (segment.end) rawNodes.push(segment.end)
       if (segment.relationship) rawRels.push(segment.relationship)
     })
+    console.log(rawRels)
   })
 }
 
