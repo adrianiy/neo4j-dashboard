@@ -4,3 +4,7 @@
     cursor: text;
     border-radius: 4px;
 }
+
+ul .CodeMirror-lines {
+    cursor: pointer;
+}
