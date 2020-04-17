@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+[#11] (https://github.com/AdrianInsua/neo4j-dashboard/issues/11) Fix graph properties parsing.
+
 ## [1.0.0] - 2020-04-17
 
 ### Added
+
 [#7] (https://github.com/AdrianInsua/neo4j-dashboard/issues/7) use d3 approximation and connect to neo4j-service.
 
 ## [0.1.0] - 2020-04-14
