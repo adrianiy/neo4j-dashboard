@@ -33,20 +33,23 @@ const nodeOutline = new Renderer({
     });
 
     circles.attr({
-      r(node) {
-        return node.radius
-      },
-      fill(node) {
-          if (node.propertyMap.mcc) {
-            return `url(#image${node.id})`
-          } else {
-            return "#f58f46";
-          }
-      },
-      'stroke-width'(node) {
-        return viz.style.forNode(node).get('border-width')
-      }
-    })
+        r(node) {
+            return node.radius;
+        },
+        fill(node) {
+            if (viz.style.forNode(node).get('caption') === '{image}') {
+                return `url(#image${node.id})`
+            } else {
+                return viz.style.forNode(node).get("color");
+            }
+        },
+        stroke(node) {
+            return viz.style.forNode(node).get("border-color");
+        },
+        "stroke-width"(node) {
+            return viz.style.forNode(node).get("border-width");
+        },
+    });
 
     return circles.exit().remove()
   },
@@ -75,15 +78,9 @@ const nodeImage = new Renderer({
                     return node.radius * 2 + 10;
                 },
                 "xlink:href"(node) {
-                    if (node.propertyMap.mcc) {
-                        const mcc = node.propertyMap.mcc;
-                        const model = mcc.slice(1, 5);
-                        const quality = mcc.slice(5, 8);
-                        const color = mcc.slice(8, 11);
-                        const camp = mcc.slice(12, 13);
-                        const year = mcc.slice(13, 17);
-                        return `https://static.zara.net/photos/${year}/${camp}/0/1/p/${model}/${quality}/${color}/2/w/400/${model}${quality}${color}_1_1_1.jpg?ts=1583248723772`;
-                    }
+                    const template = viz.style.forNode(node).get("caption");
+                    const captionText = viz.style.interpolate(template, node);
+                    return captionText
                 },
             });
 
@@ -104,7 +101,7 @@ const nodeCaption = new Renderer({
       .attr({ 'pointer-events': 'none' })
 
     text
-      .text(line => line.text)
+      .text(line => viz.style.forNode(line.node).get('caption') === '{image}' ? '' : line.text)
       .attr('y', line => line.baseline)
       .attr('font-size', line => viz.style.forNode(line.node).get('font-size'))
       .attr({

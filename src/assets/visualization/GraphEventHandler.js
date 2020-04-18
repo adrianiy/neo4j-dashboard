@@ -81,6 +81,7 @@ export class GraphEventHandler {
     d.fixed = true
     if (!d.selected) {
       this.selectItem(d)
+      console.log(d, this.onItemSelected)
       this.onItemSelected({
         type: 'node',
         item: { id: d.id, labels: d.labels, properties: d.propertyList }

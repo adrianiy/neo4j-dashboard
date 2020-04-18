@@ -95,9 +95,6 @@
     background:#464e5d;
     z-index: 99;
 }
-.list span {
-    font-size: 12px;
-}
 .list li {
     border-radius: 4px;
     list-style: none;

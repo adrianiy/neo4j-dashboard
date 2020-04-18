@@ -54,9 +54,7 @@ export class GraphComponent extends Component {
     }
 
     getVisualAreaHeight() {
-        return this.props.frameHeight && this.props.fullscreen
-            ? this.props.frameHeight - (dim.frameStatusbarHeight + dim.frameTitlebarHeight * 2)
-            : this.props.frameHeight - dim.frameStatusbarHeight || this.svgElement.parentNode.offsetHeight;
+        return this.props.frameHeight - dim.frameStatusbarHeight || this.svgElement.parentNode.offsetHeight;
     }
 
     componentDidMount() {
@@ -104,7 +102,7 @@ export class GraphComponent extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (prevProps.styleVersion !== this.props.styleVersion) {
+        if (prevProps.graphStyle.getVersion() !== this.props.graphStyle.getVersion()) {
             this.graphView.update();
         }
         if (this.props.fullscreen !== prevProps.fullscreen || this.props.frameHeight !== prevProps.frameHeight) {
