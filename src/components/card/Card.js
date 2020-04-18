@@ -5,18 +5,18 @@ import { getChart } from '../../service/neo.service';
 import styles from './Card.module.css';
 import { ColumnLayout, RowLayout } from '../../global/layouts';
 import Chart from '../chart/Chart';
+import Summary from './Summary';
 
 function Card(props) {
     const [results, setResults] = useState(null);
-    const [updated, setUpdated] = useState(null);
     const [item, setItem] = useState(null);
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState(null);
+    const [stats, setStats] = useState(null);
+    const [graphStyle, setGraphStyle] = useState(null);
 
     const fecthData = useCallback(async () => {
         const results = await getChart(props.sessionId, props.query);
-        console.log(results);
         setResults(results);
-        setUpdated(new Date().getTime());
     }, [props])
 
     useEffect(() => {
@@ -25,23 +25,23 @@ function Card(props) {
     }, [props, fecthData])
 
     const itemHover = (_item) => {
-        if (!selected) {
+        if (['node', 'relationship'].includes(_item.type)) {
             setItem(_item);
+        } else if (_item.type === 'canvas') {
+            setItem(null);
         }
     }
 
-    const itemSelected = (_item) => {
-        if (!selected || item !== _item) {
-            setSelected(true);
-            setItem(item);
-            console.log(item);
-        } else {
-            setSelected(false);
-        }
+    const itemSelected = (item) => {
+        setSelected(item)
     }
 
     const setSummary = (stats) => {
-        console.log(stats);
+        setStats(stats);
+    }
+
+    const graphStyleCallback = (style) => {
+        setGraphStyle(style);
     }
 
     return results ? (
@@ -54,6 +54,11 @@ function Card(props) {
             <RowLayout className={styles.cardBody}>
                 <ColumnLayout className={styles.summary}>
                     <h3>Summary</h3>
+                    <Summary
+                        summary={stats}
+                        item={item || selected}
+                        graphStyle={graphStyle}
+                    ></Summary>
                 </ColumnLayout>
                 <Chart
                     style={{width: '100%'}}
@@ -63,8 +68,9 @@ function Card(props) {
                     itemHovered={itemHover}
                     itemSelected={itemSelected}
                     setSummary={setSummary}
+                    graphStyleData={graphStyle}
+                    graphStyleCallback={graphStyleCallback}
                     autoComplete={false}
-                    updated={updated}
                 />
             </RowLayout>
         </ColumnLayout>

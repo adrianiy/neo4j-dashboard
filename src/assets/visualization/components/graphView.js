@@ -50,14 +50,6 @@ export default class graphView {
     return this
   }
 
-  grass(value) {
-    if (!arguments.length) {
-      return this.style.toSheet()
-    }
-    this.style.importGrass(value)
-    return this
-  }
-
   update() {
     this.viz.update()
     return this

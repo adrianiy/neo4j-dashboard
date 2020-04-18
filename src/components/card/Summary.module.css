@@ -1,5 +1,36 @@
+.summary {
+    margin-bottom: 8px;
+    font-weight: lighter;
+    overflow: scroll;
+    max-width: 100%;
+}
+.summary span{
+    margin-right: 8px;
+}
 .circle {
     width: 5px;
     height: 5px;
     border-radius: 100%;
+}
+
+.properties {
+    padding-top: 24px;
+    margin-top: 24px;
+    border-top: 1px solid var(--bg-color);
+    overflow: hidden;
+}
+.chip {
+    padding: 4px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+.property {
+    max-width: 100%;
+    margin-bottom: 8px;
+}
+.property span {
+    font-weight: lighter;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
