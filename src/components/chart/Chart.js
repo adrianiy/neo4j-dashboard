@@ -8,13 +8,6 @@ import neo4j from 'neo4j-driver';
 
 import neoGraphStyle from './graphStyle';
 
-const updateGraphStyleData = (graphStyleData) => {
-    return {
-        type: "grass/UPDATE_GRAPH_STYLE_DATA",
-        styleData: graphStyleData,
-    };
-};
-
 const deduplicateNodes = (nodes) => {
     return nodes.reduce(
         (all, curr) => {
@@ -34,7 +27,6 @@ function Chart (props) {
     const [nodes, setNodes] = useState([]);
     const [relationships, setRelationships] = useState([]);
     const [graphStyle, setGraphStyle] = useState(neoGraphStyle());
-    const [styleVersion, setStyleVersion] = useState(0);
     let _graph;
     let _autoCompleteCallback;
 
@@ -68,17 +60,17 @@ function Chart (props) {
 
     const checkGraphStyle = useCallback(() => {
         const _graphStyle = graphStyle.toSheet();
-        if (props.graphStyleData) {
+        if (props.graphStyleData && props.graphStyleData.getVersion() !== graphStyle.getVersion()) {
             const rebasedStyle = deepmerge(_graphStyle, props.graphStyleData);
             graphStyle.loadRules(rebasedStyle);
+            graphStyle.update();
             setGraphStyle(graphStyle);
-            setStyleVersion(styleVersion + 1);
         } else {
             graphStyle.resetToDefault();
             setGraphStyle(graphStyle);
-            updateGraphStyleData(graphStyle.toSheet());
+            props.graphStyleCallback(graphStyle);
         }
-    }, [graphStyle, props.graphStyleData, styleVersion]);
+    }, [graphStyle, props]);
 
     useEffect(() => {
         checkGraphStyle();
@@ -110,7 +102,6 @@ function Chart (props) {
                     LIMIT ${props.maxNeighbours -
                         currentNeighbourIds.length}`
         const results = await getChart(props.sessionId, query);
-        console.log(results);
         const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
         const resultGraph = extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
         await autoCompleteRelationships(_graph._nodes, resultGraph.nodes);
@@ -124,7 +115,6 @@ function Chart (props) {
         const query =
             'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
         const results = await getChart(props.sessionId, query);
-        console.log(results);
         return {
             ...extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
         };
@@ -158,7 +148,6 @@ function Chart (props) {
 
     const onGraphModelChange = (stats) => {
         props.setSummary(stats);
-        updateGraphStyleData(graphStyle.toSheet());
     }
 
     return !nodes.length ? null : (
@@ -171,7 +160,6 @@ function Chart (props) {
             onItemMouseOver={props.itemHovered}
             onItemSelect={props.itemSelected}
             graphStyle={graphStyle}
-            styleVersion={styleVersion} // cheap way for child to check style updates
             onGraphModelChange={onGraphModelChange}
             assignVisElement={props.assignVisElement}
             getAutoCompleteCallback={props.getAutoCompleteCallback}

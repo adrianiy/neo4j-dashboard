@@ -52,10 +52,23 @@ export const getChart = async (sessionId, query) => {
     }
 };
 
+const getPhoto = mcc => {
+    const model = mcc.slice(1, 5);
+    const quality = mcc.slice(5, 8);
+    const color = mcc.slice(8, 11);
+    const camp = mcc.slice(12, 13);
+    const year = mcc.slice(13, 17);
+    return `https://static.zara.net/photos/${year}/${camp}/0/1/p/${model}/${quality}/${color}/2/w/400/${
+        model}${quality}${color}_1_1_1.jpg?ts=1583248723772`;
+}
+
 const parseProperties = props => {
     Object.keys(props).forEach(key => {
         if (props[key] instanceof Object) {
             props[key] = createInteger(props[key])
+        }
+        if (key === 'mcc' && !Object.keys(props).includes('image')) {
+            props['image'] = getPhoto(props[key])
         }
     })
     return props

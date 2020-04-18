@@ -196,6 +196,7 @@ export default function neoGraphStyle() {
       'text-color-internal': '#FFFFFF'
     }
   ]
+
   const Selector = (function() {
     function Selector(tag1, classes1) {
       this.tag = tag1
@@ -265,6 +266,7 @@ export default function neoGraphStyle() {
   const GraphStyle = (function() {
     function GraphStyle() {
       this.rules = []
+      this.version = 0
       try {
         this.loadRules()
       } catch (_error) {
@@ -329,6 +331,7 @@ export default function neoGraphStyle() {
         }
       }
       const captionPrioOrder = [
+        /^image$/i,
         /^name$/i,
         /^title$/i,
         /^label$/i,
@@ -354,6 +357,14 @@ export default function neoGraphStyle() {
       return {
         caption: defaultCaption
       }
+    }
+
+    GraphStyle.prototype.update = function () {
+        this.version = this.ersion + 1;
+    }
+
+    GraphStyle.prototype.getVersion = function () {
+        return this.version
     }
 
     GraphStyle.prototype.calculateStyle = function(selector) {
