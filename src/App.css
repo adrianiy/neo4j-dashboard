@@ -7,6 +7,25 @@
   align-items: center;
   justify-content: center;
 }
+.AppLoading {
+    font-size: 140px;
+    color: var(--highlight-color);
+    animation: loading infinite 1500ms;
+}
+@keyframes loading {
+    0% {
+        opacity: .5
+    }
+    50% {
+        opacity: .9
+    }
+    100% {
+        opacity: .5
+    }
+}
+.AppContainer {
+    width: 100%;
+}
 h3 {
     font-weight: 600;
     margin-top: 0;
