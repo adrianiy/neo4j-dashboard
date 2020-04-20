@@ -18,7 +18,7 @@ export const doLogin = async (uri, user, password) => {
 };
 
 export const doLogout = async (sessionId) => {
-    const result = await fetch(`${SERVICE_URL}/logout/${sessionId}`, { method: "DELETE" });
+    const result = await fetch(`${SERVICE_URL}/logout/${sessionId}`);
     if (result.ok) {
         return await result.json();
     } else {
