@@ -4,8 +4,8 @@ import { getChart } from '../../service/neo.service';
 
 import styles from './Card.module.css';
 import { ColumnLayout, RowLayout } from '../../global/layouts';
-import Chart from '../chart/Chart';
 import Summary from './Summary';
+import Chart from '../../global/components/chart/Chart';
 
 function Card(props) {
     const [results, setResults] = useState(null);
