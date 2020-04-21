@@ -8,7 +8,7 @@
   justify-content: center;
 }
 .AppLoading {
-    font-size: 140px;
+    font-size: 140px!important;
     color: var(--highlight-color);
     animation: loading infinite 1500ms;
 }

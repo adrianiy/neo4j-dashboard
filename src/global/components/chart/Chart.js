@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GraphComponent } from '../../assets/visualization/Graph';
-import { getChart } from '../../service/neo.service';
+import { GraphComponent } from './../../../assets/visualization/Graph';
+import { getChart } from './../../../service/neo.service';
 
 import { extractNodesAndRelationshipsFromRecordsForOldVis } from './utils/graph-utils';
 import deepmerge from 'deepmerge';

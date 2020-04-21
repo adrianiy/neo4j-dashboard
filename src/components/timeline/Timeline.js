@@ -1,111 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../card/Card';
-import styles from './Timeline.module.css';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
-import {Controlled as CodeMirror} from 'react-codemirror2'
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
-import 'codemirror/mode/cypher/cypher';
-import './codemirror.css';
-import { cls } from '../../global/utils';
+
+import styles from './Timeline.module.css';
 
 function Timeline(props) {
-    const [query, setQuery] = useState('');
     const [queries, setQueries] = useState([])
-    const [storedQueries, setStoredQueries] = useState([]);
-    const [showStored, setShowStored] = useState(false);
 
     useEffect(() => {
-        const queries = localStorage.getItem("neo4jDashboard.queries");
-        if (queries) {
-            setStoredQueries(JSON.parse(queries));
+        if (props.queries !== queries) {
+            setQueries(props.queries);
         }
-    }, [props])
-
-    const handlePlay = () => {
-        const stored = [query].concat(storedQueries.filter(q => q !== query)).slice(0, 5);
-        setQueries([query].concat(queries.filter((q) => q !== query)));
-        setStoredQueries(stored);
-        setQuery('')
-        localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
-    }
-
-    const showStoredQueries = () => {
-        setShowStored(!showStored);
-    }
-
-    const selectQuery = (query) => {
-        setQuery(query)
-        setShowStored(false)
-    }
+    }, [props, queries]);
 
     const deleteQuery = (query) => {
-        setQueries(queries.filter(q => q !== query));
-    }
+        props.deleteQuery(query);
+    };
 
     return (
-        <ColumnLayout dist="spaced" className={cls(styles.timelineContainer, 'animated', 'fadeInUp')}>
-            <div className={styles.overflowScroll}></div>
-            <RowLayout dist="middle" className={styles.inputContainer}>
-                <CodeMirror
-                    className={styles.input}
-                    value={query}
-                    options={{
-                        mode: "cypher",
-                        theme: "material",
-                        lineNumbers: false,
-                        lineWrapping: true,
-                    }}
-                    onBeforeChange={(editor, data, value) => {
-                        setQuery(value);
-                    }}
-                />
-                <em className="material-icons" onClick={handlePlay}>
-                    play_arrow
-                </em>
-                <em className={
-                    cls('material-icons', showStored ? styles.activeIcon : '')
-                } onClick={showStoredQueries}>
-                    history
-                </em>
-            </RowLayout>
-            <div className={cls(styles.list, showStored ? styles.listActive : '')}>
-                <div className={styles.listOverflow}></div>
-                <span className={styles.listTitle}>Últimas consultas</span>
-                <ul>
-                    {storedQueries.map((q, i) => (
-                        <li key={i} onClick={() => selectQuery(q)}>
-                            <CodeMirror
-                                value={q}
-                                options={{
-                                    mode: "cypher",
-                                    theme: "material",
-                                    lineNumbers: false,
-                                    lineWrapping: true,
-                                }}
-                            />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <ColumnLayout className={styles.chartContainer}>
-                {queries.length ? (
-                    queries.map((q, idx) => (
-                        <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
-                            <Card
-                                sessionId={props.sessionId}
-                                query={q}
-                                deleteQuery={deleteQuery}
-                                restoreQuery={selectQuery}
-                            />
-                        </RowLayout>
-                    ))
-                ) : (
-                    <RowLayout dist="center middle" className={styles.chartWrapper}>
-                        Type a query and press RUN!
+        <ColumnLayout className={styles.chartContainer}>
+            {queries.length ? (
+                queries.map((q, idx) => (
+                    <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
+                        <Card
+                            sessionId={props.sessionId}
+                            query={q}
+                            deleteQuery={deleteQuery}
+                            restoreQuery={props.selectQuery}
+                        />
                     </RowLayout>
-                )}
-            </ColumnLayout>
+                ))
+            ) : (
+                <RowLayout dist="center middle" className={styles.noQueries}>
+                    Type a query and press RUN!
+                </RowLayout>
+            )}
         </ColumnLayout>
     );
 };

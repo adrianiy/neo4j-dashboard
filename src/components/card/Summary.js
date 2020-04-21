@@ -57,13 +57,13 @@ function Summary (props) {
                 color: styleForItem.get('text-color-internal')
             }
             return (
-                <ColumnLayout dist="center" className={style.properties}>
+                <ColumnLayout dist="left" className={style.properties}>
                     <span className={style.chip} style={chipStyle}>{
                         item.type === 'node' ? item.item.labels.join(' ') : item.item.type
                     }</span>
                     {
                         item.item.properties.map((prop, idx) => (
-                            <ColumnLayout dist="middle center spaced" className={style.property} key={idx}>
+                            <ColumnLayout dist="middle left spaced" className={style.property} key={idx}>
                                 <strong>{ prop.key }</strong>
                                 <span title={prop.value}>{ prop.value }</span>
                             </ColumnLayout>
@@ -76,7 +76,7 @@ function Summary (props) {
     }
 
     return (
-        <ColumnLayout>
+        <ColumnLayout dist="left">
             { renderLabels(props.summary) }
             { renderRelations(props.summary) }
             { renderProperties(props.item) }

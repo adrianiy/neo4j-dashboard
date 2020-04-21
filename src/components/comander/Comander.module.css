@@ -1,0 +1,92 @@
+.comanderContainer {
+    height: calc(100vh - 85px);
+    margin-top: 85px;
+    width: 100%;
+    position: relative;
+}
+.input {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    padding: 12px;
+    width: calc(100% - 142px);
+}
+.input .CodeMirror {
+    height: 20px;
+}
+.inputContainer {
+    background: var(--p-color);
+    margin: 0 20%;
+    box-shadow: 0 0 8px 4px #00000024;
+}
+.inputContainer em {
+    font-size: 35px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+.inputContainer em:hover  {
+    color: var(--highlight-color);
+}
+.activeIcon  {
+    color: var(--highlight-color);
+}
+.list {
+    border-radius: 4px;
+    overflow: hidden;
+    background: rgb(70, 78, 93);
+    margin: 0 20%;
+    margin-top: -2px;
+    padding: 0;
+    box-shadow: -1px 4px 20px 0px #00000040;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #5a6070;
+    max-height: 0px;
+    position: relative;
+    transition: all ease-in-out 200ms;
+}
+.listActive {
+    max-height: 200px;
+}
+.list ul {
+    max-height: calc(100% - 40px);
+    overflow: scroll;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+}
+.listTitle {
+    padding: 0 24px;
+    line-height: 40px;
+    display: block;
+}
+.listOverflow {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 14px;
+    background:#464e5d;
+    z-index: 2;
+}
+.list li {
+    list-style: none;
+    cursor: pointer;
+    margin: 16px 0;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: all ease-in-out 300ms;
+}
+.list li:hover {
+    background: #5f6a7f;
+}
+.suggestionActive {
+    background: #5f6a7f;
+}
+.list li:first-of-type {
+    margin-top: 0;
+}
+.list li .CodeMirror-lines {
+    cursor: inherit;
+}

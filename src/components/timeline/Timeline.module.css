@@ -4,6 +4,17 @@
     width: 100%;
     position: relative;
 }
+.noQueries {
+    min-height: 400px;
+    margin: 0 20%;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    background: var(--p-color);
+    color: rgba(255,255,255,.6);
+    font-weight: bold;
+    flex: 1;
+    box-shadow: 0 0 8px 4px #00000024;
+}
 .overflowScroll {
     background: var(--bg-color);
     height: 100%;
@@ -13,32 +24,7 @@
     width: 20px;
     z-index: 99;
 }
-.input {
-    outline: none;
-    border: none;
-    font-size: 14px;
-    padding: 12px;
-    width: calc(100% - 142px);
-}
-.input .CodeMirror {
-    height: 20px;
-}
-.inputContainer {
-    background: var(--p-color);
-    margin: 0 20%;
-    box-shadow: 0 0 8px 4px #00000024;
-}
-.inputContainer em {
-    font-size: 35px;
-    margin: 0 8px;
-    cursor: pointer;
-}
-.inputContainer em:hover  {
-    color: var(--highlight-color);
-}
-.activeIcon  {
-    color: var(--highlight-color);
-}
+
 .chartContainer {
     flex: 1;
     padding: 0;
@@ -46,65 +32,8 @@
 }
 .chartWrapper {
     min-height: 400px;
-    margin: 0 20%;
     margin-bottom: 48px;
-    background: var(--p-color);
-    color: rgba(255,255,255,.6);
-    font-weight: bold;
-    flex: 1;
-    box-shadow: 0 0 8px 4px #00000024;
 }
 .chartWrapper:first-of-type {
     margin-top: 48px;
-}
-.list {
-    border-radius: 4px;
-    overflow: hidden;
-    background: rgb(70, 78, 93);
-    margin: 0 20%;
-    margin-top: -2px;
-    padding: 0;
-    box-shadow: -1px 4px 20px 0px #00000040;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border: 1px solid #5a6070;
-    height: 0px;
-    position: relative;
-    transition: all ease-in-out 200ms;
-}
-.listActive {
-    height: 200px;
-}
-.list ul {
-    max-height: calc(100% - 40px);
-    overflow: scroll;
-    margin: 0;
-    padding: 0 24px;
-}
-.listTitle {
-    padding: 0 24px;
-    line-height: 40px;
-    display: block;
-}
-.listOverflow {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 14px;
-    background:#464e5d;
-    z-index: 99;
-}
-.list li {
-    border-radius: 4px;
-    list-style: none;
-    cursor: pointer;
-    margin: 16px 0;
-    overflow: scroll;
-}
-.list li:first-of-type {
-    margin-top: 0;
-}
-.list li .CodeMirror-lines {
-    cursor: inherit;
 }

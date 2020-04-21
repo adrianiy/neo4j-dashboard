@@ -48,7 +48,7 @@ export const getChart = async (sessionId, query) => {
         });
         return parsed;
     } else {
-        return null;
+        throw (await result.json()).message;
     }
 };
 

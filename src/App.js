@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Login from './components/login/Login';
-import Timeline from './components/timeline/Timeline';
+import Comander from './components/comander/Comander';
 import Header from './components/header/Header';
 import { doLogout } from './service/neo.service';
 import { useCookies } from 'react-cookie';
@@ -14,7 +14,6 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     const loginHandler = useCallback((response) => {
-        console.log('entra', response)
         setCookie("neo4jDash.sess", JSON.stringify(response));
         setSessionId(response.sessionId);
         setUser(response.user);
@@ -22,7 +21,6 @@ function App() {
 
     useEffect(() => {
         if (cookies["neo4jDash.sess"] && cookies["neo4jDash.sess"].sessionId && loading) {
-            console.log(cookies["neo4jDash.sess"]);
             loginHandler(cookies['neo4jDash.sess'])
         }
         setLoading(false);
@@ -52,7 +50,7 @@ function App() {
                 return (
                     <div className="AppContainer">
                         <Header user={user} callback={ logoutHandler }></Header>
-                        <Timeline sessionId={sessionId}></Timeline>
+                        <Comander sessionId={sessionId}></Comander>
                     </div>
                 )
             }
