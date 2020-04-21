@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.3.0...v1.4.0) (2020-04-21)
+
+
+### Bug Fixes
+
+* card animations are smoother now ([#34](https://github.com/AdrianInsua/neo4j-dashboard/issues/34)) ([c28493e](https://github.com/AdrianInsua/neo4j-dashboard/commit/c28493e20994b3edc215e1829dfb729a13e9102d)), closes [#30](https://github.com/AdrianInsua/neo4j-dashboard/issues/30) [#31](https://github.com/AdrianInsua/neo4j-dashboard/issues/31) [#25](https://github.com/AdrianInsua/neo4j-dashboard/issues/25)
+
+
+### Features
+
+* add theme changer in header ([#35](https://github.com/AdrianInsua/neo4j-dashboard/issues/35)) ([19d4f48](https://github.com/AdrianInsua/neo4j-dashboard/commit/19d4f48a2fd7552151879372195c7bd1ae466491))
+
 # [1.3.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.2.0...v1.3.0) (2020-04-21)
 
 
