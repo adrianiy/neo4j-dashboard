@@ -42,6 +42,7 @@ function Card(props) {
     }
 
     const toggleFullScreen = () => {
+        props.toggleFullScreen(!fullscreen);
         setFullscreen(!fullscreen);
     };
 
@@ -68,6 +69,7 @@ function Card(props) {
     return (
         <ColumnLayout
             className={cls(styles.card, expanded ? styles.expanded : "", fullscreen ? styles.fullscreen : "")}
+            style={{ marginTop: fullscreen ? 85 - props.idx * 500 : 0 }}
         >
             <header className="row middle spaced">
                 <span className={styles.cardTitle}>QUERY</span>
@@ -75,13 +77,21 @@ function Card(props) {
                     {props.query}
                 </div>
                 <RowLayout dist="middle right">
-                    <em className="material-icons" onClick={toggleFullScreen}>
+                    <em
+                        className="material-icons"
+                        title={fullscreen ? "minimize" : "maximize"}
+                        onClick={toggleFullScreen}
+                    >
                         {fullscreen ? "fullscreen_exit" : "fullscreen"}
                     </em>
-                    <em className={cls(styles.expand, "material-icons")} onClick={toggleExpand}>
+                    <em
+                        className={cls(styles.expand, "material-icons")}
+                        title={expanded ? "contract" : "expand"}
+                        onClick={toggleExpand}
+                    >
                         {expanded ? "unfold_less" : "unfold_more"}
                     </em>
-                    <em className="material-icons" onClick={() => props.deleteQuery(props.query)}>
+                    <em className="material-icons" title="close" onClick={() => props.deleteQuery(props.query)}>
                         close
                     </em>
                 </RowLayout>
@@ -106,7 +116,7 @@ function Card(props) {
                     />
                 </RowLayout>
             ) : (
-                <ColumnLayout dist="center middle" className={cls(styles.card, styles.loading)}>
+                <ColumnLayout dist="center middle" className={cls(styles.cardBody, styles.loading)}>
                     {error ? error : <em className={cls("AppLoading", "material-icons")}>share</em>}
                 </ColumnLayout>
             )}

@@ -5,15 +5,14 @@
     position: relative;
 }
 .noQueries {
-    min-height: 400px;
+    min-height: 450px;
     margin: 0 20%;
     margin-top: 48px;
     margin-bottom: 48px;
     background: var(--p-color);
-    color: rgba(255,255,255,.6);
+    color: var(--text-color);
     font-weight: bold;
-    flex: 1;
-    box-shadow: 0 0 8px 4px #00000024;
+    box-shadow: var(--box-decoration--shadow);
 }
 .overflowScroll {
     background: var(--bg-color);
@@ -31,7 +30,7 @@
     overflow: scroll;
 }
 .chartWrapper {
-    min-height: 400px;
+    min-height: 450px;
     margin-bottom: 48px;
 }
 .chartWrapper:first-of-type {
