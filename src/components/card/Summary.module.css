@@ -1,8 +1,7 @@
 .summary {
     margin-bottom: 8px;
     font-weight: lighter;
-    overflow: scroll;
-    max-width: 100%;
+    overflow-y: scroll;
 }
 .summary span{
     margin-right: 8px;
@@ -18,6 +17,7 @@
     margin-top: 24px;
     border-top: 1px solid var(--bg-color);
     overflow: hidden;
+    max-width: 100%;
 }
 .chip {
     padding: 4px;
