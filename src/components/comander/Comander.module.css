@@ -17,6 +17,7 @@
 .inputContainer {
     background: var(--p-color);
     margin: 0 20%;
+    /* transition: all linear 300ms; */
     box-shadow: 0 0 8px 4px #00000024;
 }
 .inputContainer em {
@@ -26,6 +27,9 @@
 }
 .inputContainer em:hover  {
     color: var(--highlight-color);
+}
+.fullscreen {
+    margin-top: -151px;
 }
 .activeIcon  {
     color: var(--highlight-color);
@@ -73,7 +77,7 @@
 .list li {
     list-style: none;
     cursor: pointer;
-    margin: 16px 0;
+    margin: 0;
     padding: 8px 24px;
     cursor: pointer;
     transition: all ease-in-out 300ms;

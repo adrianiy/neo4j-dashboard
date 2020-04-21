@@ -25,8 +25,10 @@ function Timeline(props) {
                         <Card
                             sessionId={props.sessionId}
                             query={q}
+                            idx={idx}
                             deleteQuery={deleteQuery}
                             restoreQuery={props.selectQuery}
+                            toggleFullScreen={props.toggleFullScreen}
                         />
                     </RowLayout>
                 ))
