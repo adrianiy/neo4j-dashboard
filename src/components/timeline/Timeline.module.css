@@ -10,9 +10,9 @@
     margin-top: 48px;
     margin-bottom: 48px;
     background: var(--p-color);
-    color: rgba(255,255,255,.6);
+    color: var(--text-color);
     font-weight: bold;
-    box-shadow: 0 0 8px 4px #00000024;
+    box-shadow: var(--box-decoration--shadow);
 }
 .overflowScroll {
     background: var(--bg-color);
