@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.2.0...v1.3.0) (2020-04-21)
+
+
+### Features
+
+* add autosuggest in login URIs ([#30](https://github.com/AdrianInsua/neo4j-dashboard/issues/30)) ([79bf0e6](https://github.com/AdrianInsua/neo4j-dashboard/commit/79bf0e68a8bad986fe0c13ec799a2dc5e96b1f33))
+* add resize options in cards and improve summary styles ([#31](https://github.com/AdrianInsua/neo4j-dashboard/issues/31)) ([20da53f](https://github.com/AdrianInsua/neo4j-dashboard/commit/20da53fc62a2ad35f993d75d5aa6ec514d612d22))
+* show graph objects details in a side bar ([#25](https://github.com/AdrianInsua/neo4j-dashboard/issues/25)) ([26f83c6](https://github.com/AdrianInsua/neo4j-dashboard/commit/26f83c6b817e5eac8ca14132a9df45cf10a9be64))
+
 # [1.2.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.1.0...v1.2.0) (2020-04-18)
 
 
