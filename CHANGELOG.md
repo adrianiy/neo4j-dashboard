@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* card animations are smoother now ([#34](https://github.com/AdrianInsua/neo4j-dashboard/issues/34)) ([c28493e](https://github.com/AdrianInsua/neo4j-dashboard/commit/c28493e20994b3edc215e1829dfb729a13e9102d)), closes [#30](https://github.com/AdrianInsua/neo4j-dashboard/issues/30) [#31](https://github.com/AdrianInsua/neo4j-dashboard/issues/31) [#25](https://github.com/AdrianInsua/neo4j-dashboard/issues/25)
+* card animations are smoother now ([#34](https://github.com/AdrianInsua/neo4j-dashboard/issues/34)) ([c28493e](https://github.com/AdrianInsua/neo4j-dashboard/commit/c28493e20994b3edc215e1829dfb729a13e9102d))
 
 
 ### Features
