@@ -82,7 +82,7 @@ function Comander(props) {
                     value={query}
                     options={{
                         mode: "cypher",
-                        theme: "material",
+                        theme: props.theme === 'dark' ? 'material' : 'default',
                         lineNumbers: false,
                         lineWrapping: true,
                     }}
@@ -111,7 +111,7 @@ function Comander(props) {
                                 value={q}
                                 options={{
                                     mode: "cypher",
-                                    theme: "material",
+                                    theme: props.theme === 'dark' ? 'material' : 'default',
                                     lineNumbers: false,
                                     lineWrapping: true,
                                 }}

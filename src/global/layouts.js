@@ -3,7 +3,7 @@ import { cls } from "./utils";
 
 export function RowLayout(props) {
     return (
-        <div className={cls( 'row', props.dist, props.className )} style={props.style}>
+        <div className={cls( 'row', props.dist, props.className )} style={props.style} onClick={props.onClick}>
             { props.children }
         </div>
     )
@@ -11,7 +11,7 @@ export function RowLayout(props) {
 
 export function ColumnLayout(props) {
     return (
-        <div className={cls( 'column', props.dist, props.className )} style={props.style}>
+        <div className={cls( 'column', props.dist, props.className )} style={props.style} onClick={props.onClick}>
             { props.children }
         </div>
     )

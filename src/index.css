@@ -8,9 +8,31 @@ body {
   font-size: 12px;
 }
 
-:root {
+:root .dark {
     --bg-color: #282c34;
-    --secondary-color: #424b5d;
-    --highlight-color: #f76d09;
     --p-color: rgb(90, 96, 112);
+    --secondary-color: #424b5d;
+    --third-color: rgb(70, 78, 93);
+    --highlight-color: #f76d09;
+    --highlight-secondary: #5f6a7f;
+    --text-color: white;
+
+    --theme-icon--light: #ffcb6b99;
+    --theme-icon--dark: rgb(90, 96, 112);
+
+    --box-decoration--shadow: 0 0 8px 4px #00000024;
+}
+:root .light {
+    --bg-color: rgb(210, 213, 218);
+    --p-color: rgb(239, 239, 244);
+    --secondary-color: #e3e5e8;
+    --third-color: rgb(239, 239, 244);
+    --highlight-color: #f76d09;
+    --highlight-secondary: #c8cdd7;
+    --text-color: rgba(0,0,0,.8);
+
+    --theme-icon--light: #f0a10f;
+    --theme-icon--dark: rgb(90, 96, 112);
+
+    --box-decoration--shadow: none;
 }
