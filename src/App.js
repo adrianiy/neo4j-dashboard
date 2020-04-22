@@ -15,7 +15,7 @@ function App() {
     const [theme, setTheme] = useState("dark");
 
     useEffect(() => {
-        if ((new Date()).getHours() > 20) {
+        if ((new Date()).getHours() >= 20) {
             setTheme('dark');
         } else {
             setTheme('light');
