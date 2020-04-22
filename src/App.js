@@ -14,6 +14,14 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState("dark");
 
+    useEffect(() => {
+        if ((new Date()).getHours() >= 20) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    }, []); // executes only on first component mount
+
     const loginHandler = useCallback((response) => {
         setCookie("neo4jDash.sess", JSON.stringify(response));
         setSessionId(response.sessionId);
