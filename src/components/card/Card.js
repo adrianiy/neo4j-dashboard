@@ -85,9 +85,9 @@ function Card(props) {
                         {fullscreen ? "fullscreen_exit" : "fullscreen"}
                     </em>
                     <em
-                        className={cls(styles.expand, "material-icons")}
+                        className={cls(styles.expand, "material-icons", fullscreen ? 'disabled' : '')}
                         title={expanded ? "contract" : "expand"}
-                        onClick={toggleExpand}
+                        onClick={fullscreen ? null : toggleExpand}
                     >
                         {expanded ? "unfold_less" : "unfold_more"}
                     </em>
@@ -98,7 +98,7 @@ function Card(props) {
             </header>
             {results ? (
                 <RowLayout className={styles.cardBody}>
-                    <ColumnLayout className={styles.summary}>
+                    <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : '')}>
                         <h3>Summary</h3>
                         <Summary summary={stats} item={item || selected} graphStyle={graphStyle}></Summary>
                     </ColumnLayout>

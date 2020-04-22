@@ -68,12 +68,13 @@
 }
 
 .summary {
-    background: var(--secondary-color);
-    border-right: 1px solid var(--bg-color);
     padding: 24px;
     width: 132px;
     overflow: scroll;
     transition: all ease-in-out 200ms;
+}
+.summaryWidder {
+    width: 200px;
 }
 .dragger {
     position: absolute;
