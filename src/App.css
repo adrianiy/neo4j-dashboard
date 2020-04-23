@@ -26,6 +26,13 @@
 .AppContainer {
     width: 100%;
 }
+.disabled {
+    opacity: .4;
+    cursor: default!important;
+}
+.disabled:hover {
+    color: var(--text-color)!important;
+}
 .theme-toggler {
     width: 28px;
     margin: 0 8px;
@@ -53,4 +60,5 @@
 h3 {
     font-weight: 600;
     margin-top: 0;
+    text-transform: uppercase;
 }
