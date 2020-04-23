@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Timeline from '../timeline/Timeline';
 import "codemirror/lib/codemirror.css";
@@ -8,9 +8,11 @@ import "./codemirror.css";
 
 import { cls, concatUniqueStrings } from '../../global/utils';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
-import { useEventListener } from "../../global/utils/hooks";
+import { useEventListener } from "../../global/utils/hooks/events";
 
 import styles from './Comander.module.css';
+import { ThemeContext } from '../../global/utils/hooks/theme';
+
 
 function Comander(props) {
     const [query, setQuery] = useState("");
@@ -19,6 +21,7 @@ function Comander(props) {
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
     const [fullscreen, setFullscreen] = useState(false);
     const storedQueries = useRef([]);
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         const queries = localStorage.getItem("neo4jDashboard.queries");
@@ -82,7 +85,7 @@ function Comander(props) {
                     value={query}
                     options={{
                         mode: "cypher",
-                        theme: props.theme === 'dark' ? 'material' : 'default',
+                        theme: theme.codemirror,
                         lineNumbers: false,
                         lineWrapping: true,
                     }}
@@ -111,7 +114,7 @@ function Comander(props) {
                                 value={q}
                                 options={{
                                     mode: "cypher",
-                                    theme: props.theme === 'dark' ? 'material' : 'default',
+                                    theme: theme.codemirror,
                                     lineNumbers: false,
                                     lineWrapping: true,
                                 }}
