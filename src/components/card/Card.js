@@ -7,6 +7,10 @@ import { ColumnLayout, RowLayout } from '../../global/layouts';
 import Chart from '../../global/components/chart/Chart';
 import { cls } from '../../global/utils';
 import styles from './Card.module.css';
+import neoGraphStyle from '../../global/components/chart/graphStyle';
+import deepmerge from 'deepmerge';
+
+const graphStyle = new neoGraphStyle();
 
 function Card(props) {
     const [results, setResults] = useState(null);
@@ -14,10 +18,19 @@ function Card(props) {
     const [item, setItem] = useState(null);
     const [selected, setSelected] = useState(null);
     const [stats, setStats] = useState(null);
-    const [graphStyle, setGraphStyle] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [fullscreen, setFullscreen] = useState(false);
+
+    const graphStyleData = useRef(null);
     const query = useRef('');
+
+    useEffect(() => {
+        const _graphStyle = graphStyle.toSheet();
+        const rebasedStyles = deepmerge(_graphStyle, { relationship: { 'text-color-internal': '#000' }});
+        graphStyle.loadRules(rebasedStyles);
+        graphStyle.update();
+        graphStyleData.current = graphStyle.toSheet();
+    }, [])
 
     const fecthData = useCallback(async () => {
         try {
@@ -63,7 +76,7 @@ function Card(props) {
     }
 
     const graphStyleCallback = (style) => {
-        setGraphStyle(style);
+        graphStyleData.current = style.toSheet();
     }
 
     return (
@@ -110,7 +123,7 @@ function Card(props) {
                         itemHovered={itemHover}
                         itemSelected={itemSelected}
                         setSummary={setSummary}
-                        graphStyleData={graphStyle}
+                        graphStyleData={graphStyleData.current}
                         graphStyleCallback={graphStyleCallback}
                         autoComplete={false}
                     />
