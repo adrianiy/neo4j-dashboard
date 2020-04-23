@@ -37,7 +37,7 @@ const nodeOutline = new Renderer({
             return node.radius;
         },
         fill(node) {
-            if (viz.style.forNode(node).get('caption') === '{image}') {
+            if (viz.style.forNode(node).getImage()) {
                 return `url(#image${node.id})`
             } else {
                 return viz.style.forNode(node).get("color");
@@ -58,6 +58,9 @@ const nodeOutline = new Renderer({
 
 const nodeImage = new Renderer({
     onGraphChange(selection, viz) {
+        if (!viz.style.shouldRenderImageCaption()) {
+            return;
+        }
         const image = selection.selectAll('img').data(node => [node])
 
         image
@@ -78,9 +81,7 @@ const nodeImage = new Renderer({
                     return node.radius * 2 + 10;
                 },
                 "xlink:href"(node) {
-                    const template = viz.style.forNode(node).get("caption");
-                    const captionText = viz.style.interpolate(template, node);
-                    return captionText
+                    return viz.style.forNode(node).getImage()
                 },
             });
 
@@ -101,7 +102,7 @@ const nodeCaption = new Renderer({
       .attr({ 'pointer-events': 'none' })
 
     text
-      .text(line => viz.style.forNode(line.node).get('caption') === '{image}' ? '' : line.text)
+      .text(line => viz.style.forNode(line.node).getImage() ? '' : line.text)
       .attr('y', line => line.baseline)
       .attr('font-size', line => viz.style.forNode(line.node).get('font-size'))
       .attr({
@@ -208,7 +209,7 @@ const relationshipType = new Renderer({
     texts
       .attr('font-size', rel => viz.style.forRelationship(rel).get('font-size'))
       .attr('fill', rel =>
-        'white'
+          viz.style.forRelationship(rel).get(`text-color-${rel.captionLayout}`)
       )
 
     return texts.exit().remove()
