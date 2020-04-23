@@ -1,26 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './App.css';
+import { useCookies } from 'react-cookie';
+
 import Login from './components/login/Login';
 import Comander from './components/comander/Comander';
 import Header from './components/header/Header';
+
 import { doLogout } from './service/neo.service';
-import { useCookies } from 'react-cookie';
+import { themes, manageAutoTheme, ThemeContext } from './global/utils/hooks/theme';
 import { cls } from './global/utils';
+
+import './App.css';
 
 function App() {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
     const [sessionId, setSessionId] = useState(null);
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true);
-    const [theme, setTheme] = useState("dark");
-
-    useEffect(() => {
-        if ((new Date()).getHours() >= 20) {
-            setTheme('dark');
-        } else {
-            setTheme('light');
-        }
-    }, []); // executes only on first component mount
+    const [theme, setTheme] = useState(() => manageAutoTheme('auto'));
 
     const loginHandler = useCallback((response) => {
         setCookie("neo4jDash.sess", JSON.stringify(response));
@@ -33,7 +29,7 @@ function App() {
             loginHandler(cookies['neo4jDash.sess'])
         }
         setLoading(false);
-    }, [cookies, loading, loginHandler]);
+    }, [cookies, loading, loginHandler, theme]);
 
     const logoutHandler = () => {
         logout();
@@ -47,10 +43,6 @@ function App() {
         }
     }
 
-    const setThemeCbk = theme => {
-        setTheme(theme);
-    }
-
     const render = () => {
         if (loading) {
             return <em className={cls('AppLoading', "material-icons")}>share</em>
@@ -62,17 +54,19 @@ function App() {
             } else {
                 return (
                     <div className="AppContainer">
-                        <Header user={user} callback={ logoutHandler } theme={theme} themeCallback={setThemeCbk}></Header>
-                        <Comander sessionId={sessionId} theme={theme}></Comander>
+                        <Header user={user} callback={ logoutHandler } themeCallback={setTheme}></Header>
+                        <Comander sessionId={sessionId}></Comander>
                     </div>
                 )
             }
         }
     }
 
-    return <div className={ cls('App', theme ) }>
-        { render() }
-    </div>
+    return <ThemeContext.Provider value={themes[theme]}>
+        <div className={cls('App', theme)}>
+            { render() }
+        </div>
+    </ThemeContext.Provider>
 }
 
 export default App;
