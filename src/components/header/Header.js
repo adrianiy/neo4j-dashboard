@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Header.module.css';
 import { RowLayout } from '../../global/layouts';
 import { cls } from '../../global/utils';
 import { useCookies } from 'react-cookie';
+import { ThemeContext } from '../../global/utils/hooks/theme';
+
 
 function Header(props) {
     // eslint-disable-next-line no-unused-vars
     const [_, __, removeCookie] = useCookies(["neo4jDash.sess"]);
+    const theme = useContext(ThemeContext);
 
     const doLogout = () => {
         removeCookie('neo4jDash.sess');
@@ -14,9 +17,8 @@ function Header(props) {
     };
 
     const handleClick = () => {
-        const newTheme = props.theme === 'dark' ? 'light' : 'dark';
-        console.log(newTheme)
-        props.themeCallback(newTheme);
+        const newTheme = theme.id === 'dark' ? 'light' : 'dark';
+        props.themeCallback(newTheme)
     }
 
     return (
@@ -29,7 +31,7 @@ function Header(props) {
                 <RowLayout dist="middle spaced" className={styles.themeChanger}>
                     <em className={cls("material-icons", styles.lightIcon)}>wb_sunny</em>
                     <RowLayout dist="middle"
-                        className={cls('theme-toggler', props.theme === 'dark' ? 'active' : '')}
+                        className={cls('theme-toggler', theme.id === 'dark' ? 'active' : '')}
                         onClick={handleClick}
                     >
                         <div className='theme-toggler__circle'></div>
