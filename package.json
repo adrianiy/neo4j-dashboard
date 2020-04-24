@@ -51,8 +51,7 @@
   },
   "lint-staged": {
     "*.{js, json, ts}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "browserslist": {
