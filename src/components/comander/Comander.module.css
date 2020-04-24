@@ -17,7 +17,8 @@
 .inputContainer {
     background: var(--p-color);
     margin: 0 20%;
-    box-shadow: 0 0 8px 4px #00000024;
+    /* transition: all linear 300ms; */
+    box-shadow: var(--box-decoration--shadow);
 }
 .inputContainer em {
     font-size: 35px;
@@ -27,20 +28,22 @@
 .inputContainer em:hover  {
     color: var(--highlight-color);
 }
+.fullscreen {
+    margin-top: -151px;
+}
 .activeIcon  {
     color: var(--highlight-color);
 }
 .list {
     border-radius: 4px;
     overflow: hidden;
-    background: rgb(70, 78, 93);
+    background: var(--third-color);
     margin: 0 20%;
     margin-top: -2px;
     padding: 0;
-    box-shadow: -1px 4px 20px 0px #00000040;
+    box-shadow: var(--box-decoration--shadow);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border: 1px solid #5a6070;
     max-height: 0px;
     position: relative;
     transition: all ease-in-out 200ms;
@@ -67,22 +70,22 @@
     top: 0;
     height: 100%;
     width: 14px;
-    background:#464e5d;
+    background:var(--third-color);
     z-index: 2;
 }
 .list li {
     list-style: none;
     cursor: pointer;
-    margin: 16px 0;
+    margin: 0;
     padding: 8px 24px;
     cursor: pointer;
     transition: all ease-in-out 300ms;
 }
 .list li:hover {
-    background: #5f6a7f;
+    background: var(--highlight-secondary);
 }
 .suggestionActive {
-    background: #5f6a7f;
+    background: var(--hightlight--secondary);
 }
 .list li:first-of-type {
     margin-top: 0;

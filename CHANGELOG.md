@@ -1,3 +1,29 @@
+# [1.5.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.4.0...v1.5.0) (2020-04-23)
+
+
+### Bug Fixes
+
+* improve graph rendering performance ([4fc9cc3](https://github.com/AdrianInsua/neo4j-dashboard/commit/4fc9cc36d1cb2e13c44dcf79b3a00ea0d40eac4b))
+
+
+### Features
+
+* add methods to get images as property instead of caption ([b0a038d](https://github.com/AdrianInsua/neo4j-dashboard/commit/b0a038d268265d263e7600cb419139c76842e887))
+* autoconfigure theme based on user's system hour ([#46](https://github.com/AdrianInsua/neo4j-dashboard/issues/46)) ([306c987](https://github.com/AdrianInsua/neo4j-dashboard/commit/306c98777f59ed75042a9a7b6316dd1c9e4c4f02))
+* simplify card's summary styles ([#45](https://github.com/AdrianInsua/neo4j-dashboard/issues/45)) ([91ae858](https://github.com/AdrianInsua/neo4j-dashboard/commit/91ae8583ca7e3a8d04d61fa53fd333e87c0f7fc0))
+
+# [1.4.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.3.0...v1.4.0) (2020-04-21)
+
+
+### Bug Fixes
+
+* card animations are smoother now ([#34](https://github.com/AdrianInsua/neo4j-dashboard/issues/34)) ([c28493e](https://github.com/AdrianInsua/neo4j-dashboard/commit/c28493e20994b3edc215e1829dfb729a13e9102d))
+
+
+### Features
+
+* add theme changer in header ([#35](https://github.com/AdrianInsua/neo4j-dashboard/issues/35)) ([19d4f48](https://github.com/AdrianInsua/neo4j-dashboard/commit/19d4f48a2fd7552151879372195c7bd1ae466491))
+
 # [1.3.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.2.0...v1.3.0) (2020-04-21)
 
 

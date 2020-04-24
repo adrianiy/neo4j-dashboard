@@ -12,6 +12,15 @@ function App() {
     const [sessionId, setSessionId] = useState(null);
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true);
+    const [theme, setTheme] = useState("dark");
+
+    useEffect(() => {
+        if ((new Date()).getHours() >= 20) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    }, []); // executes only on first component mount
 
     const loginHandler = useCallback((response) => {
         setCookie("neo4jDash.sess", JSON.stringify(response));
@@ -38,6 +47,10 @@ function App() {
         }
     }
 
+    const setThemeCbk = theme => {
+        setTheme(theme);
+    }
+
     const render = () => {
         if (loading) {
             return <em className={cls('AppLoading', "material-icons")}>share</em>
@@ -49,15 +62,15 @@ function App() {
             } else {
                 return (
                     <div className="AppContainer">
-                        <Header user={user} callback={ logoutHandler }></Header>
-                        <Comander sessionId={sessionId}></Comander>
+                        <Header user={user} callback={ logoutHandler } theme={theme} themeCallback={setThemeCbk}></Header>
+                        <Comander sessionId={sessionId} theme={theme}></Comander>
                     </div>
                 )
             }
         }
     }
 
-    return <div className="App">
+    return <div className={ cls('App', theme ) }>
         { render() }
     </div>
 }

@@ -17,6 +17,7 @@ function Comander(props) {
     const [queries, setQueries] = useState([]);
     const [showStored, setShowStored] = useState(false);
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
+    const [fullscreen, setFullscreen] = useState(false);
     const storedQueries = useRef([]);
 
     useEffect(() => {
@@ -52,6 +53,10 @@ function Comander(props) {
         setQueries(queries.filter(q => q !== query));
     }
 
+    const toggleFullScreen = (value) => {
+        setFullscreen(value);
+    }
+
     useEventListener("keydown", (event) => {
         switch (event.keyCode) {
             case 40: // ArrowDown
@@ -71,13 +76,13 @@ function Comander(props) {
 
     return (
         <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, 'animated', 'fadeInUp')}>
-            <RowLayout dist="middle" className={styles.inputContainer}>
+            <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : '')}>
                 <CodeMirror
                     className={styles.input}
                     value={query}
                     options={{
                         mode: "cypher",
-                        theme: "material",
+                        theme: props.theme === 'dark' ? 'material' : 'default',
                         lineNumbers: false,
                         lineWrapping: true,
                     }}
@@ -106,7 +111,7 @@ function Comander(props) {
                                 value={q}
                                 options={{
                                     mode: "cypher",
-                                    theme: "material",
+                                    theme: props.theme === 'dark' ? 'material' : 'default',
                                     lineNumbers: false,
                                     lineWrapping: true,
                                 }}
@@ -120,6 +125,7 @@ function Comander(props) {
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}
                 sessionId={props.sessionId}
+                toggleFullScreen={toggleFullScreen}
             />
         </ColumnLayout>
     );

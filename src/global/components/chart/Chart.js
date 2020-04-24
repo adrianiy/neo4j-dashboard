@@ -58,9 +58,9 @@ function Chart (props) {
         setRelationships(relationships);
     }, [checkNodesLength]);
 
-    const checkGraphStyle = useCallback(() => {
+    useEffect(() => {
         const _graphStyle = graphStyle.toSheet();
-        if (props.graphStyleData && props.graphStyleData.getVersion() !== graphStyle.getVersion()) {
+        if (props.graphStyleData) {
             const rebasedStyle = deepmerge(_graphStyle, props.graphStyleData);
             graphStyle.loadRules(rebasedStyle);
             graphStyle.update();
@@ -73,13 +73,12 @@ function Chart (props) {
     }, [graphStyle, props]);
 
     useEffect(() => {
-        checkGraphStyle();
         const { records = [] } = props.result;
         if (records && records.length > 0) {
             setNodes([]);
             populateDataFromRecords(records);
         }
-    }, [props, populateDataFromRecords, checkGraphStyle]);
+    }, [props, populateDataFromRecords]);
 
     const autoCompleteRelationships = async (existingNodes, newNodes) => {
         if (props.autoComplete) {

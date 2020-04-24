@@ -18,6 +18,17 @@
 .userContainer span {
     color: #f76d09;
 }
+.themeChanger {
+    margin-right: 24px;
+}
+.darkIcon {
+    color: var(--theme-icon--dark);
+    font-size: 13px;
+}
+.lightIcon {
+    color: var(--theme-icon--light);
+    font-size: 13px;
+}
 .link {
     margin-left: 8px;
     cursor: pointer;
