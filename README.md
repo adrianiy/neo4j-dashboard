@@ -65,7 +65,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 [build-badge]: https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg
-[build-link]: https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22
+[build-link]: https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A"Build+%26+Test"
 [license-image]: https://badgen.net/github/license/AdrianInsua/neo4j-dashboard
 [version-image]: https://badgen.net/github/release/AdrianInsua/neo4j-dashboard/stable
 [repo-link]: https://github.com/AdrianInsua/neo4j-dashboard
