@@ -1,3 +1,5 @@
+[![Codeship Status for AdrianInsua/neo4j-dashboard](https://app.codeship.com/projects/351c95f0-6835-0138-8265-6a712b957df3/status?branch=master)](https://app.codeship.com/projects/394075)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
