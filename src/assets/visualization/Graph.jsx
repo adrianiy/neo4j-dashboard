@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import { createGraph, mapRelationships, getGraphStats } from "./mapper";
 import { GraphEventHandler } from "./GraphEventHandler";
 import { StyledSvgWrapper } from "./styled";
@@ -27,94 +27,77 @@ d3.selection.enter.prototype.appendSVG = function (SVGString) {
     });
 };
 
-export class GraphComponent extends Component {
-    state = {
-        zoomInLimitReached: true,
-        zoomOutLimitReached: false,
-    };
+function GraphComponent(props) {
+    const [svgElement, setSvgElement] = useState(null);
+    const _graph = useRef(null);
+    const _graphView = useRef(null);
+    const _graphEH = useRef(null);
 
-    graphInit(el) {
-        this.svgElement = el;
-    }
-
-    zoomInClicked(el) {
-        const limits = this.graphView.zoomIn(el);
-        this.setState({
-            zoomInLimitReached: limits.zoomInLimit,
-            zoomOutLimitReached: limits.zoomOutLimit,
-        });
-    }
-
-    zoomOutClicked(el) {
-        const limits = this.graphView.zoomOut(el);
-        this.setState({
-            zoomInLimitReached: limits.zoomInLimit,
-            zoomOutLimitReached: limits.zoomOutLimit,
-        });
-    }
-
-    getVisualAreaHeight() {
-        return this.props.frameHeight - dim.frameStatusbarHeight || this.svgElement.parentNode.offsetHeight;
-    }
-
-    componentDidMount() {
-        if (this.svgElement != null) {
-            this.initGraphView();
-            this.graph && this.props.setGraph && this.props.setGraph(this.graph);
-            this.props.getAutoCompleteCallback && this.props.getAutoCompleteCallback(this.addInternalRelationships);
-            this.props.assignVisElement && this.props.assignVisElement(this.svgElement, this.graphView);
+    const addInternalRelationships = useCallback((internalRelationships) => {
+        if (_graph.current) {
+            _graph.current.addInternalRelationships(mapRelationships(internalRelationships, _graph.current));
+            props.onGraphModelChange(getGraphStats(_graph.current));
+            _graphView.current.update();
+            _graphEH.current.onItemMouseOut();
         }
-    }
+    }, [props]);
 
-    initGraphView() {
-        if (!this.graphView) {
+    const getVisualAreaHeight = useCallback(() => {
+        return props.frameHeight - dim.frameStatusbarHeight || svgElement.parentNode.offsetHeight;
+    }, [props.frameHeight, svgElement])
+
+    const initGraphView = useCallback(() => {
+        if (!_graphView.current) {
             const NeoConstructor = graphView;
             const measureSize = () => {
                 return {
-                    width: this.svgElement.offsetWidth,
-                    height: this.getVisualAreaHeight(),
+                    width: svgElement.offsetWidth,
+                    height: getVisualAreaHeight(),
                 };
             };
-            this.graph = createGraph(this.props.nodes, this.props.relationships);
-            this.graphView = new NeoConstructor(this.svgElement, measureSize, this.graph, this.props.graphStyle);
-            this.graphEH = new GraphEventHandler(
-                this.graph,
-                this.graphView,
-                this.props.getNodeNeighbours,
-                this.props.onItemMouseOver,
-                this.props.onItemSelect,
-                this.props.onGraphModelChange
+            _graph.current = createGraph(props.nodes, props.relationships);
+            _graphView.current = new NeoConstructor(svgElement, measureSize, _graph.current, props.graphStyle);
+            _graphEH.current = new GraphEventHandler(
+                _graph.current,
+                _graphView.current,
+                props.getNodeNeighbours,
+                props.onItemMouseOver,
+                props.onItemSelect,
+                props.onGraphModelChange
             );
-            this.graphEH.bindEventHandlers();
-            this.props.onGraphModelChange(getGraphStats(this.graph));
-            this.graphView.resize();
-            this.graphView.update();
+            _graphEH.current.bindEventHandlers();
+            props.onGraphModelChange(getGraphStats(_graph.current));
+            _graphView.current.resize();
+            _graphView.current.update();
         }
-    }
+        _graph.current && props.setGraph && props.setGraph(_graph.current);
+        props.getAutoCompleteCallback && props.getAutoCompleteCallback(addInternalRelationships);
+        props.assignVisElement && props.assignVisElement(svgElement, graphView);
+    }, [getVisualAreaHeight, addInternalRelationships, props, svgElement]);
 
-    addInternalRelationships = (internalRelationships) => {
-        if (this.graph) {
-            this.graph.addInternalRelationships(mapRelationships(internalRelationships, this.graph));
-            this.props.onGraphModelChange(getGraphStats(this.graph));
-            this.graphView.update();
-            this.graphEH.onItemMouseOut();
+    useEffect(() => {
+        if (svgElement) {
+            initGraphView();
         }
-    };
+    }, [svgElement, initGraphView]);
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.graphStyle.getVersion() !== this.props.graphStyle.getVersion()) {
-            this.graphView.update();
+    useEffect(() => {
+        if (_graphView.current) {
+            _graphView.current.update();
         }
-        if (this.props.fullscreen !== prevProps.fullscreen || this.props.frameHeight !== prevProps.frameHeight) {
-            this.graphView.resize();
-        }
-    }
+    }, [props.graphStyle.version]);
 
-    render() {
-        return (
-            <StyledSvgWrapper>
-                <svg className="neod3viz" ref={this.graphInit.bind(this)} />
-            </StyledSvgWrapper>
-        );
-    }
+    useEffect(() => {
+        if (_graphView.current) {
+            _graphView.current.resize();
+        }
+    }, [props.fullscreen, props.frameHeight])
+
+    return (
+        <StyledSvgWrapper>
+            <svg className="neod3viz" ref={el => setSvgElement(el)} />
+        </StyledSvgWrapper>
+    );
 }
+
+export default GraphComponent;
