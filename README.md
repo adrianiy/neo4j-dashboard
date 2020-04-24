@@ -1,4 +1,4 @@
-[![Codeship Status for AdrianInsua/neo4j-dashboard](https://app.codeship.com/projects/351c95f0-6835-0138-8265-6a712b957df3/status?branch=master)](https://app.codeship.com/projects/394075)
+[![Build & Test](https://github.com/AdrianInsua/neo4j-dashboard/workflows/build_test/badge.svg)](https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22build_test%22)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
