@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { GraphComponent } from './../../../assets/visualization/Graph';
+import GraphComponent from './../../../assets/visualization/Graph';
 import { getChart } from './../../../service/neo.service';
 
 import { extractNodesAndRelationshipsFromRecordsForOldVis } from './utils/graph-utils';
@@ -59,13 +59,14 @@ function Chart (props) {
     }, [checkNodesLength]);
 
     useEffect(() => {
-        const _graphStyle = graphStyle.toSheet();
-        if (props.graphStyleData) {
-            const rebasedStyle = deepmerge(_graphStyle, props.graphStyleData);
-            graphStyle.loadRules(rebasedStyle);
-            graphStyle.update();
-            setGraphStyle(graphStyle);
-        } else {
+        const rebasedStyle = deepmerge(graphStyle.toSheet(), props.graphStyleData);
+        graphStyle.loadRules(rebasedStyle);
+        graphStyle.update();
+        setGraphStyle(graphStyle);
+    }, [props.graphStyleData, graphStyle])
+
+    useEffect(() => {
+        if (!props.graphStyleData) {
             graphStyle.resetToDefault();
             setGraphStyle(graphStyle);
             props.graphStyleCallback(graphStyle);
