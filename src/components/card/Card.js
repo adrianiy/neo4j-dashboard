@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useContext } from 'react';
 import Summary from './Summary';
 
 import { getChart } from '../../service/neo.service';
@@ -9,6 +9,7 @@ import { cls } from '../../global/utils';
 import styles from './Card.module.css';
 import neoGraphStyle from '../../global/components/chart/graphStyle';
 import deepmerge from 'deepmerge';
+import { ThemeContext } from '../../global/utils/hooks/theme';
 
 const graphStyle = new neoGraphStyle();
 
@@ -20,17 +21,18 @@ function Card(props) {
     const [stats, setStats] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [fullscreen, setFullscreen] = useState(false);
+    const theme = useContext(ThemeContext)
 
     const graphStyleData = useRef(null);
     const query = useRef('');
 
     useEffect(() => {
         const _graphStyle = graphStyle.toSheet();
-        const rebasedStyles = deepmerge(_graphStyle, { relationship: { 'text-color-internal': '#000' }});
+        const rebasedStyles = deepmerge(_graphStyle, { relationship: { 'text-color-internal': theme.relColor }});
         graphStyle.loadRules(rebasedStyles);
         graphStyle.update();
         graphStyleData.current = graphStyle.toSheet();
-    }, [])
+    }, [theme.relColor])
 
     const fecthData = useCallback(async () => {
         try {
