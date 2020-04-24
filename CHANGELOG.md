@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.5.0...v1.6.0) (2020-04-24)
+
+
+### Features
+
+* add theme hook. Fixes auto theming after midnight ([22d97a2](https://github.com/AdrianInsua/neo4j-dashboard/commit/22d97a29a857b87c6c164c2f372fac08ef7028b4)), closes [#53](https://github.com/AdrianInsua/neo4j-dashboard/issues/53)
+
 # [1.5.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.4.0...v1.5.0) (2020-04-23)
 
 
