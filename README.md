@@ -1,4 +1,6 @@
-[![Build & Test](https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg)](https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22)
+[![Build & Test][build-badge]][build-link]
+[![GitHub license][license-image]][repo-link]
+[![Version][version-image]][repo-version-link]
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,3 +70,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+[build-badge]: https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg
+[build-link]: https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22
+[license-image]: https://badgen.net/github/license/AdrianInsua/neo4j-dashboard
+[version-image]: https://badgen.net/github/release/AdrianInsua/neo4j-dashboard
+[repo-link]: https://github.com/AdrianInsua/neo4j-dashboard
+[repo-version-link]: https://github.com/AdrianInsua/neo4j-dashboard/releases
