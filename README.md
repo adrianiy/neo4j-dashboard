@@ -1,8 +1,43 @@
-[![Build & Test](https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg)](https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22)
+[![Build & Test][build-badge]][build-link]
+[![GitHub license][license-image]][repo-link]
+[![Version][version-image]][repo-version-link]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <img width="200" height="200"
+    src="./public/logo512.png">
+</div>
 
-## Available Scripts
+# NEO4J-Dashboard
+
+This project was created in order to add new features over [neo4j-browser]'s Graph.
+
+The graphic library is a wrapper of [neo4j-browser] graph classes isolated and reimplemented if neccessary to fit our goals.
+
+## Demo
+
+You can access [neo4j-dashboad] and use your custom [neo4j] credentials to test this App
+
+## Custom features
+
+### Image rendering on nodes
+
+In order to render article's images we've added some new features that recognizes [ image | photo-* ] keys in node's properties.
+When one of these properties are present the graph renders a new svg element and referece it in node's fill property.
+
+## Commit style
+
+Conventional commits: [conventional-commits]
+
+## CI
+
+To do a PR please follow [contributing rules](.github/CONTRIBUTING.md)
+
+Every PR should pass a PR-Verify process for production deployment security in CI/CD.
+
+PR-Verify will be composed by a set of tests and a Zeit now branch deployment verification.
+
+
+## Development
 
 In the project directory, you can run:
 
@@ -29,42 +64,14 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+[build-badge]: https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg
+[build-link]: https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22
+[license-image]: https://badgen.net/github/license/AdrianInsua/neo4j-dashboard
+[version-image]: https://badgen.net/github/release/AdrianInsua/neo4j-dashboard/stable
+[repo-link]: https://github.com/AdrianInsua/neo4j-dashboard
+[repo-version-link]: https://github.com/AdrianInsua/neo4j-dashboard/releases
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[neo4j]: https://neo4j.com/download-neo4j-now/?utm_source=google&utm_medium=ppc&utm_campaign=*EU%20-%20Search%20-%20Branded&utm_adgroup=*EU%20-%20Search%20-%20Branded%20-%20Neo4j%20-%20Exact&utm_term=neo4j&gclid=CjwKCAjwnIr1BRAWEiwA6GpwNW0X6o33Apjt_e3hn-lsI1iEYvVoiNcWDFr76xMXKyQ-XPqF2IOeTBoCgl8QAvD_BwE
+[neo4j-dashboard]: https://neo4j-dashboard.now.sh/
+[neo4j-browser]: https://github.com/neo4j/neo4j-browser
+[conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0
