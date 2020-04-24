@@ -1,3 +1,5 @@
+[![Build & Test](https://github.com/AdrianInsua/neo4j-dashboard/workflows/Build%20&%20Test/badge.svg)](https://github.com/AdrianInsua/neo4j-dashboard/actions?query=workflow%3A%22Build+&+Test%22)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
