@@ -53,6 +53,7 @@
 }
 .list ul {
     max-height: calc(100% - 40px);
+    width: calc(100% + 24px);
     overflow: scroll;
     margin: 0;
     padding: 0;
@@ -64,22 +65,14 @@
     line-height: 40px;
     display: block;
 }
-.listOverflow {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 14px;
-    background:var(--third-color);
-    z-index: 2;
-}
 .list li {
     list-style: none;
     cursor: pointer;
     margin: 0;
     padding: 8px 24px;
+    padding-right: 48px;
     cursor: pointer;
-    transition: all ease-in-out 300ms;
+    transition: all ease-in-out 100ms;
 }
 .list li:hover {
     background: var(--highlight-secondary);

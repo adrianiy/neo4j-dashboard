@@ -3,12 +3,12 @@ import React from "react"
 export const themes = {
     light: {
         id: 'light',
-        codemirror: 'default',
+        codemirror: 'cypher cypher-light',
         relColor: '#000'
     },
     dark: {
         id: 'dark',
-        codemirror: 'material' ,
+        codemirror: 'cypher cypher-dark' ,
         relColor: '#fff'
     }
 }
