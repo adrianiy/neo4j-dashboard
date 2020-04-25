@@ -23,7 +23,6 @@ function Timeline(props) {
                 queries.map((q, idx) => (
                     <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
                         <Card
-                            sessionId={props.sessionId}
                             query={q}
                             idx={idx}
                             deleteQuery={deleteQuery}

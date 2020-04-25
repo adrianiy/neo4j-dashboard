@@ -1,24 +1,27 @@
-import React, { useContext } from 'react';
-import styles from './Header.module.css';
+import React from 'react';
+import { useCookies } from 'react-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+
+import allActions from '../../global/utils/store/actions';
 import { RowLayout } from '../../global/layouts';
 import { cls } from '../../global/utils';
-import { useCookies } from 'react-cookie';
-import { ThemeContext } from '../../global/utils/hooks/theme';
 
+import styles from './Header.module.css';
 
 function Header(props) {
     // eslint-disable-next-line no-unused-vars
     const [_, __, removeCookie] = useCookies(["neo4jDash.sess"]);
-    const theme = useContext(ThemeContext);
+    const dispatch = useDispatch();
+    const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
 
     const doLogout = () => {
         removeCookie('neo4jDash.sess');
-        props.callback();
+        dispatch(allActions.userActions.logOut());
     };
 
     const handleClick = () => {
         const newTheme = theme.id === 'dark' ? 'light' : 'dark';
-        props.themeCallback(newTheme)
+        dispatch(allActions.themeActions.setCustomTheme(newTheme));
     }
 
     return (
@@ -39,7 +42,7 @@ function Header(props) {
                     <em className={cls("material-icons", styles.darkIcon)}>brightness_2</em>
                 </RowLayout>
                 <div>
-                    Hi, <span>{props.user}</span>!
+                    Hi, <span>{user.user}</span>!
                 </div>
                 <strong className={styles.link} onClick={doLogout}>
                     Logout

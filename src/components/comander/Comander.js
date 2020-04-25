@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ThemeContext } from '../../global/utils/hooks/theme';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Timeline from '../timeline/Timeline';
 import CypherCodeMirror from './CypherCodeMirror';
 
@@ -21,7 +21,7 @@ function Comander(props) {
     const [editor, setEditor] = useState(null);
     const cm = useRef(null);
     const storedQueries = useRef([]);
-    const theme = useContext(ThemeContext);
+    const theme = useSelector(state => state.currentTheme);
 
     useEffect(() => {
         if (editor) {
@@ -44,6 +44,7 @@ function Comander(props) {
         const stored = concatUniqueStrings(query, storedQueries.current).slice(0, 10);
         setQueries(concatUniqueStrings(query, queries));
         setQuery("");
+        cm.current.setValue("");
         setShowStored(false);
         storedQueries.current = stored;
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
@@ -126,7 +127,6 @@ function Comander(props) {
                 queries={queries}
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}
-                sessionId={props.sessionId}
                 toggleFullScreen={toggleFullScreen}
             />
         </ColumnLayout>
