@@ -44,9 +44,9 @@ function Comander(props) {
         const stored = concatUniqueStrings(query, storedQueries.current).slice(0, 10);
         setQueries(concatUniqueStrings(query, queries));
         setQuery("");
-        cm.current.setValue("");
         setShowStored(false);
         storedQueries.current = stored;
+        cm.current.setValue("");
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
     };
 
@@ -54,11 +54,12 @@ function Comander(props) {
         setShowStored(!showStored);
     };
 
-    const selectQuery = (query) => {
+    const selectQuery = (event, query) => {
+        event.preventDefault();
         setQuery(query);
+        setShowStored(false);
         cm.current.setValue(query);
         cm.current.setCursor(cm.current.lineCount(), 0);
-        setShowStored(false);
     };
 
     const deleteQuery = (query) => {
@@ -111,12 +112,16 @@ function Comander(props) {
                     {storedQueries.current.map((q, i) => (
                         <li
                             key={i}
-                            onClick={() => selectQuery(q)}
+                            onClick={e => selectQuery(e, q)}
                             className={highlightedSuggestion === i ? styles.suggestionActive : ""}
                         >
                             <CypherCodeMirror
                                 value={q}
-                                options={{ ...codeMirrorSettings, ...{ theme: theme.codemirror, autofocus: false } }}
+                                options={{ ...codeMirrorSettings, ...{
+                                    theme: theme.codemirror,
+                                    autofocus: false,
+                                    readOnly: 'nocursor'
+                                } }}
                                 schema={neo4jSchema}
                             />
                         </li>
