@@ -29,6 +29,7 @@
     "react-suber": "1.0.4",
     "react-svg-inline": "^2.1.1",
     "redux": "^4.0.5",
+    "redux-mock-store": "^1.5.4",
     "styled-components": "^5.1.0",
     "typescript": "^3.8.3",
     "url-parse": "^1.4.7",
