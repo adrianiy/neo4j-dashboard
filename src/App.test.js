@@ -1,9 +1,18 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
+import { setup } from './global/utils/tests/store.mock';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText("Login");
-  expect(linkElement).toBeDefined();
-});
+describe('App test suite', () => {
+    beforeAll(() => {
+
+    })
+
+    test('renders login button if user is not logged in', () => {
+        const { MockProvider } = setup({ currentTheme: {}, currentUser: { loggedIn: false } });
+        const { getByText } = render(<MockProvider><App /></MockProvider>);
+        const linkElement = getByText("Login");
+        expect(linkElement).toBeDefined();
+    });
+})
+

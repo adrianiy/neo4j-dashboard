@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Summary from './Summary';
 
 import { getChart } from '../../service/neo.service';
@@ -8,7 +8,7 @@ import Chart from '../../global/components/chart/Chart';
 import { cls } from '../../global/utils';
 import styles from './Card.module.css';
 import neoGraphStyle from '../../global/components/chart/graphStyle';
-import { ThemeContext } from '../../global/utils/hooks/theme';
+import { useSelector } from 'react-redux';
 
 const graphStyle = new neoGraphStyle();
 
@@ -20,7 +20,7 @@ function Card(props) {
     const [stats, setStats] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [fullscreen, setFullscreen] = useState(false);
-    const theme = useContext(ThemeContext)
+    const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
     const [graphStyleData, setGraphStyle] = useState({
         relationship: {
             'text-color-external': theme.relColor
@@ -39,13 +39,13 @@ function Card(props) {
 
     const fecthData = useCallback(async () => {
         try {
-            const results = await getChart(props.sessionId, props.query);
+            const results = await getChart(user.sessionId, props.query);
             setResults(results);
             setError(null);
         } catch (err) {
             setError(`${ props.query }: ${err}`);
         }
-    }, [props])
+    }, [props.query, user.sessionId])
 
     useEffect(() => {
         if (query.current !== props.query) {
@@ -124,7 +124,6 @@ function Card(props) {
                         style={{ width: "100%" }}
                         result={results}
                         maxNeighbours={30}
-                        sessionId={props.sessionId}
                         itemHovered={itemHover}
                         itemSelected={itemSelected}
                         setSummary={setSummary}

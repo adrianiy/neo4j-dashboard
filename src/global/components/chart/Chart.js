@@ -7,6 +7,7 @@ import deepmerge from 'deepmerge';
 import neo4j from 'neo4j-driver';
 
 import neoGraphStyle from './graphStyle';
+import { useSelector } from 'react-redux';
 
 const deduplicateNodes = (nodes) => {
     return nodes.reduce(
@@ -27,6 +28,7 @@ function Chart (props) {
     const [nodes, setNodes] = useState([]);
     const [relationships, setRelationships] = useState([]);
     const [graphStyle, setGraphStyle] = useState(neoGraphStyle());
+    const user = useSelector(state => state.currentUser);
     let _graph;
     let _autoCompleteCallback;
 
@@ -101,7 +103,7 @@ function Chart (props) {
                     ORDER BY id(o)
                     LIMIT ${props.maxNeighbours -
                         currentNeighbourIds.length}`
-        const results = await getChart(props.sessionId, query);
+        const results = await getChart(user.sessionId, query);
         const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
         const resultGraph = extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
         await autoCompleteRelationships(_graph._nodes, resultGraph.nodes);
@@ -114,7 +116,7 @@ function Chart (props) {
         existingNodeIds = existingNodeIds.concat(newNodeIds)
         const query =
             'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
-        const results = await getChart(props.sessionId, query);
+        const results = await getChart(user.sessionId, query);
         return {
             ...extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
         };
