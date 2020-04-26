@@ -43,6 +43,18 @@
     padding: 0 24px;
     color: var(--highlight-color);
 }
+.iconContainer {
+    position: relative;
+}
+.downloadWrapper {
+    position: absolute;
+    top: 33px;
+    left: 0;
+    background: var(--third-color);
+    z-index: 3;
+    border: 1px solid var(--bg-color);
+    box-shadow: var(--box-decoration--shadow);
+}
 .card header em:not(.AppLoading) {
     cursor: pointer;
     padding: 0 8px;

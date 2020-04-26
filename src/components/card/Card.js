@@ -1,14 +1,16 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Summary from './Summary';
+import Download from './components/Download';
 
 import { getQuery } from '../../service/neo.service';
 
+import neoGraphStyle from '../../global/components/chart/graphStyle';
 import { ColumnLayout, RowLayout } from '../../global/layouts';
 import Chart from '../../global/components/chart/Chart';
 import { cls } from '../../global/utils';
+
 import styles from './Card.module.css';
-import neoGraphStyle from '../../global/components/chart/graphStyle';
-import { useSelector } from 'react-redux';
 
 const graphStyle = new neoGraphStyle();
 
@@ -20,6 +22,7 @@ function Card(props) {
     const [stats, setStats] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [fullscreen, setFullscreen] = useState(false);
+    const [download, setDownload] = useState(false);
     const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
     const [graphStyleData, setGraphStyle] = useState({
         relationship: {
@@ -28,6 +31,7 @@ function Card(props) {
     });
 
     const query = useRef('');
+    const visElement = useRef(null);
 
     useEffect(() => {
         setGraphStyle({
@@ -64,6 +68,10 @@ function Card(props) {
         setFullscreen(!fullscreen);
     };
 
+    const toggleDownload = () => {
+        setDownload(!download);
+    }
+
     const itemHover = (_item) => {
         if (['node', 'relationship'].includes(_item.type)) {
             setItem(_item);
@@ -81,7 +89,9 @@ function Card(props) {
     }
 
     const graphStyleCallback = (style) => {
-        // setGraphStyle(style.toSheet())
+        if (!graphStyle) {
+            setGraphStyle(style.toSheet())
+        }
     }
 
     return (
@@ -94,7 +104,10 @@ function Card(props) {
                 <div className={styles.cardQuery} onClick={() => props.restoreQuery(props.query)}>
                     {props.query}
                 </div>
-                <RowLayout dist="middle right">
+                <RowLayout dist="middle right" className={styles.iconContainer}>
+                    <em className="material-icons" title="download" onClick={toggleDownload}>
+                        save_alt
+                    </em>
                     <em
                         className="material-icons"
                         title={fullscreen ? "minimize" : "maximize"}
@@ -103,7 +116,7 @@ function Card(props) {
                         {fullscreen ? "fullscreen_exit" : "fullscreen"}
                     </em>
                     <em
-                        className={cls(styles.expand, "material-icons", fullscreen ? 'disabled' : '')}
+                        className={cls(styles.expand, "material-icons", fullscreen ? "disabled" : "")}
                         title={expanded ? "contract" : "expand"}
                         onClick={fullscreen ? null : toggleExpand}
                     >
@@ -112,11 +125,14 @@ function Card(props) {
                     <em className="material-icons" title="close" onClick={() => props.deleteQuery(props.query)}>
                         close
                     </em>
+                    {download ? (
+                        <Download results={results} vis={visElement.current} className={styles.downloadWrapper} />
+                    ) : null}
                 </RowLayout>
             </header>
             {results ? (
                 <RowLayout className={styles.cardBody}>
-                    <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : '')}>
+                    <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : "")}>
                         <h3>Summary</h3>
                         <Summary summary={stats} item={item || selected} graphStyle={graphStyle}></Summary>
                     </ColumnLayout>
@@ -130,6 +146,9 @@ function Card(props) {
                         graphStyleData={graphStyleData}
                         graphStyleCallback={graphStyleCallback}
                         autoComplete={false}
+                        assignVisElement={(svgElement, graphElement) =>
+                            (visElement.current = { svgElement, graphElement, type: "graph" })
+                        }
                     />
                 </RowLayout>
             ) : (

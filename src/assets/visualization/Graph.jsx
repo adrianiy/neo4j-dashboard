@@ -72,7 +72,7 @@ function GraphComponent(props) {
         }
         _graph.current && props.setGraph && props.setGraph(_graph.current);
         props.getAutoCompleteCallback && props.getAutoCompleteCallback(addInternalRelationships);
-        props.assignVisElement && props.assignVisElement(svgElement, graphView);
+        props.assignVisElement && props.assignVisElement(svgElement, _graphView.current);
     }, [getVisualAreaHeight, addInternalRelationships, props, svgElement]);
 
     useEffect(() => {
