@@ -1,9 +1,11 @@
-import userActions from './user';
-import themeActions from './theme';
+import user from './user';
+import theme from './theme';
+import db from './db';
 
-const allActions = {
-    userActions,
-    themeActions
+const actions = {
+    user,
+    theme,
+    db
 }
 
-export default allActions;
+export default actions;

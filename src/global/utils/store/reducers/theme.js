@@ -1,3 +1,6 @@
+export const AUTOTHEME = "SET_AUTO_THEME";
+export const THEME = "SET_THEME";
+
 const themes = {
     light: {
         id: "light",
@@ -22,15 +25,15 @@ const manageAutoTheme = () => {
 
 const currentTheme = (state = themes[manageAutoTheme()], action) => {
     switch(action.type) {
-        case 'SET_AUTO_THEME':
+        case AUTOTHEME:
             return {
                 ...state,
                 ...themes[manageAutoTheme()]
             };
-        case 'SET_THEME':
+        case THEME:
             return {
                 ...state,
-                ...themes[action.payload]
+                ...themes[action.theme]
             };
         default:
             return state;

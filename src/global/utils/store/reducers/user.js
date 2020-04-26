@@ -1,12 +1,15 @@
+export const SETUSER = "SET_USER";
+export const LOGOUT = "LOG_OUT";
+
 const currentUser = (state = { loggedIn: false }, action) => {
     switch (action.type) {
-        case "SET_USER":
+        case SETUSER:
             return {
                 ...state,
-                ...action.payload,
+                ...action.userData,
                 loggedIn: true,
             };
-        case "LOG_OUT":
+        case LOGOUT:
             return {
                 ...state,
                 ...{

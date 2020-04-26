@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Timeline from '../timeline/Timeline';
 import CypherCodeMirror from './CypherCodeMirror';
 
-import { codeMirrorSettings, neo4jSchema } from './cypher/common';
+import { codeMirrorSettings, neo4jSchema, toSchema } from './cypher/common';
 
 import { cls, concatUniqueStrings } from '../../global/utils';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
@@ -19,9 +19,18 @@ function Comander(props) {
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
     const [fullscreen, setFullscreen] = useState(false);
     const [editor, setEditor] = useState(null);
+    const schema = useRef(neo4jSchema);
     const cm = useRef(null);
     const storedQueries = useRef([]);
     const theme = useSelector(state => state.currentTheme);
+    const dbSchema = useSelector(state => state.dbSchema);
+
+    useEffect(() => {
+        Object.keys(dbSchema)
+            .forEach(key =>
+                schema.current[key] = [...schema.current[key], ...toSchema(key, dbSchema[key].records)]
+            );
+    }, [dbSchema])
 
     useEffect(() => {
         if (editor) {
