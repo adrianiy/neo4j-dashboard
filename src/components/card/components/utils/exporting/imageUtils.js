@@ -18,45 +18,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Canvg from "canvg";
+import canvg from "canvg";
 
-import { prepareForExport } from './svgUtils'
-import FileSaver from 'file-saver'
+import { prepareForExport } from "./svgUtils";
+import FileSaver from "file-saver";
 
-export const downloadPNGFromSVG = async (svg, graph, type) => {
-  const svgObj = prepareForExport(svg, graph, type)
-    const svgData = htmlCharacterRefToNumericalRef(svgObj.node())
+export const downloadPNGFromSVG = (svg, graph, type) => {
+    const svgObj = prepareForExport(svg, graph, type);
+    const svgData = htmlCharacterRefToNumericalRef(svgObj.node());
 
     let canvas;
     canvas = document.createElement("canvas");
     canvas.width = svgObj.attr("width");
     canvas.height = svgObj.attr("height");
-    canvas.crossOrigin = "Anonymous";
-    const ctx = canvas.getContext("2d");
 
-    const v = await Canvg.from(ctx, svgData);
-
-    await v.render();
-
+    canvg(canvas, svgData);
     return downloadWithDataURI(type + ".png", canvas.toDataURL("image/png"));
-}
+};
 
 export const downloadSVG = (svg, graph, type) => {
-    const svgObj = prepareForExport(svg, graph, type)
-    const svgData = htmlCharacterRefToNumericalRef(svgObj.node())
+    const svgObj = prepareForExport(svg, graph, type);
+    const svgData = htmlCharacterRefToNumericalRef(svgObj.node());
 
-    return download(type + '.svg', 'image/svg+xml;charset=utf-8', svgData)
-}
+    return download(type + ".svg", "image/svg+xml;charset=utf-8", svgData);
+};
 
-const htmlCharacterRefToNumericalRef = node =>
-    new window.XMLSerializer()
-        .serializeToString(node)
-        .replace(/&nbsp;/g, '&#160;')
+const htmlCharacterRefToNumericalRef = (node) =>
+    new window.XMLSerializer().serializeToString(node).replace(/&nbsp;/g, "&#160;");
 
 const download = (filename, mime, data) => {
-    const blob = new Blob([data], { type: mime })
-    return FileSaver.saveAs(blob, filename)
-}
+    const blob = new Blob([data], { type: mime });
+    return FileSaver.saveAs(blob, filename);
+};
 
 const downloadWithDataURI = (filename, dataURI) => {
     var byteString, i, ia, j, mimeString, ref;
