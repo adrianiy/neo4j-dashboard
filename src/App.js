@@ -7,10 +7,12 @@ import Comander from './components/comander/Comander';
 import Header from './components/header/Header';
 
 import { doLogout } from './service/neo.service';
+import { getDBSchema } from './service/schema.service';
 import { cls } from './global/utils';
 
 import './App.css';
-import allActions from './global/utils/store/actions';
+import actions from './global/utils/store/actions';
+import { useAsyncDispatch } from './global/utils/hooks/dispatch';
 
 function App() {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
@@ -18,11 +20,13 @@ function App() {
     const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
 
     const dispatch = useDispatch();
+    const asyncDispatch = useAsyncDispatch();
 
-    const loginHandler = useCallback((response) => {
-        setCookie("neo4jDash.sess", JSON.stringify(response));
-        dispatch(allActions.userActions.setUser(response));
-    }, [dispatch, setCookie]);
+    const loginHandler = useCallback((userData) => {
+        setCookie("neo4jDash.sess", JSON.stringify(userData));
+        dispatch(actions.user.setUser(userData));
+        asyncDispatch(actions.db.setProperties, getDBSchema(userData.sessionId));
+    }, [asyncDispatch, dispatch, setCookie]);
 
     useEffect(() => {
         if (cookies["neo4jDash.sess"] && cookies["neo4jDash.sess"].sessionId && loading) {

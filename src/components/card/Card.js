@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Summary from './Summary';
 
-import { getChart } from '../../service/neo.service';
+import { getQuery } from '../../service/neo.service';
 
 import { ColumnLayout, RowLayout } from '../../global/layouts';
 import Chart from '../../global/components/chart/Chart';
@@ -39,7 +39,7 @@ function Card(props) {
 
     const fecthData = useCallback(async () => {
         try {
-            const results = await getChart(user.sessionId, props.query);
+            const results = await getQuery(user.sessionId, props.query);
             setResults(results);
             setError(null);
         } catch (err) {

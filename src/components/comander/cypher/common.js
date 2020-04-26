@@ -46,6 +46,50 @@ export const codeMirrorSettings = {
     },
 };
 
+export const toProcedure = (row) => {
+    const name = row[0];
+    const signature = row[1].replace(row[0], "");
+
+    let returnItems = [];
+    const matches = signature.match(/\([^)]*\) :: \((.*)\)/i);
+
+    if (matches) {
+        returnItems = matches[1].split(", ").map((returnItem) => {
+            const returnItemMatches = returnItem.match(/(.*) :: (.*)/);
+            return {
+                name: returnItemMatches[1],
+                signature: returnItemMatches[2],
+            };
+        });
+    }
+
+    return {
+        name,
+        signature,
+        returnItems,
+    };
+};
+
+export const toSchema = (type, records) => {
+    switch (type) {
+        case "procedures":
+            return records.map(record => {
+                const proc = record.toObject();
+                return toProcedure([proc.name, proc.signature])
+            });
+        case "functions":
+            return records.map(record => {
+                const func = record.toObject();
+                return {
+                    name: func.name,
+                    signature: func.signature.replace(func.name, ""),
+                };
+            })
+        default:
+            return records.map((record) => record.get(0));
+    }
+};
+
 export const neo4jSchema = {
     consoleCommands: [
         { name: ":clear" },
@@ -64,95 +108,15 @@ export const neo4jSchema = {
         { name: ":history" },
         { name: ":queries" },
     ],
-    labels: [
-        ":Spacey mc spaceface",
-        ":Legislator",
-        ":State",
-        ":Party",
-        ":Body",
-        ":Bill",
-        ":Subject",
-        ":Committee",
-        ":Congress",
-    ],
-    relationshipTypes: [
-        ":REPRESENTS",
-        ":IS_MEMBER_OF",
-        ":ELECTED_TO",
-        ":PROPOSED_DURING",
-        ":SPONSORED_BY",
-        ":VOTED ON",
-        ":REFERRED_TO",
-        ":SERVES_ON",
-        ":DEALS_WITH",
-    ],
-    parameters: ["age", "name", "surname"],
-    propertyKeys: [
-        "bioguideID",
-        "code",
-        "name",
-        "type",
-        "billID",
-        "title",
-        "thomasID",
-        "birthday",
-        "wikipediaID",
-        "currentParty",
-        "state",
-        "votesmartID",
-        "fecIDs",
-        "republicanCount",
-        "otherCount",
-        "cspanID",
-        "democratCount",
-        "lastName",
-        "firstName",
-        "party",
-        "opensecretsID",
-        "icpsrID",
-        "religion",
-        "lisID",
-        "govtrackID",
-        "gender",
-        "district",
-        "number",
-        "enacted",
-        "officialTitle",
-        "vetoed",
-        "active",
-        "popularTitle",
-        "cosponsor",
-        "vote",
-        "jurisdiction",
-        "url",
-        "rank",
-        "washpostID",
-    ],
+    labels: [],
+    relationshipTypes: [],
+    parameters: [],
+    propertyKeys: [],
     functions: functions.data.map((data) => ({
         name: data.row[0],
         signature: data.row[1].replace(data.row[0], ""),
     })),
     procedures: procedures.data.map((data) => {
-        const name = data.row[0];
-        const signature = data.row[1].replace(data.row[0], "");
-
-        let returnItems = [];
-        const matches = signature.match(/\([^)]*\) :: \((.*)\)/i);
-
-        if (matches) {
-            returnItems = matches[1].split(", ").map((returnItem) => {
-                const returnItemMatches = returnItem.match(/(.*) :: (.*)/);
-                return {
-                    name: returnItemMatches[1],
-                    signature: returnItemMatches[2],
-                };
-            });
-        }
-
-        return {
-            name,
-            signature,
-            returnItems,
-        };
+        return toProcedure(data.row)
     }),
 };

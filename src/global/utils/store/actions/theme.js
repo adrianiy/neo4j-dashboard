@@ -1,14 +1,15 @@
-const setAutoTheme = theme => {
+import { AUTOTHEME, THEME } from "../reducers/theme";
+
+const setAutoTheme = () => {
     return {
-        type: 'SET_AUTO_THEME',
-        payload: theme
+        type: AUTOTHEME
     }
 };
 
 const setCustomTheme = theme => {
     return {
-        type: 'SET_THEME',
-        payload: theme
+        type: THEME,
+        theme
     }
 };
 

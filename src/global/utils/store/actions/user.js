@@ -1,13 +1,16 @@
+import { SETUSER, LOGOUT } from "../reducers/user"
+
+
 const setUser = userObj => {
     return {
-        type: 'SET_USER',
-        payload: userObj
+        type: SETUSER,
+        userData: userObj
     }
 }
 
 const logOut = () => {
     return {
-        type: 'LOG_OUT'
+        type: LOGOUT
     }
 }
 

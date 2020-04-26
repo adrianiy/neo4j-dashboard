@@ -2,11 +2,11 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 
-import allActions from '../../global/utils/store/actions';
 import { RowLayout } from '../../global/layouts';
 import { cls } from '../../global/utils';
 
 import styles from './Header.module.css';
+import actions from '../../global/utils/store/actions';
 
 function Header(props) {
     // eslint-disable-next-line no-unused-vars
@@ -16,12 +16,12 @@ function Header(props) {
 
     const doLogout = () => {
         removeCookie('neo4jDash.sess');
-        dispatch(allActions.userActions.logOut());
+        dispatch(actions.user.logOut());
     };
 
     const handleClick = () => {
         const newTheme = theme.id === 'dark' ? 'light' : 'dark';
-        dispatch(allActions.themeActions.setCustomTheme(newTheme));
+        dispatch(actions.theme.setCustomTheme(newTheme));
     }
 
     return (
