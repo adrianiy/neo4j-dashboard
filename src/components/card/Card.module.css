@@ -48,7 +48,7 @@
 }
 .downloadWrapper {
     position: absolute;
-    top: 33px;
+    top: 32px;
     left: 0;
     background: var(--third-color);
     z-index: 3;

@@ -36,7 +36,7 @@ export const downloadPNGFromSVG = async (svg, graph, type) => {
 
     const v = await Canvg.from(ctx, svgData);
 
-    v.render();
+    await v.render();
 
     return downloadWithDataURI(type + ".png", canvas.toDataURL("image/png"));
 }
