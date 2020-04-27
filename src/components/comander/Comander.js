@@ -17,7 +17,6 @@ function Comander(props) {
     const [queries, setQueries] = useState([]);
     const [showStored, setShowStored] = useState(false);
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
-    const [fullscreen, setFullscreen] = useState(false);
     const [editor, setEditor] = useState(null);
     const schema = useRef(neo4jSchema);
     const cm = useRef(null);
@@ -75,10 +74,6 @@ function Comander(props) {
         setQueries(queries.filter(q => q !== query));
     }
 
-    const toggleFullScreen = (value) => {
-        setFullscreen(value);
-    }
-
     useEventListener("keydown", (event) => {
         switch (event.keyCode) {
             case 40: // ArrowDown
@@ -98,7 +93,7 @@ function Comander(props) {
 
     return (
         <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
-            <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : "")}>
+            <RowLayout dist="middle" className={styles.inputContainer}>
                 <CypherCodeMirror
                     className={styles.input}
                     options={{ ...codeMirrorSettings, ...{ theme: theme.codemirror } }}
@@ -141,7 +136,6 @@ function Comander(props) {
                 queries={queries}
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}
-                toggleFullScreen={toggleFullScreen}
             />
         </ColumnLayout>
     );
