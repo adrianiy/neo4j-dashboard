@@ -1,5 +1,5 @@
 import neo4j from 'neo4j-driver';
-import { itemIntToString } from "./typing-utils";
+import { itemIntToString } from "./cypher-utils";
 
 export function extractNodesAndRelationshipsFromRecordsForOldVis(records,  filterRels = true, types = neo4j.types) {
     if (records.length === 0) {

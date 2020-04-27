@@ -46,10 +46,10 @@ export default function neoGraphStyle() {
     const defaultStyle = {
         node: {
             diameter: "50px",
-            color: "#A5ABB6",
+            color: "#FFE081",
             "border-color": "#9AA1AC",
-            "border-width": "2px",
             "text-color-internal": "#FFFFFF",
+            "border-width": "2px",
             "font-size": "10px",
         },
         relationship: {
@@ -130,12 +130,7 @@ export default function neoGraphStyle() {
     ];
     const defaultColors = [
         {
-            color: "#FFE081",
-            "border-color": "#9AA1AC",
-            "text-color-internal": "#FFFFFF",
-        },
-        {
-            color: "#C990C0",
+            color: "#A5ABB6",
             "border-color": "#b261a5",
             "text-color-internal": "#FFFFFF",
         },
@@ -231,7 +226,7 @@ export default function neoGraphStyle() {
     })();
 
     const StyleElement = (function () {
-        function StyleElement(selector) {
+        function StyleElement(selector, properties = {}) {
             this.selector = selector;
             this.props = {};
         }
@@ -251,8 +246,8 @@ export default function neoGraphStyle() {
             return this.props[attr] || "";
         };
 
-        StyleElement.prototype.getImage = function () {
-            return this.props.image;
+        StyleElement.prototype.willRenderImage = function () {
+            return this.props['caption'].includes('photo') || this.props['caption'].includes('image');
         }
 
         return StyleElement;
@@ -262,7 +257,6 @@ export default function neoGraphStyle() {
         function GraphStyle() {
             this.rules = [];
             this.version = 0;
-            this.haveImage = null;
 
             try {
                 this.loadRules();
@@ -317,36 +311,28 @@ export default function neoGraphStyle() {
             return defaultColors[index];
         };
 
-        const checkImage = (key) => key.includes("photo") || key.includes("photo");
-
         const getDefaultNodeCaption = function (item) {
-            if (!item || !(item.propertyList != null ? item.propertyList.length : 0) > 0) {
-                return {
-                    defaultCaption: "<id>",
-                };
-            }
-            const captionPrioOrder = [/^name$/i, /^title$/i, /^label$/i, /name$/i, /description$/i, /^.+/];
-            let defaultCaption = captionPrioOrder.reduceRight((leading, current) => {
-                const hits = item.propertyList.filter(function (prop) {
-                    return current.test(prop.key);
-                });
-                if (hits.length && !checkImage(hits[0].key)) {
-                    return "{" + hits[0].key + "}";
-                } else if (!checkImage(leading)) {
-                    return leading;
-                } else {
-                    return null;
-                }
-            }, "");
-            defaultCaption || (defaultCaption = "<id>");
-            return {
-                caption: defaultCaption
-            };
+             if (!item || !(item.propertyList != null ? item.propertyList.length : 0) > 0) {
+                 return {
+                     defaultCaption: "<id>",
+                 };
+             }
+             const captionPrioOrder = [/^name$/i, /^title$/i, /^label$/i, /name$/i, /description$/i, /^.+/];
+             let defaultCaption = captionPrioOrder.reduceRight(function (leading, current) {
+                 const hits = item.propertyList.filter(function (prop) {
+                     return current.test(prop.key);
+                 });
+                 if (hits.length) {
+                     return "{" + hits[0].key + "}";
+                 } else {
+                     return leading;
+                 }
+             }, "");
+             defaultCaption || (defaultCaption = "<id>");
+             return {
+                 caption: defaultCaption,
+             };
         };
-
-        GraphStyle.prototype.shouldRenderImageCaption = function () {
-            return this.haveImage;
-        }
 
         GraphStyle.prototype.update = function () {
             this.version = this.version + 1;
@@ -356,13 +342,19 @@ export default function neoGraphStyle() {
             return this.version;
         };
 
-        GraphStyle.prototype.calculateStyle = function (selector) {
-            return new StyleElement(selector).applyRules(this.rules);
+        GraphStyle.prototype.calculateStyle = function (selector, properties = {}) {
+            return new StyleElement(selector, properties).applyRules(this.rules);
         };
 
         GraphStyle.prototype.forEntity = function (item) {
             return this.calculateStyle(selector(item));
         };
+
+        GraphStyle.prototype.shouldRenderImageCaption = function () {
+            const imageRule = this.rules
+                .filter(rule => rule.props?.caption?.includes('image') || rule.props?.caption?.includes('photo'));
+            return imageRule.length;
+        }
 
         GraphStyle.prototype.setDefaultNodeStyling = function (selector, item) {
             let defaultColor = true;
@@ -378,14 +370,9 @@ export default function neoGraphStyle() {
                     }
                 }
             }
-            const imageCaptionIdx = item.propertyList && item.propertyList.findIndex((prop) => checkImage(prop.key));
             const minimalSelector = new Selector(selector.tag, selector.classes.sort().slice(0, 1))
             if (defaultColor) {
                 this.changeForSelector(minimalSelector, findAvailableDefaultColor(this.rules));
-            }
-            if (imageCaptionIdx > -1) {
-                this.haveImage = true;
-                this.changeForSelector(minimalSelector, { image: item.propertyList[imageCaptionIdx].value})
             }
             if (defaultCaption) {
                 return this.changeForSelector(minimalSelector, getDefaultNodeCaption(item));
@@ -570,7 +557,7 @@ export default function neoGraphStyle() {
 
         GraphStyle.prototype.forRelationship = function (rel) {
             const selector = relationshipSelector(rel);
-            return this.calculateStyle(selector);
+            return this.calculateStyle(selector, rel.propertyList);
         };
 
         return GraphStyle;

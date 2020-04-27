@@ -1,17 +1,15 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Controlled as CodeMirror } from "react-codemirror2";
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Timeline from '../timeline/Timeline';
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/mode/cypher/cypher";
-import "./codemirror.css";
+import CypherCodeMirror from './CypherCodeMirror';
+
+import { codeMirrorSettings, neo4jSchema, toSchema } from './cypher/common';
 
 import { cls, concatUniqueStrings } from '../../global/utils';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
 import { useEventListener } from "../../global/utils/hooks/events";
 
 import styles from './Comander.module.css';
-import { ThemeContext } from '../../global/utils/hooks/theme';
 
 
 function Comander(props) {
@@ -20,8 +18,25 @@ function Comander(props) {
     const [showStored, setShowStored] = useState(false);
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
     const [fullscreen, setFullscreen] = useState(false);
+    const [editor, setEditor] = useState(null);
+    const schema = useRef(neo4jSchema);
+    const cm = useRef(null);
     const storedQueries = useRef([]);
-    const theme = useContext(ThemeContext);
+    const theme = useSelector(state => state.currentTheme);
+    const dbSchema = useSelector(state => state.dbSchema);
+
+    useEffect(() => {
+        Object.keys(dbSchema)
+            .forEach(key =>
+                schema.current[key] = [...schema.current[key], ...toSchema(key, dbSchema[key].records)]
+            );
+    }, [dbSchema])
+
+    useEffect(() => {
+        if (editor) {
+            cm.current = editor.getCodeMirror();
+        }
+    }, [editor])
 
     useEffect(() => {
         const queries = localStorage.getItem("neo4jDashboard.queries");
@@ -40,6 +55,7 @@ function Comander(props) {
         setQuery("");
         setShowStored(false);
         storedQueries.current = stored;
+        cm.current.setValue("");
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
     };
 
@@ -47,9 +63,12 @@ function Comander(props) {
         setShowStored(!showStored);
     };
 
-    const selectQuery = (query) => {
+    const selectQuery = (event, query) => {
+        event.preventDefault();
         setQuery(query);
         setShowStored(false);
+        cm.current.setValue(query);
+        cm.current.setCursor(cm.current.lineCount(), 0);
     };
 
     const deleteQuery = (query) => {
@@ -78,20 +97,16 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, 'animated', 'fadeInUp')}>
-            <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : '')}>
-                <CodeMirror
+        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
+            <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : "")}>
+                <CypherCodeMirror
                     className={styles.input}
-                    value={query}
-                    options={{
-                        mode: "cypher",
-                        theme: theme.codemirror,
-                        lineNumbers: false,
-                        lineWrapping: true,
-                    }}
-                    onBeforeChange={(_, __, value) => {
-                        setQuery(value);
-                    }}
+                    options={{ ...codeMirrorSettings, ...{ theme: theme.codemirror } }}
+                    schema={neo4jSchema}
+                    defaultValue={""}
+                    onChange={(value) => setQuery(value)}
+                    onParsed={() => null}
+                    ref={(el) => setEditor(el)}
                 />
                 <em className="material-icons" onClick={handlePlay}>
                     play_arrow
@@ -101,23 +116,22 @@ function Comander(props) {
                 </em>
             </RowLayout>
             <div className={cls(styles.list, showStored ? styles.listActive : "")}>
-                <div className={styles.listOverflow}></div>
                 <span className={styles.listTitle}>Últimas consultas</span>
                 <ul>
                     {storedQueries.current.map((q, i) => (
                         <li
                             key={i}
-                            onClick={() => selectQuery(q)}
+                            onClick={e => selectQuery(e, q)}
                             className={highlightedSuggestion === i ? styles.suggestionActive : ""}
                         >
-                            <CodeMirror
+                            <CypherCodeMirror
                                 value={q}
-                                options={{
-                                    mode: "cypher",
+                                options={{ ...codeMirrorSettings, ...{
                                     theme: theme.codemirror,
-                                    lineNumbers: false,
-                                    lineWrapping: true,
-                                }}
+                                    autofocus: false,
+                                    readOnly: 'nocursor'
+                                } }}
+                                schema={neo4jSchema}
                             />
                         </li>
                     ))}
@@ -127,7 +141,6 @@ function Comander(props) {
                 queries={queries}
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}
-                sessionId={props.sessionId}
                 toggleFullScreen={toggleFullScreen}
             />
         </ColumnLayout>

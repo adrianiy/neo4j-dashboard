@@ -1,7 +1,10 @@
 .summary {
     margin-bottom: 8px;
     font-weight: lighter;
-    overflow-y: scroll;
+    cursor: pointer;
+}
+.summary:hover, .summaryActive {
+    color: var(--highlight-color);
 }
 .summary span{
     margin-right: 8px;

@@ -1,10 +1,20 @@
 .CodeMirror {
     height: auto;
-    padding: 4px;
     cursor: text;
     border-radius: 4px;
+    padding: 4px;
 }
-
+.CodeMirror.CodeMirror-wrap.cm-s-cypher.cm-s-cypher-light {
+    background-color: #fff;
+}
+.cm-s-cypher.cm-s-cypher .CodeMirror-gutters {
+    background: transparent;
+    border-right: none;
+}
+.cm-s-cypher .CodeMirror-cursor {
+    z-index: 3 !important;
+    border-left: 11px solid rgba(155, 157, 162, 0.37) !important;
+}
 ul .CodeMirror-lines {
     cursor: pointer;
 }
