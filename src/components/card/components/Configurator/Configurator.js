@@ -16,7 +16,6 @@ function Configurator(props) {
     }
 
     const renderPropSelector = (defaultProps, className, activeProp, title, style) => {
-        console.log(props.styleForItem.get("color"));
         return defaultProps.map((prop, i) => {
             const onClick = () => {
                 updateStyle(props.styleForItem.selector, prop);
@@ -34,7 +33,6 @@ function Configurator(props) {
     }
 
     const renderCaptionSelector = (defaultCaptions, className, activeCaption) => {
-        console.log(props.styleForItem.get("caption"))
         return Object.entries(defaultCaptions).map((cap, i) => {
             const onClick = () => {
                 updateStyle(props.styleForItem.selector, {
