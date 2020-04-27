@@ -97,7 +97,7 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, "animated", "fadeInUp")}>
+        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
             <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : "")}>
                 <CypherCodeMirror
                     className={styles.input}

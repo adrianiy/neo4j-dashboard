@@ -1,18 +1,16 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Summary from './Summary';
-import Download from './components/Download';
+import { useSelector, useDispatch } from 'react-redux';
+import Summary from './components/Summary/Summary';
+import Download from './components/Download/Download';
 
 import { getQuery } from '../../service/neo.service';
 
-import neoGraphStyle from '../../global/components/chart/graphStyle';
 import { ColumnLayout, RowLayout } from '../../global/layouts';
 import Chart from '../../global/components/chart/Chart';
 import { cls } from '../../global/utils';
 
 import styles from './Card.module.css';
-
-const graphStyle = new neoGraphStyle();
+import actions from '../../global/utils/store/actions';
 
 function Card(props) {
     const [results, setResults] = useState(null);
@@ -24,22 +22,22 @@ function Card(props) {
     const [fullscreen, setFullscreen] = useState(false);
     const [download, setDownload] = useState(false);
     const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
-    const [graphStyleData, setGraphStyle] = useState({
-        relationship: {
-            'text-color-external': theme.relColor
-        }
-    });
+    const graphStyle = useSelector(state => state.graph);
+    const dispatch = useDispatch();
 
     const query = useRef('');
     const visElement = useRef(null);
 
     useEffect(() => {
-        setGraphStyle({
-            relationship: {
-                'text-color-external': theme.relColor
-            }
-        });
-    }, [theme.relColor])
+        dispatch(
+            actions.graph.updateStyle({
+                relationship: {
+                    "text-color-external": theme.relColor,
+                    "text-color-internal": theme.relColorInternal,
+                },
+            })
+        );
+    }, [dispatch, theme.relColor, theme.relColorInternal]);
 
     const fecthData = useCallback(async () => {
         try {
@@ -89,9 +87,7 @@ function Card(props) {
     }
 
     const graphStyleCallback = (style) => {
-        if (!graphStyle) {
-            setGraphStyle(style.toSheet())
-        }
+        dispatch(actions.graph.updateStyle(style.toSheet()));
     }
 
     return (
@@ -134,7 +130,7 @@ function Card(props) {
                 <RowLayout className={styles.cardBody}>
                     <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : "")}>
                         <h3>Summary</h3>
-                        <Summary summary={stats} item={item || selected} graphStyle={graphStyle}></Summary>
+                        <Summary summary={stats} item={item || selected}></Summary>
                     </ColumnLayout>
                     <Chart
                         style={{ width: "100%" }}
@@ -143,9 +139,10 @@ function Card(props) {
                         itemHovered={itemHover}
                         itemSelected={itemSelected}
                         setSummary={setSummary}
-                        graphStyleData={graphStyleData}
+                        graphStyle={graphStyle}
                         graphStyleCallback={graphStyleCallback}
                         autoComplete={false}
+                        fullscreen={fullscreen}
                         assignVisElement={(svgElement, graphElement) =>
                             (visElement.current = { svgElement, graphElement, type: "graph" })
                         }
