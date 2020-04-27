@@ -127,8 +127,10 @@ function Card(props) {
             {results ? (
                 <RowLayout className={styles.cardBody}>
                     <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : "")}>
-                        <h3>Summary</h3>
-                        <Summary summary={stats} item={item || selected}></Summary>
+                        <ColumnLayout className={cls(styles.summaryContainer, "hideScroll")}>
+                            <h3>Summary</h3>
+                            <Summary summary={stats} item={item || selected}></Summary>
+                        </ColumnLayout>
                     </ColumnLayout>
                     <Chart
                         style={{ width: "100%" }}

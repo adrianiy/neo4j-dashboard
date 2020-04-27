@@ -3,6 +3,7 @@ import Card from '../card/Card';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
 
 import styles from './Timeline.module.css';
+import { cls } from '../../global/utils';
 
 function Timeline(props) {
     const [queries, setQueries] = useState([])
@@ -18,7 +19,7 @@ function Timeline(props) {
     };
 
     return (
-        <ColumnLayout className={styles.chartContainer}>
+        <ColumnLayout dist="center" className={cls(styles.chartContainer, 'hideScroll')}>
             {queries.length ? (
                 queries.map((q, idx) => (
                     <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>
