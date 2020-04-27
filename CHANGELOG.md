@@ -1,3 +1,19 @@
+# [1.7.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.6.0...v1.7.0) (2020-04-27)
+
+
+### Bug Fixes
+
+* update graph styles on theme change ([#58](https://github.com/AdrianInsua/neo4j-dashboard/issues/58)) ([2aa2d76](https://github.com/AdrianInsua/neo4j-dashboard/commit/2aa2d76dc6d1bb1b72a059808a98b1a6e47f9622))
+
+
+### Features
+
+* add default hints using cypher-codemirror ([#59](https://github.com/AdrianInsua/neo4j-dashboard/issues/59)) ([9f6b5b3](https://github.com/AdrianInsua/neo4j-dashboard/commit/9f6b5b394da3cb8906b6369a6417b98ab782eb2a))
+* add download options ([#62](https://github.com/AdrianInsua/neo4j-dashboard/issues/62)) ([968a96e](https://github.com/AdrianInsua/neo4j-dashboard/commit/968a96e669677d2f2866b4ac563644c9dd0c75a4))
+* add graph configuration in summary side bar ([#64](https://github.com/AdrianInsua/neo4j-dashboard/issues/64)) ([eb48ba9](https://github.com/AdrianInsua/neo4j-dashboard/commit/eb48ba9b3a8c54f876fb3b85175b69d7d133879e))
+* add theme hook ([0ba2281](https://github.com/AdrianInsua/neo4j-dashboard/commit/0ba228174a8a84912751715ca05f9c5165b707d4))
+* get db schema to improve cmd hints ([#61](https://github.com/AdrianInsua/neo4j-dashboard/issues/61)) ([8a28f03](https://github.com/AdrianInsua/neo4j-dashboard/commit/8a28f0378cd83214269129aef137518d3d47eb80))
+
 # [1.6.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.5.0...v1.6.0) (2020-04-24)
 
 
