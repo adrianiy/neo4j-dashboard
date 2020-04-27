@@ -1,14 +1,14 @@
 .comanderContainer {
-    height: calc(100vh - 85px);
-    margin-top: 85px;
+    height: calc(100vh - var(--padding--xxxl));
+    margin-top: var(--padding--xxxl);
     width: 100%;
     position: relative;
 }
 .input {
     outline: none;
     border: none;
-    font-size: 14px;
-    padding: 12px;
+    font-size: var(--font--l);
+    padding: var(--padding--s);
     width: calc(100% - 142px);
 }
 .input .CodeMirror {
@@ -16,20 +16,17 @@
 }
 .inputContainer {
     background: var(--p-color);
-    margin: 0 20%;
+    margin: 0 var(--margin);
     /* transition: all linear 300ms; */
     box-shadow: var(--box-decoration--shadow);
 }
 .inputContainer em {
     font-size: 35px;
-    margin: 0 8px;
+    margin: 0 var(--padding--xs);
     cursor: pointer;
 }
 .inputContainer em:hover  {
     color: var(--highlight-color);
-}
-.fullscreen {
-    margin-top: -151px;
 }
 .activeIcon  {
     color: var(--highlight-color);
@@ -38,7 +35,7 @@
     border-radius: 4px;
     overflow: hidden;
     background: var(--third-color);
-    margin: 0 20%;
+    margin: 0 var(--margin);
     margin-top: -2px;
     padding: 0;
     box-shadow: var(--box-decoration--shadow);
@@ -53,7 +50,7 @@
 }
 .list ul {
     max-height: calc(100% - 40px);
-    width: calc(100% + 24px);
+    width: calc(100% + var(--padding-m));
     overflow: scroll;
     margin: 0;
     padding: 0;
@@ -61,7 +58,7 @@
     z-index: 3;
 }
 .listTitle {
-    padding: 0 24px;
+    padding: 0 var(--padding--m);
     line-height: 40px;
     display: block;
 }
@@ -69,8 +66,7 @@
     list-style: none;
     cursor: pointer;
     margin: 0;
-    padding: 8px 24px;
-    padding-right: 48px;
+    padding: var(--padding--xs) var(--padding--m);
     cursor: pointer;
     transition: all ease-in-out 100ms;
 }
