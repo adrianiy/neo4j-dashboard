@@ -55,8 +55,10 @@
     position: relative;
     z-index: 3;
 }
-.listTitle {
+.list span {
     padding: 0 var(--padding--m);
+}
+.listTitle {
     line-height: 40px;
     display: block;
 }

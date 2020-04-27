@@ -114,7 +114,7 @@ function Comander(props) {
                 </em>
             </RowLayout>
             <div className={cls(styles.list, showStored ? styles.listActive : "")}>
-                <span className={styles.listTitle}>Últimas consultas</span>
+                <span className={styles.listTitle}>Last queries</span>
                 <ul className="hideScroll">
                     {storedQueries.current.map((q, i) => (
                         <li
@@ -133,6 +133,7 @@ function Comander(props) {
                             />
                         </li>
                     ))}
+                    {!storedQueries.current.length ? <span>No queries found</span> : null }
                 </ul>
             </div>
             <Timeline
