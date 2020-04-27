@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import GraphComponent from './../../../assets/visualization/Graph';
 import { getQuery } from './../../../service/neo.service';
 
@@ -27,6 +27,7 @@ function Chart (props) {
     const [nodes, setNodes] = useState([]);
     const [relationships, setRelationships] = useState([]);
     const user = useSelector(state => state.currentUser);
+    const _prevResults = useRef(null);
     let _graph;
     let _autoCompleteCallback;
 
@@ -59,12 +60,15 @@ function Chart (props) {
     }, [checkNodesLength]);
 
     useEffect(() => {
-        const { records = [] } = props.result;
-        if (records && records.length > 0) {
-            setNodes([]);
-            populateDataFromRecords(records);
+        if (_prevResults.current !== props.result) {
+            const { records = [] } = props.result;
+            if (records && records.length > 0) {
+                setNodes([]);
+                populateDataFromRecords(records);
+                _prevResults.current = props.result;
+            }
         }
-    }, [props, populateDataFromRecords]);
+    }, [populateDataFromRecords, props.result]);
 
     const autoCompleteRelationships = async (existingNodes, newNodes) => {
         if (props.autoComplete) {

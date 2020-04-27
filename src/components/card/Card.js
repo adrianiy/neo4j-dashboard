@@ -55,7 +55,7 @@ function Card(props) {
             setResults(null);
             fecthData();
         }
-    }, [props, fecthData]);
+    }, [props.query, fecthData]);
 
     const toggleExpand = () => {
         setExpanded(!expanded);
