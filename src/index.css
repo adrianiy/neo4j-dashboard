@@ -21,6 +21,10 @@ h3 {
     text-transform: uppercase;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 :root .dark {
     --bg-color: #282c34;
     --p-color: rgb(90, 96, 112);
