@@ -77,14 +77,17 @@ function Comander(props) {
     useEventListener("keydown", (event) => {
         switch (event.keyCode) {
             case 40: // ArrowDown
-                setHighlightedSuggestion((hs) => (hs === storedQueries.current.length - 1 ? 0 : hs + 1));
+                setHighlightedSuggestion((hs) => {
+                    console.log((hs === storedQueries.current.length - 1 ? 0 : hs + 1))
+                    return (hs === storedQueries.current.length - 1 ? 0 : hs + 1)
+                });
                 break;
             case 38: // ArrowUp
                 setHighlightedSuggestion((hs) => (hs <= 0 ? storedQueries.current.length : hs) - 1);
                 break;
             case 13: // Enter
-                showStored && selectQuery(storedQueries.current(highlightedSuggestion));
-                !showStored && handlePlay();
+                showStored && ! query.length && selectQuery(event, storedQueries.current[highlightedSuggestion]);
+                (!showStored || query.length) && handlePlay();
                 break;
             default:
                 break;
@@ -92,7 +95,7 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
+        <ColumnLayout dist="spaced center" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
             <RowLayout dist="middle" className={styles.inputContainer}>
                 <CypherCodeMirror
                     className={styles.input}
@@ -111,8 +114,8 @@ function Comander(props) {
                 </em>
             </RowLayout>
             <div className={cls(styles.list, showStored ? styles.listActive : "")}>
-                <span className={styles.listTitle}>Últimas consultas</span>
-                <ul>
+                <span className={styles.listTitle}>Last queries</span>
+                <ul className="hideScroll">
                     {storedQueries.current.map((q, i) => (
                         <li
                             key={i}
@@ -130,6 +133,7 @@ function Comander(props) {
                             />
                         </li>
                     ))}
+                    {!storedQueries.current.length ? <span>No queries found</span> : null }
                 </ul>
             </div>
             <Timeline

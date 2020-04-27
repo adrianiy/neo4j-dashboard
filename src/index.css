@@ -8,6 +8,23 @@ body {
   font-size: var(--font-size--m);
 }
 
+ul {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+h3 {
+    font-weight: var(--font-weight--bold);
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 :root .dark {
     --bg-color: #282c34;
     --p-color: rgb(90, 96, 112);
@@ -68,6 +85,6 @@ body {
 }
 
 :root {
-    --margin: 20%;
-    --max-width: 40%;
+    --max-width: 60%;
+    --min-height: 450px;
 }

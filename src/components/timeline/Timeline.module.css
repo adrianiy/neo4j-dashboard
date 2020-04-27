@@ -1,33 +1,23 @@
-.timelineContainer {
-    height: calc(100vh - 85px);
-    width: 100%;
-    position: relative;
-}
 .noQueries {
-    min-height: 450px;
-    margin: var(--padding--xl) 20%;
+    width: 100%;
+    min-height: var(--min-height);
+    max-width: var(--max-width);
+    margin: var(--padding--xl) 0;
+    margin-right: var(--padding--m);
     background: var(--p-color);
     color: var(--text-color);
     font-weight: bold;
     box-shadow: var(--box-decoration--shadow);
 }
-.overflowScroll {
-    background: var(--bg-color);
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    z-index: 99;
-}
 
 .chartContainer {
-    flex: 1;
-    padding: 0;
+    width: 100%;
     overflow: scroll;
 }
 .chartWrapper {
-    min-height: 450px;
+    min-height: var(--min-height);
+    width: 100%;
+    margin-right: var(--padding--m);
     margin-bottom: var(--padding--xl);
 }
 .chartWrapper:first-of-type {
