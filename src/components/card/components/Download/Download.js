@@ -3,8 +3,8 @@ import { saveAs } from "file-saver";
 
 import { stringifyResultArray, transformResultRecordsToResultArray } from './utils/utils';
 import { CSVSerializer } from './utils/csvHelper';
-import { ColumnLayout } from '../../../global/layouts';
-import { csvFormat, recordToJSONMapper } from '../../../global/components/chart/utils/cypher-utils';
+import { ColumnLayout } from '../../../../global/layouts';
+import { csvFormat, recordToJSONMapper } from '../../../../global/components/chart/utils/cypher-utils';
 
 import styles from './Download.module.css';
 import { downloadPNGFromSVG, downloadSVG } from './utils/exporting/imageUtils';

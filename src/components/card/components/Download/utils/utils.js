@@ -1,5 +1,5 @@
-import { stringModifier, extractRecordsToResultArray, flattenGraphItemsInResultArray } from "../../../../global/components/chart/utils/cypher-utils";
-import { stringifyMod } from "../../../../global/utils";
+import { stringModifier, extractRecordsToResultArray, flattenGraphItemsInResultArray } from "../../../../../global/components/chart/utils/cypher-utils";
+import { stringifyMod } from "../../../../../global/utils";
 import neo4j from "neo4j-driver";
 
 /**

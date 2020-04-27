@@ -81,7 +81,7 @@
 
 .summary {
     padding: 24px;
-    width: 132px;
+    width: 150px;
     overflow: scroll;
     transition: all ease-in-out 200ms;
 }

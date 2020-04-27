@@ -6,11 +6,13 @@ const themes = {
         id: "light",
         codemirror: "cypher cypher-light",
         relColor: "#000",
+        relColorInternal: '#fff'
     },
     dark: {
         id: "dark",
         codemirror: "cypher cypher-dark",
         relColor: "#fff",
+        relColorInternal: '#000'
     },
 };
 

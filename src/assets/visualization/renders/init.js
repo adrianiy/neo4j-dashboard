@@ -29,7 +29,6 @@ const nodeOutline = new Renderer({
     circles.enter().append("circle").classed("outline", true).attr({
         cx: 0,
         cy: 0,
-        stroke: "#f76d09",
     });
 
     circles.attr({
@@ -37,8 +36,8 @@ const nodeOutline = new Renderer({
             return node.radius;
         },
         fill(node) {
-            if (viz.style.forNode(node).getImage()) {
-                return `url(#image${node.id})`
+            if (viz.style.shouldRenderImageCaption()) {
+                return `url(#image${node.id})`;
             } else {
                 return viz.style.forNode(node).get("color");
             }
@@ -74,14 +73,17 @@ const nodeImage = new Renderer({
             .attr("height", (node) => node.radius * 2 + 10)
             .attr("patternUnits", "userSpaceOnUse")
             .append("svg:image")
-            .attr("stroke-width", "1px")
-            .attr("stroke", "#d8d8d8")
             .attr({
                 width(node) {
                     return node.radius * 2 + 10;
                 },
+                stroke(node) {
+                    return viz.style.forNode(node).get("border-color");
+                },
                 "xlink:href"(node) {
-                    return viz.style.forNode(node).getImage()
+                    const caption = viz.style.forNode(node).get('caption');
+                    const url = node.propertyList.find(prop => caption.includes(prop.key));
+                    return url?.value;
                 },
             });
 
@@ -102,7 +104,7 @@ const nodeCaption = new Renderer({
       .attr({ 'pointer-events': 'none' })
 
     text
-      .text(line => viz.style.forNode(line.node).getImage() ? '' : line.text)
+      .text(line => viz.style.forNode(line.node).willRenderImage() ? '' : line.text)
       .attr('y', line => line.baseline)
       .attr('font-size', line => viz.style.forNode(line.node).get('font-size'))
       .attr({

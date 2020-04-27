@@ -3,11 +3,10 @@ import GraphComponent from './../../../assets/visualization/Graph';
 import { getQuery } from './../../../service/neo.service';
 
 import { extractNodesAndRelationshipsFromRecordsForOldVis } from './utils/graph-utils';
-import deepmerge from 'deepmerge';
 import neo4j from 'neo4j-driver';
 
-import neoGraphStyle from './graphStyle';
 import { useSelector } from 'react-redux';
+import neoGraphStyle from './graphStyle';
 
 const deduplicateNodes = (nodes) => {
     return nodes.reduce(
@@ -27,7 +26,6 @@ const deduplicateNodes = (nodes) => {
 function Chart (props) {
     const [nodes, setNodes] = useState([]);
     const [relationships, setRelationships] = useState([]);
-    const [graphStyle, setGraphStyle] = useState(neoGraphStyle());
     const user = useSelector(state => state.currentUser);
     let _graph;
     let _autoCompleteCallback;
@@ -59,21 +57,6 @@ function Chart (props) {
         checkNodesLength(nodes);
         setRelationships(relationships);
     }, [checkNodesLength]);
-
-    useEffect(() => {
-        const rebasedStyle = deepmerge(graphStyle.toSheet(), props.graphStyleData);
-        graphStyle.loadRules(rebasedStyle);
-        graphStyle.update();
-        setGraphStyle(graphStyle);
-    }, [props.graphStyleData, graphStyle])
-
-    useEffect(() => {
-        if (!props.graphStyleData) {
-            graphStyle.resetToDefault();
-            setGraphStyle(graphStyle);
-            props.graphStyleCallback(graphStyle);
-        }
-    }, [graphStyle, props]);
 
     useEffect(() => {
         const { records = [] } = props.result;
@@ -161,7 +144,7 @@ function Chart (props) {
             getNodeNeighbours={getNodeNeighbours}
             onItemMouseOver={props.itemHovered}
             onItemSelect={props.itemSelected}
-            graphStyle={graphStyle}
+            graphStyle={props.graphStyle || neoGraphStyle()}
             onGraphModelChange={onGraphModelChange}
             assignVisElement={props.assignVisElement}
             getAutoCompleteCallback={props.getAutoCompleteCallback}

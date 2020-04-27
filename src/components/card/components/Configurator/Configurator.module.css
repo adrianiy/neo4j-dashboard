@@ -1,0 +1,64 @@
+.configWrapper:not(:first-of-type) {
+    margin-top: 8px;
+}
+.configContainer {
+    margin-top: 8px;
+}
+.circle, .colorCircle {
+    border-radius: 100%;
+    background-color: var(--bg-color);
+    margin-right: 8px;
+    width: 10px;
+    height: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.colorCircle {
+    opacity: .5;
+}
+.colorActive {
+    opacity:1;
+}
+.circle:hover, .circleActive{
+    background-color: var(--highlight-color);
+}
+.line, .lineColor {
+    background-color: var(--bg-color);
+    margin-right: 8px;
+    width: 10px;
+    height: 5px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.lineColor {
+    opacity: .5;
+}
+.line:hover, .lineActive {
+    background-color: var(--highlight-color);
+    color: var(--highlight-color)
+}
+.lineActive {
+    opacity: 1;
+}
+.auto.lineActive {
+    background-color: transparent;
+}
+
+.propertiesContainer {
+    margin-top: 8px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.property {
+    max-width: 100%;
+    overflow: hidden;
+    font-weight: 200;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+.propertyActive {
+    font-weight: 400;
+}
+
+

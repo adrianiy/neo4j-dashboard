@@ -18,22 +18,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import canvg from "canvg";
+import Canvg, { presets } from "canvg";
 
 import { prepareForExport } from "./svgUtils";
 import FileSaver from "file-saver";
 
-export const downloadPNGFromSVG = (svg, graph, type) => {
+export const downloadPNGFromSVG = async (svg, graph, type) => {
     const svgObj = prepareForExport(svg, graph, type);
     const svgData = htmlCharacterRefToNumericalRef(svgObj.node());
 
-    let canvas;
-    canvas = document.createElement("canvas");
-    canvas.width = svgObj.attr("width");
-    canvas.height = svgObj.attr("height");
+    const canvas = new OffscreenCanvas(svgObj.attr("width"), svgObj.attr("height"));
+    const ctx = canvas.getContext('2d');
+    const v = await Canvg.from(ctx, svgData, presets.offscreen());
 
-    canvg(canvas, svgData);
-    return downloadWithDataURI(type + ".png", canvas.toDataURL("image/png"));
+    // Render only first frame, ignoring animations and mouse.
+    await v.render();
+
+    const blob = await canvas.convertToBlob();
+    return FileSaver.saveAs(blob, `${type}.png`)
 };
 
 export const downloadSVG = (svg, graph, type) => {
@@ -49,20 +51,4 @@ const htmlCharacterRefToNumericalRef = (node) =>
 const download = (filename, mime, data) => {
     const blob = new Blob([data], { type: mime });
     return FileSaver.saveAs(blob, filename);
-};
-
-const downloadWithDataURI = (filename, dataURI) => {
-    var byteString, i, ia, j, mimeString, ref;
-    byteString = null;
-    if (dataURI.split(",")[0].indexOf("base64") >= 0) {
-        byteString = window.atob(dataURI.split(",")[1]);
-    } else {
-        byteString = unescape(dataURI.split(",")[1]);
-    }
-    mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-    ia = new Uint8Array(byteString.length);
-    for (i = j = 0, ref = byteString.length; ref >= 0 ? j <= ref : j >= ref; i = ref >= 0 ? ++j : --j) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    return download(filename, mimeString, ia);
 };
