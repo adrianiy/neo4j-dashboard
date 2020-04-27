@@ -1,14 +1,11 @@
 .timelineContainer {
     height: calc(100vh - 85px);
-    margin-top: 85px;
     width: 100%;
     position: relative;
 }
 .noQueries {
     min-height: 450px;
-    margin: 0 20%;
-    margin-top: 48px;
-    margin-bottom: 48px;
+    margin: var(--padding--xl) 20%;
     background: var(--p-color);
     color: var(--text-color);
     font-weight: bold;
@@ -31,8 +28,8 @@
 }
 .chartWrapper {
     min-height: 450px;
-    margin-bottom: 48px;
+    margin-bottom: var(--padding--xl);
 }
 .chartWrapper:first-of-type {
-    margin-top: 48px;
+    margin-top: var(--padding--xl);
 }

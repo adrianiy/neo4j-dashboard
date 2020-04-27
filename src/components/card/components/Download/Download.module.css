@@ -1,5 +1,5 @@
 .listItem {
-    padding: 8px;
+    padding: var(--padding--xs);
     width: 90px;
     cursor: pointer;
 }

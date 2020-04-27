@@ -11,7 +11,7 @@
   justify-content: center;
 }
 .AppLoading {
-    font-size: 140px!important;
+    font-size: var(--font-size--xxxl)!important;
     color: var(--highlight-color);
     animation: loading infinite 1500ms;
 }
@@ -38,7 +38,7 @@
 }
 .theme-toggler {
     width: 28px;
-    margin: 0 8px;
+    margin: 0 var(--padding--xs);
     border-radius: 14px;
     background: #7d7c7c;
     height: 15px;
@@ -61,7 +61,7 @@
     left: 13px;
 }
 h3 {
-    font-weight: 600;
+    font-weight: var(--font-weight--bold);
     margin-top: 0;
     text-transform: uppercase;
 }

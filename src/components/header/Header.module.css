@@ -3,36 +3,36 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 24px 48px;
+    padding: var(--padding--m) var(--padding--xl);
 }
 .name {
     font-weight: bold;
 }
 .name em {
-    color: #f76d09;
-    font-size: 18px;
+    color: var(--highlight-color);
+    font-size: var(--font-size--xxl);
 }
 .name span {
-    margin-left: 8px;
+    margin-left: var(--padding--xs);
 }
 .userContainer span {
-    color: #f76d09;
+    color: var(--highlight-color);
 }
 .themeChanger {
-    margin-right: 24px;
+    margin-right: var(--padding--m);
 }
 .darkIcon {
     color: var(--theme-icon--dark);
-    font-size: 13px;
+    font-size: var(--font-size--m);
 }
 .lightIcon {
     color: var(--theme-icon--light);
-    font-size: 13px;
+    font-size: var(--font-size--m);
 }
 .link {
-    margin-left: 8px;
+    margin-left: var(--padding--xs);
     cursor: pointer;
 }
 .link:hover {
-    color: #f76d09;
+    color: var(--highlight-color);
 }

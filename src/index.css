@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 12px;
+  font-size: var(--font-size--m);
 }
 
 :root .dark {
@@ -35,4 +35,39 @@ body {
     --theme-icon--dark: rgb(90, 96, 112);
 
     --box-decoration--shadow: none;
+}
+
+:root {
+    --padding--xxs: 4px;
+    --padding--xs: 8px;
+    --padding--s: 12px;
+    --padding--m: 24px;
+    --padding--l: 32px;
+    --padding--xl: 48px;
+    --padding--xxl: 64px;
+    --padding--xxxl: 86px;
+}
+
+:root {
+    --font-size--xxs: 6px;
+    --font-size--xs: 8px;
+    --font-size--s: 10px;
+    --font-size--m: 12px;
+    --font-size--l: 14px;
+    --font-size--xl: 16px;
+    --font-size--xxl: 18px;
+    --font-size--xxxl: 140px;
+    --font-size--xxxxl: 350px;
+}
+
+:root {
+    --font-weight--lighter: lighter;
+    --font-weight--normal: normal;
+    --font-weight--bold: 500;
+    --font-weight--bolder: bolder;
+}
+
+:root {
+    --margin: 20%;
+    --max-width: 40%;
 }
