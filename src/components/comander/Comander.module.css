@@ -17,7 +17,6 @@
 .inputContainer {
     background: var(--p-color);
     margin: 0 var(--margin);
-    /* transition: all linear 300ms; */
     box-shadow: var(--box-decoration--shadow);
 }
 .inputContainer em {

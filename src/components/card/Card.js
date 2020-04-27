@@ -62,7 +62,6 @@ function Card(props) {
     }
 
     const toggleFullScreen = () => {
-        props.toggleFullScreen(!fullscreen);
         setFullscreen(!fullscreen);
     };
 
@@ -93,7 +92,6 @@ function Card(props) {
     return (
         <ColumnLayout
             className={cls(styles.card, expanded ? styles.expanded : "", fullscreen ? styles.fullscreen : "")}
-            style={{ marginTop: fullscreen ? 85 - props.idx * 500 : 0 }}
         >
             <header className="row middle spaced">
                 <span className={styles.cardTitle}>QUERY</span>
