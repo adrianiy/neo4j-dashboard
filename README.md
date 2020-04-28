@@ -15,6 +15,10 @@ The graphic library is a wrapper of [neo4j-browser] graph classes isolated and r
 
 ## Demo
 
+<div align="center">
+  <img src="./public/screenshot.png">
+</div>
+
 You can access [neo4j-dashboad] and use your custom [neo4j] credentials to test this App
 
 ## Custom features
@@ -71,6 +75,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 [repo-link]: https://github.com/AdrianInsua/neo4j-dashboard
 [repo-version-link]: https://github.com/AdrianInsua/neo4j-dashboard/releases
 
+[neo4j-dasboard]: https://neo4j-dashboard.now.sh/
 [neo4j]: https://neo4j.com/download-neo4j-now/?utm_source=google&utm_medium=ppc&utm_campaign=*EU%20-%20Search%20-%20Branded&utm_adgroup=*EU%20-%20Search%20-%20Branded%20-%20Neo4j%20-%20Exact&utm_term=neo4j&gclid=CjwKCAjwnIr1BRAWEiwA6GpwNW0X6o33Apjt_e3hn-lsI1iEYvVoiNcWDFr76xMXKyQ-XPqF2IOeTBoCgl8QAvD_BwE
 [neo4j-dashboard]: https://neo4j-dashboard.now.sh/
 [neo4j-browser]: https://github.com/neo4j/neo4j-browser
