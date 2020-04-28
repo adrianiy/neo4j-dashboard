@@ -19,9 +19,8 @@ function Card(props) {
     const [selected, setSelected] = useState(null);
     const [stats, setStats] = useState(null);
     const [expanded, setExpanded] = useState(false);
-    const [fullscreen, setFullscreen] = useState(false);
     const [download, setDownload] = useState(false);
-    const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
+    const [theme, fullscreen, user] = useSelector(state => [state.theme, state.theme.fullscreen, state.user]);
     const graphStyle = useSelector(state => state.graph);
     const dispatch = useDispatch();
 
@@ -62,7 +61,7 @@ function Card(props) {
     }
 
     const toggleFullScreen = () => {
-        setFullscreen(!fullscreen);
+        dispatch(actions.theme.toggleFullScreen())
     };
 
     const toggleDownload = () => {

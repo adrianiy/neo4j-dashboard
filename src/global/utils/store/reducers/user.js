@@ -1,7 +1,7 @@
 export const SETUSER = "SET_USER";
 export const LOGOUT = "LOG_OUT";
 
-const currentUser = (state = { loggedIn: false }, action) => {
+const userStore = (state = { loggedIn: false }, action) => {
     switch (action.type) {
         case SETUSER:
             return {
@@ -23,4 +23,4 @@ const currentUser = (state = { loggedIn: false }, action) => {
     }
 };
 
-export default currentUser;
+export default userStore;

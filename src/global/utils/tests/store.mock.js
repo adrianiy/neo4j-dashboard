@@ -5,8 +5,8 @@ import configureStore from "redux-mock-store";
 export const getMockProvider = (partialState) => {
     const mockStore = configureStore();
     const store = mockStore({
-        currentTheme: {},
-        currentUser: { user: null, loggedIn: false }
+        theme: {},
+        user: { user: null, loggedIn: false }
     });
 
     return {

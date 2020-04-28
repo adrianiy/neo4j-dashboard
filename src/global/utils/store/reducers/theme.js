@@ -1,6 +1,7 @@
 export const AUTOTHEME = "SET_AUTO_THEME";
 export const THEME = "SET_THEME";
 export const SIZE = "SET_SIZE";
+export const TOGGLEFS = "TOGGLE_FULLSCREEN";
 
 const themes = {
     light: {
@@ -31,10 +32,11 @@ const manageAutoTheme = () => {
 const initialState = {
     ...themes[manageAutoTheme()],
     ...{ _id: 'auto' },
-    ...{ size: 'small' }
+    ...{ size: 'small' },
+    ...{ fullscreen: false }
 }
 
-const currentTheme = (state = initialState, action) => {
+const themeStore = (state = initialState, action) => {
     switch(action.type) {
         case AUTOTHEME:
             return {
@@ -52,9 +54,14 @@ const currentTheme = (state = initialState, action) => {
                 ...state,
                 ...{ size: action.size }
             }
+        case TOGGLEFS:
+            return {
+                ...state,
+                ...{ fullscreen: !state.fullscreen }
+            }
         default:
             return state;
     }
 };
 
-export default currentTheme;
+export default themeStore;

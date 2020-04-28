@@ -1,4 +1,4 @@
-import { AUTOTHEME, THEME, SIZE } from "../reducers/theme";
+import { AUTOTHEME, THEME, SIZE, TOGGLEFS } from "../reducers/theme";
 
 const setAutoTheme = () => {
     return {
@@ -20,8 +20,15 @@ const setSize = size => {
     }
 }
 
+const toggleFullScreen = () => {
+    return {
+        type: TOGGLEFS
+    }
+}
+
 export default {
     setAutoTheme,
     setCustomTheme,
-    setSize
+    setSize,
+    toggleFullScreen
 }
