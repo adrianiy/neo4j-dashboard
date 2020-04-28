@@ -3,7 +3,6 @@
     min-height: var(--min-height);
     max-width: var(--max-width);
     margin: var(--padding--xl) 0;
-    margin-right: var(--padding--m);
     background: var(--p-color);
     color: var(--text-color);
     font-weight: bold;

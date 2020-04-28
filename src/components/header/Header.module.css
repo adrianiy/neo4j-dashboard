@@ -1,14 +1,24 @@
 .header {
-    width: calc(100% - 96px);
+    width: calc(100% - var(--padding--xl));
     position: fixed;
     top: 0;
     left: 0;
-    padding: var(--padding--m) var(--padding--xl);
+    z-index: 2;
+    padding: var(--padding--m);
+}
+.menu {
+    color: var(--text-color);
+    cursor: pointer;
+    margin-right: var(--padding--s);
+    font-size: var(--font-size--big-icon);
+}
+.menu:hover, .menuActive {
+    color: var(--highlight-color);
 }
 .name {
     font-weight: bold;
 }
-.name em {
+.icon {
     color: var(--highlight-color);
     font-size: var(--font-size--xxl);
 }

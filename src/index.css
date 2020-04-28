@@ -34,24 +34,27 @@ h3 {
     --highlight-secondary: #5f6a7f;
     --text-color: white;
 
-    --theme-icon--light: #ffcb6b99;
-    --theme-icon--dark: rgb(90, 96, 112);
-
     --box-decoration--shadow: 0 0 8px 4px #00000024;
 }
 :root .light {
     --bg-color: rgb(210, 213, 218);
     --p-color: rgb(239, 239, 244);
     --secondary-color: #e3e5e8;
-    --third-color: rgb(239, 239, 244);
+    --third-color: rgb(230, 230, 234);
     --highlight-color: #f76d09;
     --highlight-secondary: #c8cdd7;
     --text-color: rgba(0,0,0,.8);
 
-    --theme-icon--light: #f0a10f;
-    --theme-icon--dark: rgb(90, 96, 112);
-
     --box-decoration--shadow: none;
+}
+:root .small {
+    --max-width: 60%;
+    --min-height: 450px;
+}
+
+:root .wide {
+    --max-width: calc(100% - var(--padding--xl));
+    --min-height: 650px;
 }
 
 :root {
@@ -75,6 +78,7 @@ h3 {
     --font-size--xxl: 18px;
     --font-size--xxxl: 140px;
     --font-size--xxxxl: 350px;
+    --font-size--big-icon: 30px;
 }
 
 :root {
@@ -82,9 +86,4 @@ h3 {
     --font-weight--normal: normal;
     --font-weight--bold: 500;
     --font-weight--bolder: bolder;
-}
-
-:root {
-    --max-width: 60%;
-    --min-height: 450px;
 }

@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import Login from './components/login/Login';
 import Comander from './components/comander/Comander';
 import Header from './components/header/Header';
+import Sidebar from './components/sidebar/Sidebar';
 
 import { doLogout } from './service/neo.service';
 import { getDBSchema } from './service/schema.service';
@@ -17,6 +18,7 @@ import { useAsyncDispatch } from './global/utils/hooks/dispatch';
 function App() {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
     const [loading, setLoading] = useState(true);
+    const [menu, setMenu] = useState(false);
     const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
 
     const dispatch = useDispatch();
@@ -45,6 +47,10 @@ function App() {
         }
     }, [loading, setCookie, user]);
 
+    const toggleMenu = (state) => {
+        setMenu(state);
+    }
+
     const render = () => {
         if (loading) {
             return <em className={cls('AppLoading', "material-icons")}>share</em>
@@ -56,15 +62,16 @@ function App() {
             } else {
                 return (
                     <div className="AppContainer">
-                        <Header></Header>
+                        <Header toggleMenu={toggleMenu}></Header>
                         <Comander></Comander>
+                        {menu ? <Sidebar className="animated fadeInLeft" /> : null}
                     </div>
                 )
             }
         }
     }
 
-    return <div className={cls('App', theme.id)}>
+    return <div className={cls('App', theme.id, theme.size)}>
             { render() }
         </div>
 }

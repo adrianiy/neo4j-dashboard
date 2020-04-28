@@ -1,0 +1,63 @@
+.sideBarContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    box-shadow: var(--box-decoration--shadow);
+    background-color: var(--p-color);
+}
+.options {
+    padding: var(--padding--xxxl) 0;
+    width: 78px;
+    text-align: right;
+}
+.options em {
+    padding: var(--padding--xs) var(--padding--s);
+    margin-bottom: var(--padding--xs);
+    cursor: pointer;
+}
+.optionActive {
+    background-color: var(--third-color);
+}
+.menuContainer {
+    background-color: var(--third-color);
+    padding-top: var(--padding--s);
+    width: 100%;
+}
+.menuContainer h3 {
+    padding: var(--padding--s) var(--padding--m);
+    line-height: 30px;
+    font-weight: var(--font-weight--bolder)!important;
+    margin-bottom: var(--padding--xs)
+}
+.menuContainer span {
+    padding-left: var(--padding--m);
+}
+
+.menuContainer h3:not(:first-of-type) {
+    border-top: 1px solid var(--bg-color);
+    margin-top: var(--padding--l);
+    padding-top: var(--padding--xxl);
+}
+
+.item {
+    padding: var(--padding--m);
+}
+.item span {
+    padding-left: 0;
+}
+
+.chipsContainer {
+    padding: var(--padding--m);
+}
+.chip {
+    padding: var(--padding--xs);
+    background: rgba(0,0,0,.3);
+    margin-right: var(--padding--xs);
+    margin-bottom: var(--padding--xs);
+}
+.propChip {
+    background: transparent;
+    border: 1px solid rgba(0,0,0,.3);
+}
