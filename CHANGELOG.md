@@ -1,3 +1,18 @@
+# [1.8.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.7.0...v1.8.0) (2020-04-28)
+
+
+### Bug Fixes
+
+* fix fullscreen transition ([#73](https://github.com/AdrianInsua/neo4j-dashboard/issues/73)) ([f897f0d](https://github.com/AdrianInsua/neo4j-dashboard/commit/f897f0de18c9b0bc222bd11b10100f8ad4752961))
+* hide scrolls in all browsers ([#74](https://github.com/AdrianInsua/neo4j-dashboard/issues/74)) ([43d1539](https://github.com/AdrianInsua/neo4j-dashboard/commit/43d153996045b296376dec7b87a52f8d7950486c))
+
+
+### Features
+
+* add sidebar menu ([#75](https://github.com/AdrianInsua/neo4j-dashboard/issues/75)) ([2ec463d](https://github.com/AdrianInsua/neo4j-dashboard/commit/2ec463df536e59b90305b65e98285571e224cb93))
+* improve graph rendering speed with image nodes ([#72](https://github.com/AdrianInsua/neo4j-dashboard/issues/72)) ([22f1c96](https://github.com/AdrianInsua/neo4j-dashboard/commit/22f1c96382008f730ea3c43ce88920c85c819fb4))
+* manage styles with global css variables ([#70](https://github.com/AdrianInsua/neo4j-dashboard/issues/70)) ([1e2350d](https://github.com/AdrianInsua/neo4j-dashboard/commit/1e2350d897b86898a0b905da434530093731c108))
+
 # [1.7.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.6.0...v1.7.0) (2020-04-27)
 
 
