@@ -55,14 +55,13 @@ function Card(props) {
             setResults(null);
             fecthData();
         }
-    }, [props, fecthData]);
+    }, [props.query, fecthData]);
 
     const toggleExpand = () => {
         setExpanded(!expanded);
     }
 
     const toggleFullScreen = () => {
-        props.toggleFullScreen(!fullscreen);
         setFullscreen(!fullscreen);
     };
 
@@ -93,7 +92,6 @@ function Card(props) {
     return (
         <ColumnLayout
             className={cls(styles.card, expanded ? styles.expanded : "", fullscreen ? styles.fullscreen : "")}
-            style={{ marginTop: fullscreen ? 85 - props.idx * 500 : 0 }}
         >
             <header className="row middle spaced">
                 <span className={styles.cardTitle}>QUERY</span>
@@ -129,8 +127,10 @@ function Card(props) {
             {results ? (
                 <RowLayout className={styles.cardBody}>
                     <ColumnLayout className={cls(styles.summary, fullscreen || expanded ? styles.summaryWidder : "")}>
-                        <h3>Summary</h3>
-                        <Summary summary={stats} item={item || selected}></Summary>
+                        <ColumnLayout className={cls(styles.summaryContainer, "hideScroll")}>
+                            <h3>Summary</h3>
+                            <Summary summary={stats} item={item || selected}></Summary>
+                        </ColumnLayout>
                     </ColumnLayout>
                     <Chart
                         style={{ width: "100%" }}

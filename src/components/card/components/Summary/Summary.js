@@ -58,10 +58,12 @@ function Summary (props) {
                 const styleForItem = graphStyle.forRelationship({
                     relTypes: [key],
                 });
-                console.log(summary);
                 return (
                     <RowLayout
-                        className={style.summary}
+                        className={cls(
+                            style.summary,
+                            configItem && configItem.label === key ? style.summaryActive : ""
+                        )}
                         dist="middle"
                         key={idx}
                         onClick={() =>

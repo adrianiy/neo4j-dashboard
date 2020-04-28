@@ -2,7 +2,7 @@
     height: auto;
     cursor: text;
     border-radius: 4px;
-    padding: 4px;
+    padding: var(--padding--xxs);
 }
 .CodeMirror.CodeMirror-wrap.cm-s-cypher.cm-s-cypher-light {
     background-color: #fff;

@@ -1,4 +1,4 @@
-import { AUTOTHEME, THEME } from "../reducers/theme";
+import { AUTOTHEME, THEME, SIZE } from "../reducers/theme";
 
 const setAutoTheme = () => {
     return {
@@ -13,7 +13,15 @@ const setCustomTheme = theme => {
     }
 };
 
+const setSize = size => {
+    return {
+        type: SIZE,
+        size
+    }
+}
+
 export default {
     setAutoTheme,
-    setCustomTheme
+    setCustomTheme,
+    setSize
 }

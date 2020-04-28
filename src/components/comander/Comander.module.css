@@ -1,14 +1,14 @@
 .comanderContainer {
-    height: calc(100vh - 85px);
-    margin-top: 85px;
+    height: calc(100vh - var(--padding--xxxl));
+    margin-top: var(--padding--xxxl);
     width: 100%;
     position: relative;
 }
 .input {
     outline: none;
     border: none;
-    font-size: 14px;
-    padding: 12px;
+    font-size: var(--font--l);
+    padding: var(--padding--s);
     width: calc(100% - 142px);
 }
 .input .CodeMirror {
@@ -16,52 +16,47 @@
 }
 .inputContainer {
     background: var(--p-color);
-    margin: 0 20%;
-    /* transition: all linear 300ms; */
+    width: 100%;
+    max-width: var(--max-width);
     box-shadow: var(--box-decoration--shadow);
 }
 .inputContainer em {
     font-size: 35px;
-    margin: 0 8px;
+    margin: 0 var(--padding--xs);
     cursor: pointer;
 }
 .inputContainer em:hover  {
     color: var(--highlight-color);
-}
-.fullscreen {
-    margin-top: -151px;
 }
 .activeIcon  {
     color: var(--highlight-color);
 }
 .list {
     border-radius: 4px;
-    overflow: hidden;
     background: var(--third-color);
-    margin: 0 20%;
-    margin-top: -2px;
-    padding: 0;
+    width: var(--max-width);
     box-shadow: var(--box-decoration--shadow);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    max-height: 0px;
+    overflow: hidden;
+    max-height: 0;
+    min-height: 0px;
     position: relative;
     transition: all ease-in-out 200ms;
 }
 .listActive {
-    max-height: 200px;
+    min-height: 170px;
+    max-height: 170px;
 }
 .list ul {
     max-height: calc(100% - 40px);
-    width: calc(100% + 24px);
-    overflow: scroll;
-    margin: 0;
-    padding: 0;
     position: relative;
     z-index: 3;
 }
+.noQueries, .listTitle {
+    padding: 0 var(--padding--m);
+}
 .listTitle {
-    padding: 0 24px;
     line-height: 40px;
     display: block;
 }
@@ -69,8 +64,7 @@
     list-style: none;
     cursor: pointer;
     margin: 0;
-    padding: 8px 24px;
-    padding-right: 48px;
+    padding: var(--padding--xs) var(--padding--m);
     cursor: pointer;
     transition: all ease-in-out 100ms;
 }
@@ -78,7 +72,7 @@
     background: var(--highlight-secondary);
 }
 .suggestionActive {
-    background: var(--hightlight--secondary);
+    background: var(--highlight-secondary);
 }
 .list li:first-of-type {
     margin-top: 0;
