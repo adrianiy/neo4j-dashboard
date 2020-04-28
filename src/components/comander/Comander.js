@@ -21,8 +21,7 @@ function Comander(props) {
     const schema = useRef(neo4jSchema);
     const cm = useRef(null);
     const storedQueries = useRef([]);
-    const theme = useSelector(state => state.currentTheme);
-    const dbSchema = useSelector(state => state.dbSchema);
+    const [theme, fullscreen, dbSchema] = useSelector(state => [state.theme, state.theme.fullscreen, state.dbSchema]);
 
     useEffect(() => {
         Object.keys(dbSchema)
@@ -95,7 +94,7 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced center" className={cls(styles.comanderContainer, "animated", "fadeIn")}>
+        <ColumnLayout dist="spaced center" className={cls(styles.comanderContainer, fullscreen ? styles.fullScreen : '', "animated", "fadeIn")}>
             <RowLayout dist="middle" className={styles.inputContainer}>
                 <CypherCodeMirror
                     className={styles.input}

@@ -9,7 +9,7 @@ describe('App test suite', () => {
     })
 
     test('renders login button if user is not logged in', () => {
-        const { MockProvider } = setup({ currentTheme: {}, currentUser: { loggedIn: false } });
+        const { MockProvider } = setup({ theme: {}, user: { loggedIn: false } });
         const { getByText } = render(<MockProvider><App /></MockProvider>);
         const linkElement = getByText("Login");
         expect(linkElement).toBeDefined();

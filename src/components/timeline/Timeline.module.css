@@ -16,7 +16,6 @@
 .chartWrapper {
     min-height: var(--min-height);
     width: 100%;
-    margin-right: var(--padding--m);
     margin-bottom: var(--padding--xl);
 }
 .chartWrapper:first-of-type {

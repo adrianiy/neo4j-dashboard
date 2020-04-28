@@ -19,7 +19,7 @@ function App() {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
     const [loading, setLoading] = useState(true);
     const [menu, setMenu] = useState(false);
-    const [theme, user] = useSelector(state => [state.currentTheme, state.currentUser]);
+    const [theme, user] = useSelector(state => [state.theme, state.user]);
 
     const dispatch = useDispatch();
     const asyncDispatch = useAsyncDispatch();
