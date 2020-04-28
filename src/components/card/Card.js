@@ -94,7 +94,7 @@ function Card(props) {
         >
             <header className="row middle spaced">
                 <span className={styles.cardTitle}>QUERY</span>
-                <div className={styles.cardQuery} onClick={() => props.restoreQuery(props.query)}>
+                <div className={styles.cardQuery} onClick={() => props.restoreQuery(null, props.query)}>
                     {props.query}
                 </div>
                 <RowLayout dist="middle right" className={styles.iconContainer}>

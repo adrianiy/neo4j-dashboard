@@ -62,7 +62,7 @@ function Comander(props) {
     };
 
     const selectQuery = (event, query) => {
-        event.preventDefault();
+        event && event.preventDefault();
         setQuery(query);
         setShowStored(false);
         cm.current.setValue(query);
