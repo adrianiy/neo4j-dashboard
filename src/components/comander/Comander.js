@@ -133,7 +133,7 @@ function Comander(props) {
                             />
                         </li>
                     ))}
-                    {!storedQueries.current.length ? <span>No queries found</span> : null }
+                    {!storedQueries.current.length ? <span className={styles.noQueries}>No queries found</span> : null }
                 </ul>
             </div>
             <Timeline

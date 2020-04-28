@@ -18,7 +18,6 @@
     background: var(--p-color);
     width: 100%;
     max-width: var(--max-width);
-    margin-right: var(--padding--m);
     box-shadow: var(--box-decoration--shadow);
 }
 .inputContainer em {
@@ -36,7 +35,6 @@
     border-radius: 4px;
     background: var(--third-color);
     width: var(--max-width);
-    margin-right: var(--padding--m);
     box-shadow: var(--box-decoration--shadow);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -55,7 +53,7 @@
     position: relative;
     z-index: 3;
 }
-.list span {
+.noQueries, .listTitle {
     padding: 0 var(--padding--m);
 }
 .listTitle {

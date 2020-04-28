@@ -44,27 +44,3 @@
 .disabled:hover {
     color: var(--text-color)!important;
 }
-.theme-toggler {
-    width: 28px;
-    margin: 0 var(--padding--xs);
-    border-radius: 14px;
-    background: #7d7c7c;
-    height: 15px;
-    position: relative;
-    cursor: pointer;
-}
-.theme-toggler__circle {
-    width: 13px;
-    height: 13px;
-    background: silver;
-    position: absolute;
-    left: 1px;
-    border-radius: 100%;
-    transition: all ease-in 300ms;
-}
-.theme-toggler.active {
-    background: #0e70a0;
-}
-.theme-toggler.active .theme-toggler__circle {
-    left: 13px;
-}
