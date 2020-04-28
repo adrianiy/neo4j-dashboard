@@ -11,7 +11,7 @@ function Sidebar(props) {
     const [menu, setMenu] = useState('settings');
     const [theme, setTheme] = useState('auto');
     const [size, setSize] = useState('small');
-    const currentTheme = useSelector(state => state.currentTheme);
+    const currentTheme = useSelector(state => state.theme);
     const dbSchema = useSelector(state => state.dbSchema);
     const dispatch = useDispatch();
 
@@ -20,18 +20,22 @@ function Sidebar(props) {
         setSize(currentTheme.size);
     }, [currentTheme])
 
-    const handleTheme = (theme) => {
-        setTheme(theme);
-        if (theme === 'auto') {
+    const handleTheme = (_theme) => {
+        const newTheme = _theme === theme ? 'auto' : _theme
+        setTheme(newTheme);
+        if (newTheme === 'auto') {
             dispatch(actions.theme.setAutoTheme());
         } else {
-            dispatch(actions.theme.setCustomTheme(theme));
+            dispatch(actions.theme.setCustomTheme(newTheme));
         }
     }
 
-    const handleSize = (size) => {
-        setSize(size);
-        dispatch(actions.theme.setSize(size));
+    const handleSize = (_size) => {
+        const newSize = size === _size 
+            ? _size === 'small' ? 'wide' : 'small'
+            : _size;
+        setSize(newSize);
+        dispatch(actions.theme.setSize(newSize));
     }
 
     const renderDbInfo = () => {
@@ -95,6 +99,7 @@ function Sidebar(props) {
     return (
         <RowLayout dist="left" className={cls(styles.sideBarContainer, props.className)}>
             <ColumnLayout className={styles.options}>
+                <em className="material-icons" onClick={() => setMenu('settings')}>menu_open</em>
                 <em className={cls("material-icons", menu === 'settings' ? styles.optionActive : '')} onClick={() => setMenu('settings')}>settings</em>
                 <em className={cls("material-icons", menu === 'storage' ? styles.optionActive : '')} onClick={() => setMenu('storage')}>storage</em>
             </ColumnLayout>

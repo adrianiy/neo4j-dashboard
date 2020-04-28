@@ -13,7 +13,7 @@ function Header(props) {
     const [_, __, removeCookie] = useCookies(["neo4jDash.sess"]);
     const [menu, setMenu] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector(state => state.currentUser);
+    const user = useSelector(state => state.user);
 
     const doLogout = () => {
         removeCookie('neo4jDash.sess');

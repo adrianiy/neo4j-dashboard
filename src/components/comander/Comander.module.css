@@ -4,6 +4,9 @@
     width: 100%;
     position: relative;
 }
+.fullScreen {
+    z-index: 99;
+}
 .input {
     outline: none;
     border: none;
