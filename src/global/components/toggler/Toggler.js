@@ -6,11 +6,11 @@ import styles from './Toggler.module.css';
 
 function Toggler(props) {
     return (
-        <RowLayout dist="middle"
+        <RowLayout dist="middle" data-testid="toggler"
             className={cls(styles.themeToggler, props.active ? styles.active : '')}
             onClick={props.handleClick}
         >
-            <div className={styles.circle}></div>
+            <div className={styles.circle} ></div>
         </RowLayout>
     )
 }

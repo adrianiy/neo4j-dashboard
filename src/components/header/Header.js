@@ -26,9 +26,13 @@ function Header(props) {
     }
 
     return (
-        <RowLayout dist="middle spaced" className={cls(styles.header, "animated", "fadeInDown")}>
+        <RowLayout data-testid="header" dist="middle spaced" className={cls(styles.header, "animated", "fadeInDown")}>
             <RowLayout dist="middle spaced" className={styles.name}>
-                <em className={cls(styles.menu, menu ? styles.menuActive : '', "material-icons")} onClick={toggleMenu}>
+                <em
+                    data-testid="menu-trigger"
+                    className={cls(styles.menu, menu ? styles.menuActive : '', "material-icons")}
+                    onClick={toggleMenu}
+                >
                     { menu ? 'menu_open' : 'menu' }
                 </em>
             </RowLayout>
@@ -36,7 +40,7 @@ function Header(props) {
                 <div>
                     Hi, <span>{user.user}</span>!
                 </div>
-                <strong className={styles.link} onClick={doLogout}>
+                <strong data-testid="logout" className={styles.link} onClick={doLogout}>
                     Logout
                 </strong>
             </RowLayout>

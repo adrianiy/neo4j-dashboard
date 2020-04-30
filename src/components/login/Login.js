@@ -90,7 +90,7 @@ function Login(props) {
     };
 
     return (
-        <ColumnLayout dist="center">
+        <ColumnLayout dist="center" data-testid="login">
             <header className="column center">
                 <em className={cls(styles.icon, "material-icons")}>share</em>
                 <p>
