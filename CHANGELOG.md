@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.8.1...v1.9.0) (2020-05-02)
+
+
+### Bug Fixes
+
+* **ux/ui:** remove menu icon ([#86](https://github.com/AdrianInsua/neo4j-dashboard/issues/86)) ([3260f52](https://github.com/AdrianInsua/neo4j-dashboard/commit/3260f52a1a601acdd8ff1eabc5c7c59b0c06ba14))
+
+
+### Features
+
+* add zoom buttons ([#87](https://github.com/AdrianInsua/neo4j-dashboard/issues/87)) ([f5c33df](https://github.com/AdrianInsua/neo4j-dashboard/commit/f5c33df62bfe42369af26c05bddf6fa691763721))
+
 ## [1.8.1](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.8.0...v1.8.1) (2020-04-28)
 
 
