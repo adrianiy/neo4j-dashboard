@@ -99,7 +99,6 @@ function Sidebar(props) {
     return (
         <RowLayout data-testid="sidebar" dist="left" className={cls(styles.sideBarContainer, props.className)}>
             <ColumnLayout className={styles.options}>
-                <em className="material-icons" onClick={() => setMenu('settings')}>menu_open</em>
                 <em className={cls("material-icons", menu === 'settings' ? styles.optionActive : '')} onClick={() => setMenu('settings')}>settings</em>
                 <em className={cls("material-icons", menu === 'storage' ? styles.optionActive : '')} onClick={() => setMenu('storage')}>storage</em>
             </ColumnLayout>

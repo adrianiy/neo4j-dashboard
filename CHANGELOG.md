@@ -1,3 +1,11 @@
+## [1.8.1](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.8.0...v1.8.1) (2020-04-28)
+
+
+### Bug Fixes
+
+* full size card z-index position ([#79](https://github.com/AdrianInsua/neo4j-dashboard/issues/79)) ([a48cacd](https://github.com/AdrianInsua/neo4j-dashboard/commit/a48cacd1ca604599fdd763e82b651989e28c984e))
+* restore query from card header ([#82](https://github.com/AdrianInsua/neo4j-dashboard/issues/82)) ([e1e478b](https://github.com/AdrianInsua/neo4j-dashboard/commit/e1e478b13dc3a3fe2fa78c1e05a96e5f88b432de))
+
 # [1.8.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.7.0...v1.8.0) (2020-04-28)
 
 
