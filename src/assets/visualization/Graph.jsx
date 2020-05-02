@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useRef, useState } from "react";
 import { createGraph, mapRelationships, getGraphStats } from "./mapper";
 import { GraphEventHandler } from "./GraphEventHandler";
-import { StyledSvgWrapper } from "./styled";
+import { StyledSvgWrapper, StyledZoomHolder, StyledZoomButton, StyledZoomIcon } from "./styled";
 import graphView from "./components/graphView";
 
 import * as d3 from "d3";
+import { cls } from "../../global/utils";
 
 const dim = {
     // Editor bar
@@ -29,6 +30,8 @@ d3.selection.enter.prototype.appendSVG = function (SVGString) {
 
 function GraphComponent(props) {
     const [svgElement, setSvgElement] = useState(null);
+    const [zoomInLimitReached, setZoomInLimitReached] = useState(true);
+    const [zoomOutLimitReached, setZoomOutLimitReached] = useState(false);
     const _graph = useRef(null);
     const _graphView = useRef(null);
     const _graphEH = useRef(null);
@@ -91,11 +94,44 @@ function GraphComponent(props) {
         if (_graphView.current) {
             _graphView.current.resize();
         }
-    }, [props.fullscreen, props.frameHeight])
+    }, [props.fullscreen, props.frameHeight]);
+
+    const zoomInClicked = (el) => {
+        const limits = _graphView.current.zoomIn(el)
+        setZoomInLimitReached(limits.zoomInLimit);
+        setZoomOutLimitReached(limits.zoomOutLimit);
+    }
+
+    const zoomOutClicked = (el) => {
+        const limits = _graphView.current.zoomOut(el)
+        setZoomInLimitReached(limits.zoomInLimit);
+        setZoomOutLimitReached(limits.zoomOutLimit);
+    }
+
+    const zoomButtons = () => {
+        if (props.fullscreen || props.zoomEnabled) {
+            return (
+                <StyledZoomHolder>
+                    <StyledZoomButton onClick={zoomInClicked}>
+                        <StyledZoomIcon className={cls(zoomInLimitReached ? "disabled" : "", "material-icons")}>
+                            zoom_in
+                        </StyledZoomIcon>
+                    </StyledZoomButton>
+                    <StyledZoomButton onClick={zoomOutClicked}>
+                        <StyledZoomIcon className={cls(zoomOutLimitReached ? "disabled" : "", "material-icons")}>
+                            zoom_out
+                        </StyledZoomIcon>
+                    </StyledZoomButton>
+                </StyledZoomHolder>
+            );
+        }
+        return null
+    }
 
     return (
         <StyledSvgWrapper>
             <svg className="neod3viz" ref={el => setSvgElement(el)} />
+             {zoomButtons()}
         </StyledSvgWrapper>
     );
 }

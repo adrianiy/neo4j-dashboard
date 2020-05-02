@@ -142,6 +142,7 @@ function Chart (props) {
     return !nodes.length ? null : (
         <GraphComponent
             fullscreen={props.fullscreen}
+            zoomEnabled={props.zoomEnabled}
             frameHeight={props.frameHeight}
             relationships={relationships}
             nodes={nodes}
