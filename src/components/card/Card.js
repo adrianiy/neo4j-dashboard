@@ -141,6 +141,7 @@ function Card(props) {
                         graphStyle={graphStyle}
                         graphStyleCallback={graphStyleCallback}
                         autoComplete={false}
+                        zoomEnabled={true}
                         fullscreen={fullscreen}
                         assignVisElement={(svgElement, graphElement) =>
                             (visElement.current = { svgElement, graphElement, type: "graph" })
