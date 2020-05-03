@@ -24,10 +24,19 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm i -g codecov
-    - run: npm run build --if-present
-    - run: npm test
-    - run: codecov
+    - name: run tests
+      run: |
+        npm ci
+        npm i -g codecov
+        npm run build --if-present
+        npm test
+    - name: upload codecov
+    - uses: codecov/codecov-action@v1.0.6
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        file: ./coverage.xml # optional
+        flags: unittests # optional
+        name: codecov-umbrella # optional
+        fail_ci_if_error: true # optional (default = false)
       env:
         CI: true
