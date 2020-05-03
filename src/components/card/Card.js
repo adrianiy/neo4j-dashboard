@@ -49,6 +49,7 @@ function Card(props) {
     }, [props.query, user.sessionId])
 
     useEffect(() => {
+        /* istanbul ignore else */
         if (query.current !== props.query) {
             query.current = props.query;
             setResults(null);
@@ -90,18 +91,28 @@ function Card(props) {
 
     return (
         <ColumnLayout
+            data-testid="card"
             className={cls(styles.card, expanded ? styles.expanded : "", fullscreen ? styles.fullscreen : "")}
         >
             <header className="row middle spaced">
                 <span className={styles.cardTitle}>QUERY</span>
-                <div className={styles.cardQuery} onClick={() => props.restoreQuery(null, props.query)}>
+                <div
+                    data-testid="restore-trigger"
+                    className={styles.cardQuery}
+                    onClick={() => props.restoreQuery(null, props.query)}>
                     {props.query}
                 </div>
                 <RowLayout dist="middle right" className={styles.iconContainer}>
-                    <em className="material-icons" title="download" onClick={toggleDownload}>
+                    <em
+                        data-testid="toggle-download"
+                        className="material-icons"
+                        title="download"
+                        onClick={toggleDownload}
+                    >
                         save_alt
                     </em>
                     <em
+                        data-testid="toggle-fullscreen"
                         className="material-icons"
                         title={fullscreen ? "minimize" : "maximize"}
                         onClick={toggleFullScreen}
@@ -109,13 +120,15 @@ function Card(props) {
                         {fullscreen ? "fullscreen_exit" : "fullscreen"}
                     </em>
                     <em
+                        data-testid="toggle-expand"
                         className={cls(styles.expand, "material-icons", fullscreen ? "disabled" : "")}
                         title={expanded ? "contract" : "expand"}
                         onClick={fullscreen ? null : toggleExpand}
                     >
                         {expanded ? "unfold_less" : "unfold_more"}
                     </em>
-                    <em className="material-icons" title="close" onClick={() => props.deleteQuery(props.query)}>
+                    <em className="material-icons" data-testid="delete-query"
+                    title="close" onClick={() => props.deleteQuery(props.query)}>
                         close
                     </em>
                     {download ? (
@@ -132,6 +145,7 @@ function Card(props) {
                         </ColumnLayout>
                     </ColumnLayout>
                     <Chart
+                        data-testid="chart"
                         style={{ width: "100%" }}
                         result={results}
                         maxNeighbours={30}
@@ -143,13 +157,14 @@ function Card(props) {
                         autoComplete={false}
                         zoomEnabled={true}
                         fullscreen={fullscreen}
-                        assignVisElement={(svgElement, graphElement) =>
-                            (visElement.current = { svgElement, graphElement, type: "graph" })
+                        assignVisElement={
+                            /* istanbul ignore next */
+                            (svgElement, graphElement) => (visElement.current = { svgElement, graphElement, type: "graph" })
                         }
                     />
                 </RowLayout>
             ) : (
-                <ColumnLayout dist="center middle" className={cls(styles.cardBody, styles.loading)}>
+                <ColumnLayout data-testid="error" dist="center middle" className={cls(styles.cardBody, styles.loading)}>
                     {error ? error : <em className={cls("AppLoading", "material-icons")}>share</em>}
                 </ColumnLayout>
             )}

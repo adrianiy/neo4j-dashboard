@@ -10,7 +10,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.0.4",
     "@testing-library/user-event": "^7.2.1",
     "canvg": "^3.0.6",
     "codemirror": "^5.52.2",
@@ -39,8 +39,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --watchAll=false",
-    "test:nocov": "react-scripts test --watchAll=false",
+    "test": "react-scripts test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen --silent",
+    "test:nocov": "react-scripts test --watchAll=false --env=jest-environment-jsdom-sixteen --silent",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js"
   },
@@ -81,7 +81,10 @@
       "!**/global/components/chart/**",
       "!**/**/autosuggest.js",
       "!**/tests/**",
-      "!**/assets/**"
+      "!**/assets/**",
+      "!**/CypherCodeMirror.js",
+      "!**/cypher/**",
+      "!**/Download/utils/**"
     ]
   },
   "release": {
@@ -109,6 +112,7 @@
     "@semantic-release/github": "^7.0.5",
     "@semantic-release/npm": "^7.0.5",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "semantic-release": "^17.0.6"
   }
 }

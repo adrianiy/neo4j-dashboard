@@ -16,7 +16,7 @@ jest.mock('./components/comander/Comander.js', () => {
 service.doLogout = jest.fn();
 service.getQuery = jest.fn();
 
-describe('App cookies setted test suite', () => {
+describe('App test suite', () => {
     let rendered;
 
     beforeEach(() => {

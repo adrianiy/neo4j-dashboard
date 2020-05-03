@@ -1,6 +1,7 @@
 import React from 'react';
 import { getMockProvider } from '../../global/utils/tests/store.mock';
 import { Simulate } from "react-dom/test-utils";
+import { cleanup } from "@testing-library/react";
 import Header from './Header';
 
 describe('Header component test suite', () => {
@@ -12,6 +13,11 @@ describe('Header component test suite', () => {
         ({ rendered, store } = getMockProvider(<Header toggleMenu={toggleMenu}/>,
             { theme: {}, user: { loggedIn: true } }));
     });
+
+     afterEach(() => {
+         jest.restoreAllMocks();
+         cleanup();
+     });
 
     test('should render component', () => {
         const { getByTestId } = rendered;
