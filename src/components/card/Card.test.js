@@ -1,4 +1,4 @@
-import React, * as react from "react";
+import React from "react";
 import { getMockProvider } from "../../global/utils/tests/store.mock";
 import { cleanup, waitFor, act } from "@testing-library/react";
 import { Simulate } from "react-dom/test-utils";

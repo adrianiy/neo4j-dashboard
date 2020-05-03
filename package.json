@@ -33,6 +33,7 @@
     "redux-mock-store": "^1.5.4",
     "save-svg-as-png": "^1.4.17",
     "styled-components": "^5.1.0",
+    "typescript": "^3.8.3",
     "url-parse": "^1.4.7",
     "vis-network": "^7.5.2"
   },
@@ -112,6 +113,7 @@
     "@semantic-release/github": "^7.0.5",
     "@semantic-release/npm": "^7.0.5",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@typescript-eslint/parser": "^2.30.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "semantic-release": "^17.0.6"
   }

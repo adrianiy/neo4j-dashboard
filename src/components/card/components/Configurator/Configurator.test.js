@@ -141,16 +141,14 @@ describe("Rel Configurator component test suite", () => {
 });
 
 describe("noType Configurator component test suite", () => {
-    let rendered;
-
     beforeEach(() => {
         act(
             () =>
-                ({ rendered } = getMockProvider(
+                getMockProvider(
                     <Configurator type={"test"} styleForItem={styleForItemWithProps} properties={{ test: test }} />,
                     { user: { loggedIn: true } },
                     true
-                ))
+                )
         );
     });
 
