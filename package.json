@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen --silent",
+    "test": "react-scripts test --coverage --watchAll=false --env=jest-environment-jsdom-sixteen --silent && codecov",
     "test:nocov": "react-scripts test --watchAll=false --env=jest-environment-jsdom-sixteen --silent",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js"
