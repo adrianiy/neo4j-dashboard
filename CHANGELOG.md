@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.9.0...v1.10.0) (2020-05-03)
+
+
+### Features
+
+* increase coverage to 100% ([#91](https://github.com/AdrianInsua/neo4j-dashboard/issues/91)) ([c566240](https://github.com/AdrianInsua/neo4j-dashboard/commit/c56624034522c5f295a726dabfa78621abecc525))
+
 # [1.9.0](https://github.com/AdrianInsua/neo4j-dashboard/compare/v1.8.1...v1.9.0) (2020-05-02)
 
 
