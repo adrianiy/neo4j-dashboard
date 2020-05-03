@@ -93,7 +93,8 @@ const noEmptyLines = function(lines) {
 }
 
 const fitCaptionIntoCircle = function(node, style) {
-  const template = style.forNode(node).get('caption')
+  const shouldRenderImage = style.shouldRenderImageCaption();
+  const template = shouldRenderImage ? '' : style.forNode(node).get('caption')
   const captionText = style.interpolate(template, node)
   const fontFamily = 'sans-serif'
   const fontSize = parseFloat(style.forNode(node).get('font-size'))

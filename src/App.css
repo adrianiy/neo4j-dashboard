@@ -2,13 +2,16 @@
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 .AppLoading {
-    font-size: 140px!important;
+    font-size: var(--font-size--xxxl)!important;
     color: var(--highlight-color);
     animation: loading infinite 1500ms;
 }
@@ -26,39 +29,18 @@
 .AppContainer {
     width: 100%;
 }
+.hideScroll {
+    margin-right: calc(var(--padding--m) * -1);
+    padding-right: var(--padding--m);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+}
 .disabled {
     opacity: .4;
     cursor: default!important;
 }
 .disabled:hover {
     color: var(--text-color)!important;
-}
-.theme-toggler {
-    width: 28px;
-    margin: 0 8px;
-    border-radius: 14px;
-    background: #7d7c7c;
-    height: 15px;
-    position: relative;
-    cursor: pointer;
-}
-.theme-toggler__circle {
-    width: 13px;
-    height: 13px;
-    background: silver;
-    position: absolute;
-    left: 1px;
-    border-radius: 100%;
-    transition: all ease-in 300ms;
-}
-.theme-toggler.active {
-    background: #0e70a0;
-}
-.theme-toggler.active .theme-toggler__circle {
-    left: 13px;
-}
-h3 {
-    font-weight: 600;
-    margin-top: 0;
-    text-transform: uppercase;
 }

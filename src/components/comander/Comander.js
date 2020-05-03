@@ -1,17 +1,15 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { Controlled as CodeMirror } from "react-codemirror2";
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Timeline from '../timeline/Timeline';
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/mode/cypher/cypher";
-import "./codemirror.css";
+import CypherCodeMirror from './CypherCodeMirror';
+
+import { codeMirrorSettings, neo4jSchema, toSchema } from './cypher/common';
 
 import { cls, concatUniqueStrings } from '../../global/utils';
 import { RowLayout, ColumnLayout } from '../../global/layouts';
 import { useEventListener } from "../../global/utils/hooks/events";
 
 import styles from './Comander.module.css';
-import { ThemeContext } from '../../global/utils/hooks/theme';
 
 
 function Comander(props) {
@@ -19,9 +17,24 @@ function Comander(props) {
     const [queries, setQueries] = useState([]);
     const [showStored, setShowStored] = useState(false);
     const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
-    const [fullscreen, setFullscreen] = useState(false);
+    const [editor, setEditor] = useState(null);
+    const schema = useRef(neo4jSchema);
+    const cm = useRef(null);
     const storedQueries = useRef([]);
-    const theme = useContext(ThemeContext);
+    const [theme, fullscreen, dbSchema] = useSelector(state => [state.theme, state.theme.fullscreen, state.dbSchema]);
+
+    useEffect(() => {
+        Object.keys(dbSchema)
+            .forEach(key =>
+                schema.current[key] = [...schema.current[key], ...toSchema(key, dbSchema[key].records)]
+            );
+    }, [dbSchema])
+
+    useEffect(() => {
+        if (editor) {
+            cm.current = editor.getCodeMirror();
+        }
+    }, [editor])
 
     useEffect(() => {
         const queries = localStorage.getItem("neo4jDashboard.queries");
@@ -40,6 +53,7 @@ function Comander(props) {
         setQuery("");
         setShowStored(false);
         storedQueries.current = stored;
+        cm.current.setValue("");
         localStorage.setItem("neo4jDashboard.queries", JSON.stringify(stored));
     };
 
@@ -47,30 +61,32 @@ function Comander(props) {
         setShowStored(!showStored);
     };
 
-    const selectQuery = (query) => {
+    const selectQuery = (event, query) => {
+        event && event.preventDefault();
         setQuery(query);
         setShowStored(false);
+        cm.current.setValue(query);
+        cm.current.setCursor(cm.current.lineCount(), 0);
     };
 
     const deleteQuery = (query) => {
         setQueries(queries.filter(q => q !== query));
     }
 
-    const toggleFullScreen = (value) => {
-        setFullscreen(value);
-    }
-
     useEventListener("keydown", (event) => {
         switch (event.keyCode) {
             case 40: // ArrowDown
-                setHighlightedSuggestion((hs) => (hs === storedQueries.current.length - 1 ? 0 : hs + 1));
+                setHighlightedSuggestion((hs) => {
+                    console.log((hs === storedQueries.current.length - 1 ? 0 : hs + 1))
+                    return (hs === storedQueries.current.length - 1 ? 0 : hs + 1)
+                });
                 break;
             case 38: // ArrowUp
                 setHighlightedSuggestion((hs) => (hs <= 0 ? storedQueries.current.length : hs) - 1);
                 break;
             case 13: // Enter
-                showStored && selectQuery(storedQueries.current(highlightedSuggestion));
-                !showStored && handlePlay();
+                showStored && ! query.length && selectQuery(event, storedQueries.current[highlightedSuggestion]);
+                (!showStored || query.length) && handlePlay();
                 break;
             default:
                 break;
@@ -78,20 +94,16 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced" className={cls(styles.comanderContainer, 'animated', 'fadeInUp')}>
-            <RowLayout dist="middle" className={cls(styles.inputContainer, fullscreen ? styles.fullscreen : '')}>
-                <CodeMirror
+        <ColumnLayout dist="spaced center" className={cls(styles.comanderContainer, fullscreen ? styles.fullScreen : '', "animated", "fadeIn")}>
+            <RowLayout dist="middle" className={styles.inputContainer}>
+                <CypherCodeMirror
                     className={styles.input}
-                    value={query}
-                    options={{
-                        mode: "cypher",
-                        theme: theme.codemirror,
-                        lineNumbers: false,
-                        lineWrapping: true,
-                    }}
-                    onBeforeChange={(_, __, value) => {
-                        setQuery(value);
-                    }}
+                    options={{ ...codeMirrorSettings, ...{ theme: theme.codemirror } }}
+                    schema={neo4jSchema}
+                    defaultValue={""}
+                    onChange={(value) => setQuery(value)}
+                    onParsed={() => null}
+                    ref={(el) => setEditor(el)}
                 />
                 <em className="material-icons" onClick={handlePlay}>
                     play_arrow
@@ -101,34 +113,32 @@ function Comander(props) {
                 </em>
             </RowLayout>
             <div className={cls(styles.list, showStored ? styles.listActive : "")}>
-                <div className={styles.listOverflow}></div>
-                <span className={styles.listTitle}>Últimas consultas</span>
-                <ul>
+                <span className={styles.listTitle}>Last queries</span>
+                <ul className="hideScroll">
                     {storedQueries.current.map((q, i) => (
                         <li
                             key={i}
-                            onClick={() => selectQuery(q)}
+                            onClick={e => selectQuery(e, q)}
                             className={highlightedSuggestion === i ? styles.suggestionActive : ""}
                         >
-                            <CodeMirror
+                            <CypherCodeMirror
                                 value={q}
-                                options={{
-                                    mode: "cypher",
+                                options={{ ...codeMirrorSettings, ...{
                                     theme: theme.codemirror,
-                                    lineNumbers: false,
-                                    lineWrapping: true,
-                                }}
+                                    autofocus: false,
+                                    readOnly: 'nocursor'
+                                } }}
+                                schema={neo4jSchema}
                             />
                         </li>
                     ))}
+                    {!storedQueries.current.length ? <span className={styles.noQueries}>No queries found</span> : null }
                 </ul>
             </div>
             <Timeline
                 queries={queries}
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}
-                sessionId={props.sessionId}
-                toggleFullScreen={toggleFullScreen}
             />
         </ColumnLayout>
     );

@@ -1,45 +1,40 @@
-import React, { useContext } from 'react';
-import styles from './Header.module.css';
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { RowLayout } from '../../global/layouts';
 import { cls } from '../../global/utils';
-import { useCookies } from 'react-cookie';
-import { ThemeContext } from '../../global/utils/hooks/theme';
+import actions from '../../global/utils/store/actions';
 
+import styles from './Header.module.css';
 
 function Header(props) {
     // eslint-disable-next-line no-unused-vars
     const [_, __, removeCookie] = useCookies(["neo4jDash.sess"]);
-    const theme = useContext(ThemeContext);
+    const [menu, setMenu] = useState(false);
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
 
     const doLogout = () => {
         removeCookie('neo4jDash.sess');
-        props.callback();
+        dispatch(actions.user.logOut());
     };
 
-    const handleClick = () => {
-        const newTheme = theme.id === 'dark' ? 'light' : 'dark';
-        props.themeCallback(newTheme)
+    const toggleMenu = () => {
+        props.toggleMenu(!menu);
+        setMenu(!menu);
     }
 
     return (
         <RowLayout dist="middle spaced" className={cls(styles.header, "animated", "fadeInDown")}>
             <RowLayout dist="middle spaced" className={styles.name}>
-                <em className={cls(styles.icon, "material-icons")}>share</em>
-                <span>Neo4J Dashboard</span>
+                <em className={cls(styles.menu, menu ? styles.menuActive : '', "material-icons")} onClick={toggleMenu}>
+                    { menu ? 'menu_open' : 'menu' }
+                </em>
             </RowLayout>
             <RowLayout dist="middle spaced" className={styles.userContainer}>
-                <RowLayout dist="middle spaced" className={styles.themeChanger}>
-                    <em className={cls("material-icons", styles.lightIcon)}>wb_sunny</em>
-                    <RowLayout dist="middle"
-                        className={cls('theme-toggler', theme.id === 'dark' ? 'active' : '')}
-                        onClick={handleClick}
-                    >
-                        <div className='theme-toggler__circle'></div>
-                    </RowLayout>
-                    <em className={cls("material-icons", styles.darkIcon)}>brightness_2</em>
-                </RowLayout>
                 <div>
-                    Hi, <span>{props.user}</span>!
+                    Hi, <span>{user.user}</span>!
                 </div>
                 <strong className={styles.link} onClick={doLogout}>
                     Logout

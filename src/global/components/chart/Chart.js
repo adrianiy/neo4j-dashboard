@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { GraphComponent } from './../../../assets/visualization/Graph';
-import { getChart } from './../../../service/neo.service';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import GraphComponent from './../../../assets/visualization/Graph';
+import { getQuery } from './../../../service/neo.service';
 
 import { extractNodesAndRelationshipsFromRecordsForOldVis } from './utils/graph-utils';
-import deepmerge from 'deepmerge';
 import neo4j from 'neo4j-driver';
 
+import { useSelector } from 'react-redux';
 import neoGraphStyle from './graphStyle';
 
 const deduplicateNodes = (nodes) => {
@@ -26,7 +26,8 @@ const deduplicateNodes = (nodes) => {
 function Chart (props) {
     const [nodes, setNodes] = useState([]);
     const [relationships, setRelationships] = useState([]);
-    const [graphStyle, setGraphStyle] = useState(neoGraphStyle());
+    const user = useSelector(state => state.currentUser);
+    const _prevResults = useRef(null);
     let _graph;
     let _autoCompleteCallback;
 
@@ -59,26 +60,15 @@ function Chart (props) {
     }, [checkNodesLength]);
 
     useEffect(() => {
-        const _graphStyle = graphStyle.toSheet();
-        if (props.graphStyleData) {
-            const rebasedStyle = deepmerge(_graphStyle, props.graphStyleData);
-            graphStyle.loadRules(rebasedStyle);
-            graphStyle.update();
-            setGraphStyle(graphStyle);
-        } else {
-            graphStyle.resetToDefault();
-            setGraphStyle(graphStyle);
-            props.graphStyleCallback(graphStyle);
+        if (_prevResults.current !== props.result) {
+            const { records = [] } = props.result;
+            if (records && records.length > 0) {
+                setNodes([]);
+                populateDataFromRecords(records);
+                _prevResults.current = props.result;
+            }
         }
-    }, [graphStyle, props]);
-
-    useEffect(() => {
-        const { records = [] } = props.result;
-        if (records && records.length > 0) {
-            setNodes([]);
-            populateDataFromRecords(records);
-        }
-    }, [props, populateDataFromRecords]);
+    }, [populateDataFromRecords, props.result]);
 
     const autoCompleteRelationships = async (existingNodes, newNodes) => {
         if (props.autoComplete) {
@@ -100,7 +90,7 @@ function Chart (props) {
                     ORDER BY id(o)
                     LIMIT ${props.maxNeighbours -
                         currentNeighbourIds.length}`
-        const results = await getChart(props.sessionId, query);
+        const results = await getQuery(user.sessionId, query);
         const count = results.records.length > 0 ? parseInt(results.records[0].get("c").toString()) : 0;
         const resultGraph = extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false);
         await autoCompleteRelationships(_graph._nodes, resultGraph.nodes);
@@ -113,7 +103,7 @@ function Chart (props) {
         existingNodeIds = existingNodeIds.concat(newNodeIds)
         const query =
             'MATCH (a)-[r]->(b) WHERE id(a) IN $existingNodeIds AND id(b) IN $newNodeIds RETURN r;'
-        const results = await getChart(props.sessionId, query);
+        const results = await getQuery(user.sessionId, query);
         return {
             ...extractNodesAndRelationshipsFromRecordsForOldVis(results.records, false),
         };
@@ -152,13 +142,14 @@ function Chart (props) {
     return !nodes.length ? null : (
         <GraphComponent
             fullscreen={props.fullscreen}
+            zoomEnabled={props.zoomEnabled}
             frameHeight={props.frameHeight}
             relationships={relationships}
             nodes={nodes}
             getNodeNeighbours={getNodeNeighbours}
             onItemMouseOver={props.itemHovered}
             onItemSelect={props.itemSelected}
-            graphStyle={graphStyle}
+            graphStyle={props.graphStyle || neoGraphStyle()}
             onGraphModelChange={onGraphModelChange}
             assignVisElement={props.assignVisElement}
             getAutoCompleteCallback={props.getAutoCompleteCallback}

@@ -1,0 +1,38 @@
+.summary {
+    margin-bottom: var(--padding--xs);
+    font-weight: var(--font-weight--lighter);
+    cursor: pointer;
+}
+.summary:hover, .summaryActive {
+    color: var(--highlight-color);
+}
+.summary span{
+    margin-right: var(--padding--xs);
+}
+.circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+}
+
+.properties {
+    padding-top: var(--padding--s);
+    margin-top: var(--padding--xs);
+    overflow: hidden;
+    max-width: 100%;
+}
+.chip {
+    padding: var(--padding--xxs);
+    border-radius: 4px;
+    margin-bottom: var(--padding--s);
+}
+.property {
+    max-width: 100%;
+    margin-bottom: var(--padding--xs);
+}
+.property span {
+    font-weight: var(--font-weight--lighter);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

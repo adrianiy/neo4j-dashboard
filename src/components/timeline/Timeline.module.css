@@ -1,38 +1,23 @@
-.timelineContainer {
-    height: calc(100vh - 85px);
-    margin-top: 85px;
-    width: 100%;
-    position: relative;
-}
 .noQueries {
-    min-height: 450px;
-    margin: 0 20%;
-    margin-top: 48px;
-    margin-bottom: 48px;
+    width: 100%;
+    min-height: var(--min-height);
+    max-width: var(--max-width);
+    margin: var(--padding--xl) 0;
     background: var(--p-color);
     color: var(--text-color);
     font-weight: bold;
     box-shadow: var(--box-decoration--shadow);
 }
-.overflowScroll {
-    background: var(--bg-color);
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    z-index: 99;
-}
 
 .chartContainer {
-    flex: 1;
-    padding: 0;
+    width: 100%;
     overflow: scroll;
 }
 .chartWrapper {
-    min-height: 450px;
-    margin-bottom: 48px;
+    min-height: var(--min-height);
+    width: 100%;
+    margin-bottom: var(--padding--xl);
 }
 .chartWrapper:first-of-type {
-    margin-top: 48px;
+    margin-top: var(--padding--xl);
 }

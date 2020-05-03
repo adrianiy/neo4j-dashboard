@@ -7,12 +7,6 @@ email, or any other method with the owners of this repository before making a ch
 
 We follow a branch-per-feature strategy. General speaking, each branch must have a reference to a ISSUE. Ex: feature/#5
 
-<br/>
-<div style="width: 100%; position: relative; display: block;padding: 40px 0;">
-	<img width=600 style="margin: 0 auto; position: relative; display: block;" src="assets/gitflow.svg"/>
-<br/>
-</div>
-
 Once development is finished, a pull request to **develop** branch must be made in order to merge the feature. Merge strategy is *--no-ff*.
 
 Pull requests tigger **PR-Verify plan**, so we can check acceptance criteria automatically.

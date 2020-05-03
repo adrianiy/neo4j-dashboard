@@ -1,0 +1,11 @@
+.listItem {
+    padding: var(--padding--xs);
+    width: 90px;
+    cursor: pointer;
+}
+.listItem:not(:first-of-type) {
+    border-top: 1px solid var(--bg-color);
+}
+.listItem:hover {
+    background: var(--secondary-color);
+}

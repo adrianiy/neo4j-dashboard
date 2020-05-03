@@ -1,0 +1,65 @@
+.configWrapper:not(:first-of-type) {
+    margin-top: var(--padding--xs);
+}
+.configContainer {
+    margin-top: var(--padding--xs);
+}
+.circle, .colorCircle {
+    border-radius: 100%;
+    background-color: var(--bg-color);
+    margin-right: var(--padding--xs);
+    width: 10px;
+    height: 10px;
+    margin-bottom: var(--padding--xs);
+    cursor: pointer;
+}
+.colorCircle {
+    opacity: .5;
+}
+.colorActive {
+    opacity:1;
+}
+.circle:hover, .circleActive{
+    background-color: var(--highlight-color);
+}
+.line, .lineColor {
+    background-color: var(--bg-color);
+    margin-right: var(--padding--xs);
+    width: 10px;
+    height: 5px;
+    margin-bottom: var(--padding--xs);
+    cursor: pointer;
+}
+.lineColor {
+    opacity: .5;
+}
+.line:hover, .lineActive {
+    background-color: var(--highlight-color);
+    color: var(--highlight-color)
+}
+.lineActive {
+    opacity: 1;
+}
+.auto.lineActive {
+    background-color: transparent;
+}
+
+.propertiesContainer {
+    margin-top: var(--padding--xs);
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.property {
+    max-width: 100%;
+    overflow: hidden;
+    font-weight: var(--font-weight--lighter);
+    margin-bottom: var(--padding--xxs);
+    opacity: .6;
+    cursor: pointer;
+}
+.propertyActive {
+    opacity: 1;
+}
+
+
