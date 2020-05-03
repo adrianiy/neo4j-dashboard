@@ -9,11 +9,12 @@ import Sidebar from './components/sidebar/Sidebar';
 
 import { doLogout } from './service/neo.service';
 import { getDBSchema } from './service/schema.service';
+
 import { cls } from './global/utils';
+import { useAsyncDispatch } from './global/utils/hooks/dispatch';
+import actions from './global/utils/store/actions';
 
 import './App.css';
-import actions from './global/utils/store/actions';
-import { useAsyncDispatch } from './global/utils/hooks/dispatch';
 
 function App() {
     const [cookies, setCookie] = useCookies(["neo4jDash.sess"]);
@@ -53,7 +54,7 @@ function App() {
 
     const render = () => {
         if (loading) {
-            return <em className={cls('AppLoading', "material-icons")}>share</em>
+            return <em data-testid="loading" className={cls('AppLoading', "material-icons")}>share</em>
         } else {
             if (!user.loggedIn) {
                 return (
@@ -61,7 +62,7 @@ function App() {
                 )
             } else {
                 return (
-                    <div className="AppContainer">
+                    <div data-testid="app" className="AppContainer">
                         <Header toggleMenu={toggleMenu}></Header>
                         <Comander></Comander>
                         {menu ? <Sidebar className="animated fadeInLeft" /> : null}

@@ -3,11 +3,11 @@ import { saveAs } from "file-saver";
 
 import { stringifyResultArray, transformResultRecordsToResultArray } from './utils/utils';
 import { CSVSerializer } from './utils/csvHelper';
+import { downloadPNGFromSVG, downloadSVG } from './utils/exporting/imageUtils';
 import { ColumnLayout } from '../../../../global/layouts';
 import { csvFormat, recordToJSONMapper } from '../../../../global/components/chart/utils/cypher-utils';
 
 import styles from './Download.module.css';
-import { downloadPNGFromSVG, downloadSVG } from './utils/exporting/imageUtils';
 
 function Download(props) {
 
@@ -46,17 +46,17 @@ function Download(props) {
     }
 
     return (
-        <ColumnLayout dist="left" className={props.className}>
-            <div className={styles.listItem} onClick={exportCSV}>
+        <ColumnLayout data-testid="download" dist="left" className={props.className}>
+            <div className={styles.listItem} data-testid="csv-trigger" onClick={exportCSV}>
                 Export to CSV
             </div>
-            <div className={styles.listItem} onClick={exportJSON}>
+            <div className={styles.listItem} data-testid="json-trigger" onClick={exportJSON}>
                 Export to JSON
             </div>
-            <div className={styles.listItem} onClick={exportPNG}>
+            <div className={styles.listItem} data-testid="png-trigger" onClick={exportPNG}>
                 Export to PNG
             </div>
-            <div className={styles.listItem} onClick={exportSVG}>
+            <div className={styles.listItem} data-testid="svg-trigger" onClick={exportSVG}>
                 Export to SVG
             </div>
         </ColumnLayout>

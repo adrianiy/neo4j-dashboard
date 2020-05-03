@@ -1,5 +1,6 @@
 import { createRecord } from './utils';
 
+/* istanbul ignore next */
 const SERVICE_URL = process.env.NODE_ENV === 'production' ? "https://neo4j-service.azurewebsites.net/api" : "http://localhost:5000/api";
 
 export const doLogin = async (uri, user, password) => {

@@ -164,6 +164,6 @@ export default class CodeMirror extends React.Component {
         const setEditorReference = (ref) => {
             this.editorReference = ref;
         };
-        return <div className={editorClassNames} ref={setEditorReference} data-testid="editor-wrapper" />;
+        return <div className={editorClassNames} ref={setEditorReference} data-testid={ this.props['data-testid'] } />;
     }
 }
