@@ -14,12 +14,13 @@ function Timeline(props) {
         }
     }, [props, queries]);
 
+    /* istanbul ignore next */
     const deleteQuery = (query) => {
         props.deleteQuery(query);
     };
 
     return (
-        <ColumnLayout dist="center" className={cls(styles.chartContainer, 'hideScroll')}>
+        <ColumnLayout data-testid="timeline" dist="center" className={cls(styles.chartContainer, 'hideScroll')}>
             {queries.length ? (
                 queries.map((q, idx) => (
                     <RowLayout key={idx} dist="center middle" className={styles.chartWrapper}>

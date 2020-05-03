@@ -40,7 +40,7 @@ function Sidebar(props) {
 
     const renderDbInfo = () => {
         return (
-            <ColumnLayout className={cls(styles.menuContainer, 'hideScroll')}>
+            <ColumnLayout data-testid="sidebar-storage" className={cls(styles.menuContainer, 'hideScroll')}>
                 <h3>D.B. Info</h3>
                 <span>Node Labels</span>
                 <RowLayout dist="left wrap" className={styles.chipsContainer}>
@@ -69,7 +69,7 @@ function Sidebar(props) {
 
     const renderSettings = () => {
         return (
-            <ColumnLayout className={cls(styles.menuContainer, 'hideScroll')}>
+            <ColumnLayout data-testid="sidebar-settings" className={cls(styles.menuContainer, 'hideScroll')}>
                 <h3>Theme</h3>
                 <RowLayout dist="spaced middle" className={styles.item}>
                     <span>AUTO</span>
@@ -97,10 +97,22 @@ function Sidebar(props) {
     }
 
     return (
-        <RowLayout dist="left" className={cls(styles.sideBarContainer, props.className)}>
+        <RowLayout data-testid="sidebar" dist="left" className={cls(styles.sideBarContainer, props.className)}>
             <ColumnLayout className={styles.options}>
-                <em className={cls("material-icons", menu === 'settings' ? styles.optionActive : '')} onClick={() => setMenu('settings')}>settings</em>
-                <em className={cls("material-icons", menu === 'storage' ? styles.optionActive : '')} onClick={() => setMenu('storage')}>storage</em>
+                <em
+                    data-testid="settings-toggler"
+                    className={cls("material-icons", menu === 'settings' ? styles.optionActive : '')}
+                    onClick={() => setMenu('settings')}
+                >
+                    settings
+                </em>
+                <em
+                    data-testid="storage-toggler"
+                    className={cls("material-icons", menu === 'storage' ? styles.optionActive : '')}
+                    onClick={() => setMenu('storage')}
+                >
+                    storage
+                </em>
             </ColumnLayout>
             { menu === 'settings' && renderSettings() }
             { menu === 'storage' && renderDbInfo() }

@@ -22,6 +22,7 @@ function Configurator(props) {
             };
             return (
                 <div
+                    data-testid="prop-trigger"
                     key={i}
                     className={cls(className, activeProp(prop))}
                     title={title(prop)}
@@ -36,11 +37,14 @@ function Configurator(props) {
         return Object.entries(defaultCaptions).map((cap, i) => {
             const onClick = () => {
                 updateStyle(props.styleForItem.selector, {
-                    caption: cap[0].startsWith('<') ? cap[0] : `{${cap[0]}}`
+                    caption:
+                        /* istanbul ignore next */
+                        cap[0].startsWith("<") ? cap[0] : `{${cap[0]}}`,
                 });
             };
             return (
                 <div
+                    data-testid="caption-trigger"
                     key={i}
                     className={cls(className, activeCaption(cap[0]))}
                     onClick={onClick}
@@ -51,7 +55,7 @@ function Configurator(props) {
 
     const renderNodeConfig = () => {
         return (
-            <ColumnLayout dist="left">
+            <ColumnLayout dist="left" data-testid="node-config">
                 <ColumnLayout className={styles.configWrapper}>
                     <strong>Sizes</strong>
                     <RowLayout dist="left middle spaced" className={styles.configContainer}>
@@ -80,6 +84,7 @@ function Configurator(props) {
                     <strong>Properties</strong>
                     <ColumnLayout dist="left middle spaced wrap" className={styles.propertiesContainer}>
                         {renderCaptionSelector(props.properties, styles.property, (prop) =>
+                            /* istanbul ignore next */
                             props.styleForItem.get("caption").includes(prop) ? styles.propertyActive : ""
                         )}
                     </ColumnLayout>
@@ -90,7 +95,7 @@ function Configurator(props) {
 
     const renderRelConfig = () => {
         return (
-            <ColumnLayout dist="left">
+            <ColumnLayout dist="left" data-testid="rel-config">
                 <ColumnLayout className={styles.configWrapper}>
                     <strong>Line width</strong>
                     <RowLayout dist="left middle spaced" className={styles.configContainer}>
@@ -120,6 +125,7 @@ function Configurator(props) {
                     <strong>Properties</strong>
                     <ColumnLayout dist="left middle spaced wrap" className={styles.propertiesContainer}>
                         {renderCaptionSelector(props.properties, styles.property, (prop) =>
+                            /* istanbul ignore next */
                             props.styleForItem.get("caption").includes(prop) ? styles.propertyActive : ""
                         )}
                     </ColumnLayout>

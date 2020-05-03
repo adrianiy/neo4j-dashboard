@@ -11,8 +11,7 @@ import { useEventListener } from "../../global/utils/hooks/events";
 
 import styles from './Comander.module.css';
 
-
-function Comander(props) {
+function Comander() {
     const [query, setQuery] = useState("");
     const [queries, setQueries] = useState([]);
     const [showStored, setShowStored] = useState(false);
@@ -21,7 +20,7 @@ function Comander(props) {
     const schema = useRef(neo4jSchema);
     const cm = useRef(null);
     const storedQueries = useRef([]);
-    const [theme, fullscreen, dbSchema] = useSelector(state => [state.theme, state.theme.fullscreen, state.dbSchema]);
+    const [theme, dbSchema] = useSelector(state => [state.theme, state.dbSchema]);
 
     useEffect(() => {
         Object.keys(dbSchema)
@@ -77,7 +76,6 @@ function Comander(props) {
         switch (event.keyCode) {
             case 40: // ArrowDown
                 setHighlightedSuggestion((hs) => {
-                    console.log((hs === storedQueries.current.length - 1 ? 0 : hs + 1))
                     return (hs === storedQueries.current.length - 1 ? 0 : hs + 1)
                 });
                 break;
@@ -85,7 +83,7 @@ function Comander(props) {
                 setHighlightedSuggestion((hs) => (hs <= 0 ? storedQueries.current.length : hs) - 1);
                 break;
             case 13: // Enter
-                showStored && ! query.length && selectQuery(event, storedQueries.current[highlightedSuggestion]);
+                showStored && !query.length && selectQuery(event, storedQueries.current[highlightedSuggestion]);
                 (!showStored || query.length) && handlePlay();
                 break;
             default:
@@ -94,29 +92,37 @@ function Comander(props) {
     });
 
     return (
-        <ColumnLayout dist="spaced center" className={cls(styles.comanderContainer, fullscreen ? styles.fullScreen : '', "animated", "fadeIn")}>
+        <ColumnLayout
+            data-testid="comander"
+            dist="spaced center"
+            className={cls(styles.comanderContainer, "animated", "fadeIn")}>
             <RowLayout dist="middle" className={styles.inputContainer}>
                 <CypherCodeMirror
+                    data-testid="codemirror"
                     className={styles.input}
                     options={{ ...codeMirrorSettings, ...{ theme: theme.codemirror } }}
                     schema={neo4jSchema}
                     defaultValue={""}
                     onChange={(value) => setQuery(value)}
-                    onParsed={() => null}
                     ref={(el) => setEditor(el)}
                 />
-                <em className="material-icons" onClick={handlePlay}>
+                <em className="material-icons" data-testid="play-trigger" onClick={handlePlay}>
                     play_arrow
                 </em>
-                <em className={cls("material-icons", showStored ? styles.activeIcon : "")} onClick={showStoredQueries}>
+                <em
+                    data-testid="stored-trigger"
+                    className={cls("material-icons", showStored ? styles.activeIcon : "")}
+                    onClick={showStoredQueries}
+                >
                     history
                 </em>
             </RowLayout>
-            <div className={cls(styles.list, showStored ? styles.listActive : "")}>
+            <div data-testid="show-stored" className={cls(styles.list, showStored ? styles.listActive : "")}>
                 <span className={styles.listTitle}>Last queries</span>
                 <ul className="hideScroll">
                     {storedQueries.current.map((q, i) => (
                         <li
+                            data-testid="select-query-trigger"
                             key={i}
                             onClick={e => selectQuery(e, q)}
                             className={highlightedSuggestion === i ? styles.suggestionActive : ""}
@@ -136,6 +142,7 @@ function Comander(props) {
                 </ul>
             </div>
             <Timeline
+                data-testid="timeline"
                 queries={queries}
                 selectQuery={selectQuery}
                 deleteQuery={deleteQuery}

@@ -35,6 +35,7 @@ function Summary (props) {
                             style.summary,
                             configItem && configItem.label === key ? style.summaryActive : ""
                         )}
+                        data-testid="label-trigger"
                         dist="middle"
                         key={idx}
                         onClick={() =>
@@ -60,6 +61,7 @@ function Summary (props) {
                 });
                 return (
                     <RowLayout
+                        data-testid="rel-trigger"
                         className={cls(
                             style.summary,
                             configItem && configItem.label === key ? style.summaryActive : ""
@@ -99,7 +101,7 @@ function Summary (props) {
                 color: styleForItem.get('text-color-internal')
             }
             return (
-                <ColumnLayout dist="left" className={style.properties}>
+                <ColumnLayout data-testid="properties" dist="left" className={style.properties}>
                     <span className={style.chip} style={chipStyle}>{
                         item.type === 'node' ? item.item.labels.join(' ') : item.item.type
                     }</span>
@@ -131,7 +133,7 @@ function Summary (props) {
         };
 
         return (
-            <ColumnLayout dist="left" className={style.properties}>
+            <ColumnLayout data-testid="configurator" dist="left" className={style.properties}>
                 <span className={style.chip} style={chipStyle}>
                     {label}
                 </span>
@@ -141,7 +143,7 @@ function Summary (props) {
     }
 
     return (
-        <ColumnLayout dist="left">
+        <ColumnLayout data-testid="summary" dist="left">
             { renderLabels(props.summary) }
             { renderRelations(props.summary) }
             { renderProperties(props.item) }

@@ -2,7 +2,7 @@ import Record from "neo4j-driver/lib/record";
 import { Path, Node, PathSegment, Relationship } from "neo4j-driver/lib/graph-types";
 import Integer from "neo4j-driver/lib/integer";
 
-const parseProperties = (props) => {
+export const parseProperties = (props) => {
     Object.keys(props).forEach((key) => {
         if (props[key] instanceof Object) {
             props[key] = createInteger(props[key]);
@@ -11,7 +11,7 @@ const parseProperties = (props) => {
     return props;
 };
 
-const createPath = (path) => {
+export const createPath = (path) => {
     if (path.start) {
         path.start = createNode(path.start);
     }
@@ -24,13 +24,13 @@ const createPath = (path) => {
     return new Path(path.start, path.end, path.segments);
 };
 
-const createSegments = (segments) => {
+export const createSegments = (segments) => {
     return segments.map((seg) => {
         return createSegment(seg);
     });
 };
 
-const createSegment = (seg) => {
+export const createSegment = (seg) => {
     if (seg.start) {
         seg.start = createNode(seg.start);
     }
@@ -43,7 +43,7 @@ const createSegment = (seg) => {
     return new PathSegment(seg.start, seg.relationship, seg.end);
 };
 
-const createRel = (rel) => {
+export const createRel = (rel) => {
     if (rel.identity) {
         rel.identity = createInteger(rel.identity);
     }
@@ -59,11 +59,11 @@ const createRel = (rel) => {
     return new Relationship(rel.identity, rel.start, rel.end, rel.type, rel.properties);
 };
 
-const createInteger = (data) => {
+export const createInteger = (data) => {
     return new Integer(data.low, data.high);
 };
 
-const createNode = (node) => {
+export const createNode = (node) => {
     if (node.properties) {
         node.properties = parseProperties(node.properties);
     }
