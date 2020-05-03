@@ -1,6 +1,7 @@
 [![Build & Test][build-badge]][build-link]
 [![GitHub license][license-image]][repo-link]
 [![Version][version-image]][repo-version-link]
+[![codecov][codecov-badge]][codecov-link]
 
 <div align="center">
   <img width="200" height="200"
@@ -74,6 +75,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 [version-image]: https://badgen.net/github/release/AdrianInsua/neo4j-dashboard/stable
 [repo-link]: https://github.com/AdrianInsua/neo4j-dashboard
 [repo-version-link]: https://github.com/AdrianInsua/neo4j-dashboard/releases
+[codecov-badge]: https://codecov.io/gh/AdrianInsua/neo4j-dashboard/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/AdrianInsua/neo4j-dashboard
 
 [neo4j-dasboard]: https://neo4j-dashboard.now.sh/
 [neo4j]: https://neo4j.com/download-neo4j-now/?utm_source=google&utm_medium=ppc&utm_campaign=*EU%20-%20Search%20-%20Branded&utm_adgroup=*EU%20-%20Search%20-%20Branded%20-%20Neo4j%20-%20Exact&utm_term=neo4j&gclid=CjwKCAjwnIr1BRAWEiwA6GpwNW0X6o33Apjt_e3hn-lsI1iEYvVoiNcWDFr76xMXKyQ-XPqF2IOeTBoCgl8QAvD_BwE
