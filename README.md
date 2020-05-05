@@ -20,7 +20,7 @@ The graphic library is a wrapper of [neo4j-browser] graph classes isolated and r
   <img src="./public/screenshot.png">
 </div>
 
-You can access [neo4j-dashboad] and use your custom [neo4j] credentials to test this App
+You can access [neo4j-dashboard] and use your custom [neo4j] credentials to test this App
 
 ## Custom features
 
