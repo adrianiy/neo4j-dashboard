@@ -37,11 +37,7 @@ describe('service/utils test suite', () => {
         });
 
         test("createPath with null Object", () => {
-            try {
-                createPath({});
-            } catch (err) {
-                expect(err.message).toBe('Cannot read property \'length\' of undefined')
-            }
+            expect(() => createPath({})).toThrowError('Cannot read property \'length\' of undefined')
         });
     })
 

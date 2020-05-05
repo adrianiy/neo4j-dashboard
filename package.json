@@ -73,6 +73,13 @@
     ]
   },
   "jest": {
+    "coverageReporters": [
+        "json",
+        "lcov",
+        "text",
+        "clover",
+        "cobertura"
+    ],
     "collectCoverageFrom": [
       "src/**/**",
       "!**/index.js",

@@ -1,5 +1,3 @@
-const isTest = String(process.env.NODE_ENV) === 'test' // Jest sets this
-
 const toExport = {
   plugins: [
     'react-hot-loader/babel',
@@ -9,17 +7,7 @@ const toExport = {
   ],
   presets: [
     '@babel/preset-react',
-    [
-      '@babel/preset-env',
-      {
-        useBuiltIns: 'entry',
-        corejs: 3,
-        modules: isTest ? 'commonjs' : false,
-        targets: {
-          browsers: ['last 1 version', 'ie >= 11']
-        }
-      }
-    ]
+    '@babel/preset-env',
   ]
 }
 
